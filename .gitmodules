@@ -1,3 +1,0 @@
-[submodule "soc-uvm"]
-	path = soc-uvm
-	url = https://github.com/PacoReinaCampo/MPSoC-UVM.git
