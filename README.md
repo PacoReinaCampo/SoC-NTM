@@ -1,3 +1,9 @@
+---
+title:  Neural Turing Machine for a System on Chip
+author: QueenField
+geometry: "left=3cm,right=2cm,top=3cm,bottom=2cm"
+---
+
 # 1. INTRODUCTION
 
 A System on Chip (SoC) is an integrated circuit that integrates components of a computer system (PU, RAM, GPIO, etc). As they are integrated on a single substrate, SoCs consume much less power and take up much less area than multi-chip designs with equivalent functionality. SoCs are common in the mobile computing, embedded systems and the Internet of Things.
@@ -540,62 +546,54 @@ make
 sudo make install
 ```
 
-# 4. CONCLUSION
+## 4.2. OPEN SOURCE SYNTHESIZER FOR WINDOWS USERS!
 
-## 4.1. FOR WINDOWS USERS!
+### 4.2.0. Install Prerequisites
 
-1. Settings → Apps → Apps & features → Related settings, Programs and
-Features → Turn Windows features on or off → Windows Subsystem for
-Linux
+#### 4.2.0.1. For WINDOWS Users!
+
+1. Settings → Apps → Apps & features → Related settings, Programs and Features → Turn Windows features on or off → Windows Subsystem for Linux
 
 2. Microsoft Store → INSTALL UBUNTU
 
-Library
-type:
+#### 4.2.0.2. For WINDOWS and LINUX Users
+
 ```
 sudo apt update
 sudo apt upgrade
-
-sudo apt install bison cmake flex freeglut3-dev libcairo2-dev libgsl-dev \
-libncurses-dev libx11-dev m4 python-tk python3-tk swig tcl tcl-dev tk-dev tcsh
-```
-
-### 4.1.1. Front-End
-
-type:
-```
-sudo apt install verilator
-sudo apt install iverilog
-sudo apt install ghdl
-
-cd /mnt/c/../sim/verilog/regression/wb/iverilog
-source SIMULATE-IT
 ```
 
 ```
-sudo apt install yosys
-
-cd /mnt/c/../synthesis/yosys
-source SYNTHESIZE-IT
+sudo apt -y install build-essential clang bison flex \
+libreadline-dev gawk tcl-dev libffi-dev git make gnat \
+graphviz xdot pkg-config python3 libboost-system-dev \
+libboost-python-dev libboost-filesystem-dev zlib1g-dev
 ```
 
-### 4.1.2. Back-End
-
-type:
+### 4.2.1. Install GHDL
 ```
-mkdir qflow
-cd qflow
+git clone https://github.com/ghdl/ghdl
 
-git clone https://github.com/RTimothyEdwards/magic
-git clone https://github.com/rubund/graywolf
-git clone https://github.com/The-OpenROAD-Project/OpenSTA
-git clone https://github.com/RTimothyEdwards/qrouter
-git clone https://github.com/RTimothyEdwards/irsim
-git clone https://github.com/RTimothyEdwards/netgen
-git clone https://github.com/RTimothyEdwards/qflow
+cd ghdl
+./configure --prefix=/usr/local
+make
+sudo make install
 ```
 
+### 4.2.2. Install Yosys
 ```
-cd /mnt/c/../synthesis/qflow
-source FLOW-IT
+git clone https://github.com/YosysHQ/yosys
+
+cd yosys
+make
+sudo make install
+```
+
+### 4.2.3. Install Synthesizer Plugin
+```
+git clone https://github.com/ghdl/ghdl-yosys-plugin
+cd ghdl-yosys-plugin
+make GHDL=/usr/local
+sudo yosys-config --exec mkdir -p --datdir/plugins
+sudo yosys-config --exec cp "ghdl.so" --datdir/plugins/ghdl.so
 ```
