@@ -4,14 +4,14 @@ cmake_minimum_required(VERSION 2.8.10)
 
 # Project's name
 
-project(blank)
+project(SoC)
 
 link_directories(${CMAKE_SOURCE_DIR}/opennn)
 
 include_directories(${CMAKE_SOURCE_DIR}/opennn)
 
-add_executable(blank main.cpp)
+add_executable(SoC main.cpp)
 
-target_link_libraries(blank opennn)
+target_link_libraries(SoC opennn)
 
 

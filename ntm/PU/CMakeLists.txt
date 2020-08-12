@@ -4,14 +4,14 @@ cmake_minimum_required(VERSION 2.8.10)
 
 # Project's name
 
-project(FinTech)
+project(PU)
 
 link_directories(${CMAKE_SOURCE_DIR}/opennn)
 
 include_directories(${CMAKE_SOURCE_DIR}/opennn)
 
-add_executable(FinTech main.cpp)
+add_executable(PU main.cpp)
 
-target_link_libraries(FinTech opennn)
+target_link_libraries(PU opennn)
 
 
