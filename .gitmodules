@@ -4,6 +4,3 @@
 [submodule "soc-rtos"]
 	path = soc-rtos
 	url = https://github.com/PacoReinaCampo/SoC-RTOS.git
-[submodule "soc-dv"]
-	path = soc-dv
-	url = https://github.com/PacoReinaCampo/SoC-DV.git
