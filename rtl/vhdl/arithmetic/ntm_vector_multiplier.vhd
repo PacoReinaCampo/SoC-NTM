@@ -42,7 +42,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity ntm_matrix_multiplier is
+entity ntm_vector_multiplier is
   generic (
     X : integer := 64,
 
@@ -55,7 +55,7 @@ entity ntm_matrix_multiplier is
 
     -- CONTROL
     START : in  std_logic;
-    READY : out std_logic_arithmetic_scalar_vector(X-1 downto 0);
+    READY : out std_logic_vector(X-1 downto 0);
 
     -- DATA
     MODULO    : in  std_logic_arithmetic_vector_vector(X-1 downto 0)(DATA_SIZE-1 downto 0);
@@ -65,7 +65,7 @@ entity ntm_matrix_multiplier is
   );
 end entity;
 
-architecture ntm_matrix_multiplier_architecture of ntm_matrix_multiplier is
+architecture ntm_vector_multiplier_architecture of ntm_vector_multiplier is
 
   -----------------------------------------------------------------------
   -- Types

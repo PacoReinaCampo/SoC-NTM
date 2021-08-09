@@ -42,7 +42,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity ntm_matrix_adder is
+entity ntm_vector_adder is
   generic (
     X : integer := 64,
 
@@ -55,7 +55,7 @@ entity ntm_matrix_adder is
 
     -- CONTROL
     START : in  std_logic;
-    READY : out std_logic_arithmetic_scalar_vector(X-1 downto 0);
+    READY : out std_logic_vector(X-1 downto 0);
 
     OPERATION : in std_logic;
 
@@ -67,7 +67,7 @@ entity ntm_matrix_adder is
   );
 end entity;
 
-architecture ntm_matrix_adder_architecture of ntm_matrix_adder is
+architecture ntm_vector_adder_architecture of ntm_vector_adder is
 
   -----------------------------------------------------------------------
   -- Types
