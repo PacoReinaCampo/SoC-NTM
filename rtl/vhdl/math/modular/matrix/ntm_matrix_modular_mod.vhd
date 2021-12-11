@@ -115,9 +115,6 @@ architecture ntm_matrix_modular_mod_architecture of ntm_matrix_modular_mod is
   signal index_i_loop : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal index_j_loop : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-  signal data_in_i_mod_int : std_logic;
-  signal data_in_j_mod_int : std_logic;
-
   -- MOD
   -- CONTROL
   signal start_vector_mod : std_logic;
@@ -155,14 +152,16 @@ begin
       DATA_OUT_J_ENABLE <= '0';
 
       -- Control Internal
+      start_vector_mod <= '0';
+
       index_i_loop <= ZERO_CONTROL;
       index_j_loop <= ZERO_CONTROL;
 
-      data_in_i_mod_int <= '0';
-      data_in_j_mod_int <= '0';
+      data_in_enable_vector_mod <= '0';
 
       -- Data Internal
       modulo_in_vector_mod <= ZERO_DATA;
+      size_in_vector_mod   <= ZERO_CONTROL;
       data_in_vector_mod   <= ZERO_DATA;
 
     elsif (rising_edge(CLK)) then
@@ -181,12 +180,12 @@ begin
             index_j_loop <= ZERO_CONTROL;
 
             -- FSM Control
-            mod_ctrl_fsm_int <= INPUT_I_STATE;
+            mod_ctrl_fsm_int <= INPUT_J_STATE;
           end if;
 
         when INPUT_I_STATE =>  -- STEP 1
 
-          if ((DATA_IN_I_ENABLE = '1') or (index_i_loop = ZERO_CONTROL)) then
+          if (DATA_IN_I_ENABLE = '1') then
             -- Data Inputs
             modulo_in_vector_mod <= MODULO_IN;
 
@@ -196,8 +195,6 @@ begin
             start_vector_mod <= '1';
 
             data_in_enable_vector_mod <= '1';
-
-            data_in_i_mod_int <= '1';
 
             -- FSM Control
             mod_ctrl_fsm_int <= ENDER_STATE;
@@ -223,8 +220,6 @@ begin
             start_vector_mod <= '1';
 
             data_in_enable_vector_mod <= '1';
-
-            data_in_j_mod_int <= '1';
 
             -- FSM Control
             mod_ctrl_fsm_int <= ENDER_STATE;
@@ -274,9 +269,6 @@ begin
           else
             -- Control Internal
             start_vector_mod <= '0';
-
-            data_in_i_mod_int <= '0';
-            data_in_j_mod_int <= '0';
           end if;
 
         when others =>
