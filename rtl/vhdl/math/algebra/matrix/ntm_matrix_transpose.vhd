@@ -178,7 +178,7 @@ begin
             index_j_loop <= ZERO_CONTROL;
 
             -- FSM Control
-            transpose_ctrl_fsm_int <= INPUT_J_STATE;
+            transpose_ctrl_fsm_int <= INPUT_I_STATE;
           else
             -- Control Outputs
             DATA_I_ENABLE <= '0';
@@ -242,7 +242,7 @@ begin
             index_j_loop <= ZERO_CONTROL;
 
             -- FSM Control
-            transpose_ctrl_fsm_int <= INPUT_J_STATE;
+            transpose_ctrl_fsm_int <= INPUT_I_STATE;
           end if;
 
         when ENDER_J_STATE =>           -- STEP 4
