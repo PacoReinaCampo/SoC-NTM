@@ -97,10 +97,10 @@ architecture ntm_scalar_float_divider_architecture of ntm_scalar_float_divider i
   constant MANTISSA_FULL  : std_logic_vector(MANTISSA_SIZE downto 0) := (others => '1');
   constant MANTISSA_EMPTY : std_logic_vector(MANTISSA_SIZE downto 0) := (others => '0');
 
-  constant LIMIT_MANTISSA : std_logic_vector(MANTISSA_SIZE downto 0) := X"800000";
-
   constant EXPONENT_FULL  : std_logic_vector(EXPONENT_SIZE-1 downto 0) := (others => '1');
   constant EXPONENT_EMPTY : std_logic_vector(EXPONENT_SIZE-1 downto 0) := (others => '0');
+
+  constant LIMIT_MANTISSA : std_logic_vector(MANTISSA_SIZE downto 0) := X"800000";
 
   constant BIAS_EXPONENT : std_logic_vector(EXPONENT_SIZE+1 downto 0) := "0001111111";
 
@@ -134,6 +134,7 @@ architecture ntm_scalar_float_divider_architecture of ntm_scalar_float_divider i
 
   signal data_sign_int : std_logic;
 
+  -- Control Internal
   signal index_loop : integer;
 
 begin
@@ -273,14 +274,17 @@ begin
 
           -- Data Internal
           if (data_exponent_int = ZERO_EXPONENT) then
+            -- Underflow
             data_out_mantissa_int <= MANTISSA_EMPTY;
             data_out_exponent_int <= EXPONENT_EMPTY;
             data_out_sign_int     <= data_sign_int;
           elsif (data_exponent_int(EXPONENT_SIZE+1 downto EXPONENT_SIZE) = "01") then
+            -- Overflow
             data_out_mantissa_int <= MANTISSA_EMPTY;
             data_out_exponent_int <= EXPONENT_FULL;
             data_out_sign_int     <= data_sign_int;
           else
+            -- Normal
             data_out_mantissa_int <= data_quotient_int(MANTISSA_SIZE+1 downto 1);
             data_out_exponent_int <= data_exponent_int(EXPONENT_SIZE-1 downto 0);
             data_out_sign_int     <= data_sign_int;
