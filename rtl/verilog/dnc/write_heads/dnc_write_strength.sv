@@ -37,7 +37,7 @@
 // Author(s):
 //   Paco Reina Campo <pacoreinacampo@queenfield.tech>
 
-module dnc_read_strengths #(
+module dnc_write_strength #(
   parameter DATA_SIZE=128,
   parameter CONTROL_SIZE=64
 )
@@ -50,11 +50,7 @@ module dnc_read_strengths #(
     input START,
     output READY,
 
-    input BETA_IN_ENABLE,  // for i in 0 to R-1
-    output BETA_OUT_ENABLE,  // for i in 0 to R-1
-
     // DATA
-    input [DATA_SIZE-1:0] SIZE_R_IN,
     input [DATA_SIZE-1:0] BETA_IN,
     output [DATA_SIZE-1:0] BETA_OUT
   );
@@ -86,57 +82,47 @@ module dnc_read_strengths #(
   // Signals
   ///////////////////////////////////////////////////////////////////////
 
-  // VECTOR ONE_CONTROLPLUS
+  // SCALAR ONE_CONTROLPLUS
   // CONTROL
-  wire start_vector_oneplus;
-  wire ready_vector_oneplus;
-  wire data_in_enable_vector_oneplus;
-  wire data_out_enable_vector_oneplus;
+  wire start_scalar_oneplus;
+  wire ready_scalar_oneplus;
 
   // DATA
-  wire [DATA_SIZE-1:0] size_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_out_vector_oneplus;
+  wire [DATA_SIZE-1:0] data_in_scalar_oneplus;
+  wire [DATA_SIZE-1:0] data_out_scalar_oneplus;
 
   ///////////////////////////////////////////////////////////////////////
   // Body
   ///////////////////////////////////////////////////////////////////////
 
-  // beta(t;i) = oneplus(beta^(t;i))
+  // beta(t) = oneplus(beta^(t))
 
   // ASSIGNATIONS
   // CONTROL
-  assign start_vector_oneplus = START;
-  assign READY = ready_vector_oneplus;
-  assign data_in_enable_vector_oneplus = BETA_IN_ENABLE;
-  assign BETA_OUT_ENABLE = data_out_enable_vector_oneplus;
+  assign start_scalar_oneplus = START;
+  assign READY = ready_scalar_oneplus;
 
   // DATA
-  assign size_in_vector_oneplus = SIZE_R_IN;
-  assign data_in_vector_oneplus = BETA_IN;
-  assign BETA_OUT = data_out_vector_oneplus;
+  assign data_in_scalar_oneplus = BETA_IN;
+  assign BETA_OUT = data_out_scalar_oneplus;
 
-  // VECTOR ONE_CONTROLPLUS
-  ntm_vector_oneplus_function #(
+  // SCALAR ONE_CONTROLPLUS
+  ntm_scalar_oneplus_function #(
     .DATA_SIZE(DATA_SIZE),
     .CONTROL_SIZE(CONTROL_SIZE)
   )
-  vector_oneplus_function(
+  ntm_scalar_oneplus_function_i(
     // GLOBAL
     .CLK(CLK),
     .RST(RST),
 
     // CONTROL
-    .START(start_vector_oneplus),
-    .READY(ready_vector_oneplus),
-
-    .DATA_IN_ENABLE(data_in_enable_vector_oneplus),
-    .DATA_OUT_ENABLE(data_out_enable_vector_oneplus),
+    .START(start_scalar_oneplus),
+    .READY(ready_scalar_oneplus),
 
     // DATA
-    .SIZE_IN(size_in_vector_oneplus),
-    .DATA_IN(data_in_vector_oneplus),
-    .DATA_OUT(data_out_vector_oneplus)
+    .DATA_IN(data_in_scalar_oneplus),
+    .DATA_OUT(data_out_scalar_oneplus)
   );
 
 endmodule

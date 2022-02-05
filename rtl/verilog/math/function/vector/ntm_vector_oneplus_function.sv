@@ -37,7 +37,7 @@
 // Author(s):
 //   Paco Reina Campo <pacoreinacampo@queenfield.tech>
 
-module dnc_read_strengths #(
+module ntm_vector_oneplus_function #(
   parameter DATA_SIZE=128,
   parameter CONTROL_SIZE=64
 )
@@ -48,20 +48,24 @@ module dnc_read_strengths #(
 
     // CONTROL
     input START,
-    output READY,
+    output reg READY,
 
-    input BETA_IN_ENABLE,  // for i in 0 to R-1
-    output BETA_OUT_ENABLE,  // for i in 0 to R-1
+    input DATA_IN_ENABLE,
+    output reg DATA_OUT_ENABLE,
 
     // DATA
-    input [DATA_SIZE-1:0] SIZE_R_IN,
-    input [DATA_SIZE-1:0] BETA_IN,
-    output [DATA_SIZE-1:0] BETA_OUT
+    input [DATA_SIZE-1:0] SIZE_IN,
+    input [DATA_SIZE-1:0] DATA_IN,
+    output reg [DATA_SIZE-1:0] DATA_OUT
   );
 
   ///////////////////////////////////////////////////////////////////////
   // Types
   ///////////////////////////////////////////////////////////////////////
+
+  parameter [1:0] STARTER_STATE = 0;
+  parameter [1:0] INPUT_STATE = 1;
+  parameter [1:0] ENDER_STATE = 2;
 
   ///////////////////////////////////////////////////////////////////////
   // Constants
@@ -86,57 +90,120 @@ module dnc_read_strengths #(
   // Signals
   ///////////////////////////////////////////////////////////////////////
 
-  // VECTOR ONE_CONTROLPLUS
+  // Finite State Machine
+  reg [1:0] oneplus_ctrl_fsm_int;
+
+  // Internal Signals
+  reg [CONTROL_SIZE-1:0] index_loop;
+
+  // SCALAR ONEPLUS
   // CONTROL
-  wire start_vector_oneplus;
-  wire ready_vector_oneplus;
-  wire data_in_enable_vector_oneplus;
-  wire data_out_enable_vector_oneplus;
+  reg start_scalar_oneplus;
+  wire ready_scalar_oneplus;
 
   // DATA
-  wire [DATA_SIZE-1:0] size_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_out_vector_oneplus;
+  reg [DATA_SIZE-1:0] data_in_scalar_oneplus;
+  wire [DATA_SIZE-1:0] data_out_scalar_oneplus;
 
   ///////////////////////////////////////////////////////////////////////
   // Body
   ///////////////////////////////////////////////////////////////////////
 
-  // beta(t;i) = oneplus(beta^(t;i))
-
-  // ASSIGNATIONS
   // CONTROL
-  assign start_vector_oneplus = START;
-  assign READY = ready_vector_oneplus;
-  assign data_in_enable_vector_oneplus = BETA_IN_ENABLE;
-  assign BETA_OUT_ENABLE = data_out_enable_vector_oneplus;
+  always @(posedge CLK or posedge RST) begin
+    if(RST == 1'b0) begin
+      // Data Outputs
+      DATA_OUT <= 1'b0;
 
-  // DATA
-  assign size_in_vector_oneplus = SIZE_R_IN;
-  assign data_in_vector_oneplus = BETA_IN;
-  assign BETA_OUT = data_out_vector_oneplus;
+      // Control Outputs
+      READY <= 1'b0;
 
-  // VECTOR ONE_CONTROLPLUS
-  ntm_vector_oneplus_function #(
+      // Assignations
+      index_loop <= ZERO_DATA;
+    end
+    else begin
+      case(oneplus_ctrl_fsm_int)
+        STARTER_STATE : begin  // STEP 0
+          // Control Outputs
+          READY <= 1'b0;
+
+          if(START == 1'b1) begin
+            // Assignations
+            index_loop <= ZERO_DATA;
+
+            // FSM Control
+            oneplus_ctrl_fsm_int <= INPUT_STATE;
+          end
+        end
+        INPUT_STATE : begin  // STEP 1
+          if(DATA_IN_ENABLE == 1'b1) begin
+            // Data Inputs
+            data_in_scalar_oneplus <= DATA_IN;
+
+            if(index_loop == ZERO_DATA) begin
+              // Control Internal
+              start_scalar_oneplus <= 1'b1;
+            end
+
+            // FSM Control
+            oneplus_ctrl_fsm_int <= ENDER_STATE;
+          end
+
+          // Control Outputs
+          DATA_OUT_ENABLE <= 1'b0;
+        end
+        ENDER_STATE : begin  // STEP 2
+          if(ready_scalar_oneplus == 1'b1) begin
+            if(index_loop == (SIZE_IN - ONE_CONTROL)) begin
+              // Control Outputs
+              READY <= 1'b1;
+
+              // FSM Control
+              oneplus_ctrl_fsm_int <= STARTER_STATE;
+            end
+            else begin
+              // Control Internal
+              index_loop <= (index_loop + ONE_CONTROL);
+
+              // FSM Control
+              oneplus_ctrl_fsm_int <= INPUT_STATE;
+            end
+            // Data Outputs
+            DATA_OUT <= data_out_scalar_oneplus;
+
+            // Control Outputs
+            DATA_OUT_ENABLE <= 1'b1;
+          end
+          else begin
+            // Control Internal
+            start_scalar_oneplus <= 1'b0;
+          end
+        end
+        default : begin
+          // FSM Control
+          oneplus_ctrl_fsm_int <= STARTER_STATE;
+        end
+      endcase
+    end
+  end
+
+  // SCALAR ONEPLUS
+  ntm_scalar_oneplus_function #(
     .DATA_SIZE(DATA_SIZE),
     .CONTROL_SIZE(CONTROL_SIZE)
   )
-  vector_oneplus_function(
+  scalar_oneplus_function(
     // GLOBAL
     .CLK(CLK),
     .RST(RST),
 
     // CONTROL
-    .START(start_vector_oneplus),
-    .READY(ready_vector_oneplus),
-
-    .DATA_IN_ENABLE(data_in_enable_vector_oneplus),
-    .DATA_OUT_ENABLE(data_out_enable_vector_oneplus),
+    .START(start_scalar_oneplus),
+    .READY(ready_scalar_oneplus),
 
     // DATA
-    .SIZE_IN(size_in_vector_oneplus),
-    .DATA_IN(data_in_vector_oneplus),
-    .DATA_OUT(data_out_vector_oneplus)
+    .DATA_IN(data_in_scalar_oneplus),
+    .DATA_OUT(data_out_scalar_oneplus)
   );
 
 endmodule

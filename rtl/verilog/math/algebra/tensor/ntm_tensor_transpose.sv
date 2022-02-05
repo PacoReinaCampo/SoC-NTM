@@ -37,7 +37,7 @@
 // Author(s):
 //   Paco Reina Campo <pacoreinacampo@queenfield.tech>
 
-module dnc_read_strengths #(
+module ntm_tensor_transpose #(
   parameter DATA_SIZE=128,
   parameter CONTROL_SIZE=64
 )
@@ -48,20 +48,41 @@ module dnc_read_strengths #(
 
     // CONTROL
     input START,
-    output READY,
+    output reg READY,
 
-    input BETA_IN_ENABLE,  // for i in 0 to R-1
-    output BETA_OUT_ENABLE,  // for i in 0 to R-1
+    input DATA_IN_I_ENABLE,
+    input DATA_IN_J_ENABLE,
+    input DATA_IN_K_ENABLE,
+
+    output reg DATA_OUT_I_ENABLE,
+    output reg DATA_OUT_J_ENABLE,
+    output reg DATA_OUT_K_ENABLE,
 
     // DATA
-    input [DATA_SIZE-1:0] SIZE_R_IN,
-    input [DATA_SIZE-1:0] BETA_IN,
-    output [DATA_SIZE-1:0] BETA_OUT
+    input [DATA_SIZE-1:0] SIZE_I_IN,
+    input [DATA_SIZE-1:0] SIZE_J_IN,
+    input [DATA_SIZE-1:0] SIZE_K_IN,
+    input [DATA_SIZE-1:0] DATA_IN,
+
+    output reg [DATA_SIZE-1:0] DATA_OUT
   );
 
   ///////////////////////////////////////////////////////////////////////
   // Types
   ///////////////////////////////////////////////////////////////////////
+
+  parameter [3:0] STARTER_STATE           = 0;
+  parameter [3:0] MATRIX_INITIAL_I_STATE  = 1;
+  parameter [3:0] MATRIX_INITIAL_J_STATE  = 2;
+  parameter [3:0] MATRIX_INITIAL_K_STATE  = 3;
+  parameter [3:0] MATRIX_INPUT_I_STATE    = 4;
+  parameter [3:0] MATRIX_INPUT_J_STATE    = 5;
+  parameter [3:0] MATRIX_INPUT_K_STATE    = 6;
+  parameter [3:0] VECTOR_MULTIPLIER_STATE = 7;
+  parameter [3:0] SCALAR_ADDER_STATE      = 8;
+  parameter [3:0] MATRIX_UPDATE_I_STATE   = 9;
+  parameter [3:0] MATRIX_UPDATE_J_STATE   = 10;
+  parameter [3:0] MATRIX_UPDATE_K_STATE   = 11;
 
   ///////////////////////////////////////////////////////////////////////
   // Constants
@@ -86,57 +107,131 @@ module dnc_read_strengths #(
   // Signals
   ///////////////////////////////////////////////////////////////////////
 
-  // VECTOR ONE_CONTROLPLUS
+  // Finite State Machine
+  reg [1:0] algebra_ctrl_fsm_int;
+
+  // SCALAR ADDER
   // CONTROL
-  wire start_vector_oneplus;
-  wire ready_vector_oneplus;
-  wire data_in_enable_vector_oneplus;
-  wire data_out_enable_vector_oneplus;
+  wire start_scalar_adder;
+  wire ready_scalar_adder;
+  wire operation_scalar_adder;
 
   // DATA
-  wire [DATA_SIZE-1:0] size_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_out_vector_oneplus;
+  wire [DATA_SIZE-1:0] data_a_in_scalar_adder;
+  wire [DATA_SIZE-1:0] data_b_in_scalar_adder;
+  wire [DATA_SIZE-1:0] data_out_scalar_adder;
+
+  // SCALAR MULTIPLIER
+  // CONTROL
+  wire start_scalar_multiplier;
+  wire ready_scalar_multiplier;
+
+  // DATA
+  wire [DATA_SIZE-1:0] data_a_in_scalar_multiplier;
+  wire [DATA_SIZE-1:0] data_b_in_scalar_multiplier;
+  wire [DATA_SIZE-1:0] data_out_scalar_multiplier;
 
   ///////////////////////////////////////////////////////////////////////
   // Body
   ///////////////////////////////////////////////////////////////////////
 
-  // beta(t;i) = oneplus(beta^(t;i))
+  // DATA_OUT = DATA_A_IN · DATA_B_IN
 
-  // ASSIGNATIONS
   // CONTROL
-  assign start_vector_oneplus = START;
-  assign READY = ready_vector_oneplus;
-  assign data_in_enable_vector_oneplus = BETA_IN_ENABLE;
-  assign BETA_OUT_ENABLE = data_out_enable_vector_oneplus;
+  always @(posedge CLK or posedge RST) begin
+    if(RST == 1'b0) begin
+      // Data Outputs
+      DATA_OUT <= ZERO_DATA;
 
-  // DATA
-  assign size_in_vector_oneplus = SIZE_R_IN;
-  assign data_in_vector_oneplus = BETA_IN;
-  assign BETA_OUT = data_out_vector_oneplus;
+      // Control Outputs
+      READY <= 1'b0;
+    end
+    else begin
+      case(algebra_ctrl_fsm_int)
+        STARTER_STATE : begin  // STEP 0
+          // Control Outputs
+          READY <= 1'b0;
 
-  // VECTOR ONE_CONTROLPLUS
-  ntm_vector_oneplus_function #(
+          if(START == 1'b1) begin
+            // FSM Control
+            algebra_ctrl_fsm_int <= MATRIX_INITIAL_I_STATE;
+          end
+        end
+
+        MATRIX_INITIAL_I_STATE : begin  // STEP 1
+        end
+        MATRIX_INITIAL_J_STATE : begin  // STEP 2
+        end
+        MATRIX_INITIAL_K_STATE : begin  // STEP 3
+        end
+
+        MATRIX_INPUT_I_STATE : begin  // STEP 4
+        end
+        MATRIX_INPUT_J_STATE : begin  // STEP 5
+        end
+        MATRIX_INPUT_K_STATE : begin  // STEP 6
+        end
+
+        VECTOR_MULTIPLIER_STATE : begin  // STEP 7
+        end
+        SCALAR_ADDER_STATE : begin  // STEP 8
+        end
+
+        MATRIX_UPDATE_I_STATE : begin  // STEP 9
+        end
+        MATRIX_UPDATE_J_STATE : begin  // STEP 10
+        end
+        MATRIX_UPDATE_K_STATE : begin  // STEP 11
+        end
+
+        default : begin
+          // FSM Control
+          algebra_ctrl_fsm_int <= STARTER_STATE;
+        end
+      endcase
+    end
+  end
+
+  // SCALAR ADDER
+  ntm_scalar_adder #(
     .DATA_SIZE(DATA_SIZE),
     .CONTROL_SIZE(CONTROL_SIZE)
   )
-  vector_oneplus_function(
+  ntm_scalar_adder_i(
     // GLOBAL
     .CLK(CLK),
     .RST(RST),
 
     // CONTROL
-    .START(start_vector_oneplus),
-    .READY(ready_vector_oneplus),
+    .START(start_scalar_adder),
+    .READY(ready_scalar_adder),
 
-    .DATA_IN_ENABLE(data_in_enable_vector_oneplus),
-    .DATA_OUT_ENABLE(data_out_enable_vector_oneplus),
+    .OPERATION(operation_scalar_adder),
 
     // DATA
-    .SIZE_IN(size_in_vector_oneplus),
-    .DATA_IN(data_in_vector_oneplus),
-    .DATA_OUT(data_out_vector_oneplus)
+    .DATA_A_IN(data_a_in_scalar_adder),
+    .DATA_B_IN(data_b_in_scalar_adder),
+    .DATA_OUT(data_out_scalar_adder)
+  );
+
+  // SCALAR MULTIPLIER
+  ntm_scalar_multiplier #(
+    .DATA_SIZE(DATA_SIZE),
+    .CONTROL_SIZE(CONTROL_SIZE)
+  )
+  ntm_scalar_multiplier_i(
+    // GLOBAL
+    .CLK(CLK),
+    .RST(RST),
+
+    // CONTROL
+    .START(start_scalar_multiplier),
+    .READY(ready_scalar_multiplier),
+
+    // DATA
+    .DATA_A_IN(data_a_in_scalar_multiplier),
+    .DATA_B_IN(data_b_in_scalar_multiplier),
+    .DATA_OUT(data_out_scalar_multiplier)
   );
 
 endmodule

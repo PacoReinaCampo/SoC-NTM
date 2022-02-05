@@ -37,7 +37,7 @@
 // Author(s):
 //   Paco Reina Campo <pacoreinacampo@queenfield.tech>
 
-module dnc_read_strengths #(
+module ntm_state_top #(
   parameter DATA_SIZE=128,
   parameter CONTROL_SIZE=64
 )
@@ -48,15 +48,41 @@ module dnc_read_strengths #(
 
     // CONTROL
     input START,
-    output READY,
+    output reg READY,
 
-    input BETA_IN_ENABLE,  // for i in 0 to R-1
-    output BETA_OUT_ENABLE,  // for i in 0 to R-1
+    input DATA_A_IN_I_ENABLE,
+    input DATA_A_IN_J_ENABLE,
+    input DATA_B_IN_I_ENABLE,
+    input DATA_B_IN_J_ENABLE,
+    input DATA_C_IN_I_ENABLE,
+    input DATA_C_IN_J_ENABLE,
+    input DATA_D_IN_I_ENABLE,
+    input DATA_D_IN_J_ENABLE,
+
+    input DATA_U_IN_ENABLE,
+
+    output reg DATA_X_OUT_ENABLE,
+    output reg DATA_Y_OUT_ENABLE,
 
     // DATA
-    input [DATA_SIZE-1:0] SIZE_R_IN,
-    input [DATA_SIZE-1:0] BETA_IN,
-    output [DATA_SIZE-1:0] BETA_OUT
+    input [DATA_SIZE-1:0] SIZE_A_I_IN,
+    input [DATA_SIZE-1:0] SIZE_A_J_IN,
+    input [DATA_SIZE-1:0] SIZE_B_I_IN,
+    input [DATA_SIZE-1:0] SIZE_B_J_IN,
+    input [DATA_SIZE-1:0] SIZE_C_I_IN,
+    input [DATA_SIZE-1:0] SIZE_C_J_IN,
+    input [DATA_SIZE-1:0] SIZE_D_I_IN,
+    input [DATA_SIZE-1:0] SIZE_D_J_IN,
+
+    input [DATA_SIZE-1:0] DATA_A_IN,
+    input [DATA_SIZE-1:0] DATA_B_IN,
+    input [DATA_SIZE-1:0] DATA_C_IN,
+    input [DATA_SIZE-1:0] DATA_D_IN,
+
+    input [DATA_SIZE-1:0] DATA_U_IN,
+
+    output reg [DATA_SIZE-1:0] DATA_X_OUT,
+    output reg [DATA_SIZE-1:0] DATA_Y_OUT
   );
 
   ///////////////////////////////////////////////////////////////////////
@@ -86,57 +112,18 @@ module dnc_read_strengths #(
   // Signals
   ///////////////////////////////////////////////////////////////////////
 
-  // VECTOR ONE_CONTROLPLUS
-  // CONTROL
-  wire start_vector_oneplus;
-  wire ready_vector_oneplus;
-  wire data_in_enable_vector_oneplus;
-  wire data_out_enable_vector_oneplus;
-
-  // DATA
-  wire [DATA_SIZE-1:0] size_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_out_vector_oneplus;
-
   ///////////////////////////////////////////////////////////////////////
   // Body
   ///////////////////////////////////////////////////////////////////////
 
-  // beta(t;i) = oneplus(beta^(t;i))
+  // u(k) = -K·y(k) + r(k)
 
-  // ASSIGNATIONS
+  // x(k+1) = a·x(k) + b·r(k)
+  // y(k) = c·x(k) + d·r(k)
+
+  // x(k) = exp(a,k)·x(0) + summation(exp(a,k-j-1)·b·u(j))[j in 0 to k-1]
+  // y(k) = c·exp(a,k)·x(0) + summation(c·exp(a,k-j)·b·u(j))[j in 0 to k-1] + d·u(k)
+
   // CONTROL
-  assign start_vector_oneplus = START;
-  assign READY = ready_vector_oneplus;
-  assign data_in_enable_vector_oneplus = BETA_IN_ENABLE;
-  assign BETA_OUT_ENABLE = data_out_enable_vector_oneplus;
-
-  // DATA
-  assign size_in_vector_oneplus = SIZE_R_IN;
-  assign data_in_vector_oneplus = BETA_IN;
-  assign BETA_OUT = data_out_vector_oneplus;
-
-  // VECTOR ONE_CONTROLPLUS
-  ntm_vector_oneplus_function #(
-    .DATA_SIZE(DATA_SIZE),
-    .CONTROL_SIZE(CONTROL_SIZE)
-  )
-  vector_oneplus_function(
-    // GLOBAL
-    .CLK(CLK),
-    .RST(RST),
-
-    // CONTROL
-    .START(start_vector_oneplus),
-    .READY(ready_vector_oneplus),
-
-    .DATA_IN_ENABLE(data_in_enable_vector_oneplus),
-    .DATA_OUT_ENABLE(data_out_enable_vector_oneplus),
-
-    // DATA
-    .SIZE_IN(size_in_vector_oneplus),
-    .DATA_IN(data_in_vector_oneplus),
-    .DATA_OUT(data_out_vector_oneplus)
-  );
 
 endmodule

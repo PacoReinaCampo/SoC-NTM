@@ -37,7 +37,7 @@
 // Author(s):
 //   Paco Reina Campo <pacoreinacampo@queenfield.tech>
 
-module dnc_read_strengths #(
+module ntm_matrix_convolution #(
   parameter DATA_SIZE=128,
   parameter CONTROL_SIZE=64
 )
@@ -48,15 +48,21 @@ module dnc_read_strengths #(
 
     // CONTROL
     input START,
-    output READY,
+    output reg READY,
 
-    input BETA_IN_ENABLE,  // for i in 0 to R-1
-    output BETA_OUT_ENABLE,  // for i in 0 to R-1
+    input DATA_A_IN_VECTOR_ENABLE,
+    input DATA_A_IN_SCALAR_ENABLE,
+    input DATA_B_IN_VECTOR_ENABLE,
+    input DATA_B_IN_SCALAR_ENABLE,
+    output reg DATA_OUT_VECTOR_ENABLE,
+    output reg DATA_OUT_SCALAR_ENABLE,
 
     // DATA
-    input [DATA_SIZE-1:0] SIZE_R_IN,
-    input [DATA_SIZE-1:0] BETA_IN,
-    output [DATA_SIZE-1:0] BETA_OUT
+    input [DATA_SIZE-1:0] SIZE_IN,
+    input [DATA_SIZE-1:0] LENGTH_IN,
+    input [DATA_SIZE-1:0] DATA_A_IN,
+    input [DATA_SIZE-1:0] DATA_B_IN,
+    output reg [DATA_SIZE-1:0] DATA_OUT
   );
 
   ///////////////////////////////////////////////////////////////////////
@@ -67,76 +73,74 @@ module dnc_read_strengths #(
   // Constants
   ///////////////////////////////////////////////////////////////////////
 
-  parameter ZERO_CONTROL  = 0;
-  parameter ONE_CONTROL   = 1;
-  parameter TWO_CONTROL   = 2;
-  parameter THREE_CONTROL = 3;
-
-  parameter ZERO_DATA  = 0;
-  parameter ONE_DATA   = 1;
-  parameter TWO_DATA   = 2;
-  parameter THREE_DATA = 3;
-
-  parameter FULL  = 1;
-  parameter EMPTY = 0;
-
-  parameter EULER = 0;
-
   ///////////////////////////////////////////////////////////////////////
   // Signals
   ///////////////////////////////////////////////////////////////////////
 
-  // VECTOR ONE_CONTROLPLUS
+  // SCALAR ADDER
   // CONTROL
-  wire start_vector_oneplus;
-  wire ready_vector_oneplus;
-  wire data_in_enable_vector_oneplus;
-  wire data_out_enable_vector_oneplus;
+  wire start_scalar_adder;
+  wire ready_scalar_adder;
+  wire operation_scalar_adder;
 
   // DATA
-  wire [DATA_SIZE-1:0] size_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_in_vector_oneplus;
-  wire [DATA_SIZE-1:0] data_out_vector_oneplus;
+  wire [DATA_SIZE-1:0] data_a_in_scalar_adder;
+  wire [DATA_SIZE-1:0] data_b_in_scalar_adder;
+  wire [DATA_SIZE-1:0] data_out_scalar_adder;
+
+  // SCALAR MULTIPLIER
+  // CONTROL
+  wire start_scalar_multiplier;
+  wire ready_scalar_multiplier;
+
+  // DATA
+  wire [DATA_SIZE-1:0] data_a_in_scalar_multiplier;
+  wire [DATA_SIZE-1:0] data_b_in_scalar_multiplier;
+  wire [DATA_SIZE-1:0] data_out_scalar_multiplier;
 
   ///////////////////////////////////////////////////////////////////////
   // Body
   ///////////////////////////////////////////////////////////////////////
 
-  // beta(t;i) = oneplus(beta^(t;i))
-
-  // ASSIGNATIONS
-  // CONTROL
-  assign start_vector_oneplus = START;
-  assign READY = ready_vector_oneplus;
-  assign data_in_enable_vector_oneplus = BETA_IN_ENABLE;
-  assign BETA_OUT_ENABLE = data_out_enable_vector_oneplus;
-
-  // DATA
-  assign size_in_vector_oneplus = SIZE_R_IN;
-  assign data_in_vector_oneplus = BETA_IN;
-  assign BETA_OUT = data_out_vector_oneplus;
-
-  // VECTOR ONE_CONTROLPLUS
-  ntm_vector_oneplus_function #(
+  // SCALAR ADDER
+  ntm_scalar_adder #(
     .DATA_SIZE(DATA_SIZE),
     .CONTROL_SIZE(CONTROL_SIZE)
   )
-  vector_oneplus_function(
+  ntm_scalar_adder_i(
+    // GLOBAL
+    .CLK(CLK),
+    .RST(RST),
+    // CONTROL
+    .START(start_scalar_adder),
+    .READY(ready_scalar_adder),
+
+    .OPERATION(operation_scalar_adder),
+
+    // DATA
+    .DATA_A_IN(data_a_in_scalar_adder),
+    .DATA_B_IN(data_b_in_scalar_adder),
+    .DATA_OUT(data_out_scalar_adder)
+  );
+
+  // SCALAR MULTIPLIER
+  ntm_scalar_multiplier #(
+    .DATA_SIZE(DATA_SIZE),
+    .CONTROL_SIZE(CONTROL_SIZE)
+  )
+  ntm_scalar_multiplier_i(
     // GLOBAL
     .CLK(CLK),
     .RST(RST),
 
     // CONTROL
-    .START(start_vector_oneplus),
-    .READY(ready_vector_oneplus),
-
-    .DATA_IN_ENABLE(data_in_enable_vector_oneplus),
-    .DATA_OUT_ENABLE(data_out_enable_vector_oneplus),
+    .START(start_scalar_multiplier),
+    .READY(ready_scalar_multiplier),
 
     // DATA
-    .SIZE_IN(size_in_vector_oneplus),
-    .DATA_IN(data_in_vector_oneplus),
-    .DATA_OUT(data_out_vector_oneplus)
+    .DATA_A_IN(data_a_in_scalar_multiplier),
+    .DATA_B_IN(data_b_in_scalar_multiplier),
+    .DATA_OUT(data_out_scalar_multiplier)
   );
 
 endmodule
