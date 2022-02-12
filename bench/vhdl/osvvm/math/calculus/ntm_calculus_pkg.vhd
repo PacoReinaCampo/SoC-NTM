@@ -83,43 +83,321 @@ package ntm_calculus_pkg is
   constant R : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- i in 0 to R-1
 
   -- INTEGERS
-  constant P_ZERO  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(0, DATA_SIZE));
-  constant P_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(1, DATA_SIZE));
-  constant P_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(2, DATA_SIZE));
-  constant P_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(3, DATA_SIZE));
-  constant P_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(4, DATA_SIZE));
-  constant P_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(5, DATA_SIZE));
-  constant P_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(6, DATA_SIZE));
-  constant P_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(7, DATA_SIZE));
-  constant P_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(8, DATA_SIZE));
-  constant P_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(9, DATA_SIZE));
+  constant INT_P_ZERO  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(0, DATA_SIZE));
+  constant INT_P_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(1, DATA_SIZE));
+  constant INT_P_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(2, DATA_SIZE));
+  constant INT_P_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(3, DATA_SIZE));
+  constant INT_P_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(4, DATA_SIZE));
+  constant INT_P_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(5, DATA_SIZE));
+  constant INT_P_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(6, DATA_SIZE));
+  constant INT_P_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(7, DATA_SIZE));
+  constant INT_P_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(8, DATA_SIZE));
+  constant INT_P_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(9, DATA_SIZE));
 
-  constant N_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-1, DATA_SIZE));
-  constant N_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-2, DATA_SIZE));
-  constant N_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-3, DATA_SIZE));
-  constant N_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-4, DATA_SIZE));
-  constant N_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-5, DATA_SIZE));
-  constant N_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-6, DATA_SIZE));
-  constant N_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-7, DATA_SIZE));
-  constant N_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-8, DATA_SIZE));
-  constant N_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-9, DATA_SIZE));
+  constant INT_N_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-1, DATA_SIZE));
+  constant INT_N_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-2, DATA_SIZE));
+  constant INT_N_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-3, DATA_SIZE));
+  constant INT_N_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-4, DATA_SIZE));
+  constant INT_N_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-5, DATA_SIZE));
+  constant INT_N_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-6, DATA_SIZE));
+  constant INT_N_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-7, DATA_SIZE));
+  constant INT_N_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-8, DATA_SIZE));
+  constant INT_N_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-9, DATA_SIZE));
+
+  -- FLOATS
+  constant FLOAT_P_ZERO  : std_logic_vector(DATA_SIZE-1 downto 0) := X"00000000";
+  constant FLOAT_P_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := X"3f8ccccd";
+  constant FLOAT_P_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := X"400ccccd";
+  constant FLOAT_P_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := X"40533333";
+  constant FLOAT_P_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := X"408ccccd";
+  constant FLOAT_P_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := X"40b00000";
+  constant FLOAT_P_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := X"40d33333";
+  constant FLOAT_P_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := X"40f66666";
+  constant FLOAT_P_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := X"410ccccd";
+  constant FLOAT_P_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := X"411e6666";
+  constant FLOAT_P_INF   : std_logic_vector(DATA_SIZE-1 downto 0) := X"7f800000";
+
+  constant FLOAT_N_ZERO  : std_logic_vector(DATA_SIZE-1 downto 0) := X"80000000";
+  constant FLOAT_N_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := X"bf8ccccd";
+  constant FLOAT_N_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := X"c00ccccd";
+  constant FLOAT_N_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := X"c0533333";
+  constant FLOAT_N_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := X"c08ccccd";
+  constant FLOAT_N_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := X"c0b00000";
+  constant FLOAT_N_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := X"c0d33333";
+  constant FLOAT_N_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := X"c0f66666";
+  constant FLOAT_N_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := X"c10ccccd";
+  constant FLOAT_N_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := X"c11e6666";
+  constant FLOAT_N_INF   : std_logic_vector(DATA_SIZE-1 downto 0) := X"ff800000";
 
   -- Buffer
-  constant TENSOR_SAMPLE_A : tensor_buffer := (((P_TWO, P_ONE, P_FOUR), (P_NINE, P_FOUR, P_TWO), (P_ONE, P_ONE, P_TWO)), ((P_EIGHT, P_SIX, P_TWO), (P_EIGHT, P_FIVE, P_TWO), (P_ONE, P_FOUR, P_ONE)), ((P_THREE, P_ONE, P_SIX), (P_FIVE, P_ZERO, P_FOUR), (P_FIVE, P_EIGHT, P_FIVE)));
-  constant TENSOR_SAMPLE_B : tensor_buffer := (((P_ONE, P_THREE, P_ONE), (P_TWO, P_FOUR, P_EIGHT), (P_FOUR, P_ONE, P_TWO)), ((P_NINE, P_ONE, P_FIVE), (P_NINE, P_EIGHT, P_ONE), (P_FIVE, P_EIGHT, P_FOUR)), ((P_FIVE, P_FOUR, P_ONE), (P_THREE, P_FOUR, P_SIX), (P_ONE, P_EIGHT, P_EIGHT)));
+  constant TENSOR_SAMPLE_A : tensor_buffer := (((INT_P_TWO, INT_P_ONE, INT_P_FOUR), (INT_P_NINE, INT_P_FOUR, INT_P_TWO), (INT_P_ONE, INT_P_ONE, INT_P_TWO)), ((INT_P_EIGHT, INT_P_SIX, INT_P_TWO), (INT_P_EIGHT, INT_P_FIVE, INT_P_TWO), (INT_P_ONE, INT_P_FOUR, INT_P_ONE)), ((INT_P_THREE, INT_P_ONE, INT_P_SIX), (INT_P_FIVE, INT_P_ZERO, INT_P_FOUR), (INT_P_FIVE, INT_P_EIGHT, INT_P_FIVE)));
+  constant TENSOR_SAMPLE_B : tensor_buffer := (((INT_P_ONE, INT_P_THREE, INT_P_ONE), (INT_P_TWO, INT_P_FOUR, INT_P_EIGHT), (INT_P_FOUR, INT_P_ONE, INT_P_TWO)), ((INT_P_NINE, INT_P_ONE, INT_P_FIVE), (INT_P_NINE, INT_P_EIGHT, INT_P_ONE), (INT_P_FIVE, INT_P_EIGHT, INT_P_FOUR)), ((INT_P_FIVE, INT_P_FOUR, INT_P_ONE), (INT_P_THREE, INT_P_FOUR, INT_P_SIX), (INT_P_ONE, INT_P_EIGHT, INT_P_EIGHT)));
 
-  constant MATRIX_SAMPLE_A : matrix_buffer := ((P_ONE, P_FOUR, P_ONE), (P_ZERO, P_EIGHT, P_FOUR), (P_FIVE, P_THREE, P_NINE));
-  constant MATRIX_SAMPLE_B : matrix_buffer := ((P_ONE, P_TWO, P_SIX), (P_ONE, P_THREE, P_SIX), (P_EIGHT, P_FOUR, P_FOUR));
+  constant MATRIX_SAMPLE_A : matrix_buffer := ((INT_P_ONE, INT_P_FOUR, INT_P_ONE), (INT_P_ZERO, INT_P_EIGHT, INT_P_FOUR), (INT_P_FIVE, INT_P_THREE, INT_P_NINE));
+  constant MATRIX_SAMPLE_B : matrix_buffer := ((INT_P_ONE, INT_P_TWO, INT_P_SIX), (INT_P_ONE, INT_P_THREE, INT_P_SIX), (INT_P_EIGHT, INT_P_FOUR, INT_P_FOUR));
 
-  constant VECTOR_SAMPLE_A : vector_buffer := (P_FOUR, P_SEVEN, N_THREE);
-  constant VECTOR_SAMPLE_B : vector_buffer := (P_THREE, N_NINE, N_ONE);
+  constant VECTOR_SAMPLE_A : vector_buffer := (INT_P_FOUR, INT_P_SEVEN, INT_N_THREE);
+  constant VECTOR_SAMPLE_B : vector_buffer := (INT_P_THREE, INT_N_NINE, INT_N_ONE);
 
-  constant SCALAR_SAMPLE_A : std_logic_vector(DATA_SIZE-1 downto 0) := P_NINE;
-  constant SCALAR_SAMPLE_B : std_logic_vector(DATA_SIZE-1 downto 0) := N_FOUR;
+  constant SCALAR_SAMPLE_A : std_logic_vector(DATA_SIZE-1 downto 0) := INT_P_NINE;
+  constant SCALAR_SAMPLE_B : std_logic_vector(DATA_SIZE-1 downto 0) := INT_N_FOUR;
+
+  -- VECTOR-FUNCTIONALITY
+  signal STIMULUS_NTM_VECTOR_DIFFERENTIATION_TEST : boolean := false;
+  signal STIMULUS_NTM_VECTOR_INTEGRATION_TEST     : boolean := false;
+  signal STIMULUS_NTM_VECTOR_SOFTMAX_TEST         : boolean := false;
+
+  signal STIMULUS_NTM_VECTOR_DIFFERENTIATION_CASE_0 : boolean := false;
+  signal STIMULUS_NTM_VECTOR_INTEGRATION_CASE_0     : boolean := false;
+  signal STIMULUS_NTM_VECTOR_SOFTMAX_CASE_0         : boolean := false;
+
+  signal STIMULUS_NTM_VECTOR_DIFFERENTIATION_CASE_1 : boolean := false;
+  signal STIMULUS_NTM_VECTOR_INTEGRATION_CASE_1     : boolean := false;
+  signal STIMULUS_NTM_VECTOR_SOFTMAX_CASE_1         : boolean := false;
+
+  -- MATRIX-FUNCTIONALITY
+  signal STIMULUS_NTM_MATRIX_DIFFERENTIATION_TEST : boolean := false;
+  signal STIMULUS_NTM_MATRIX_INTEGRATION_TEST     : boolean := false;
+  signal STIMULUS_NTM_MATRIX_SOFTMAX_TEST         : boolean := false;
+
+  signal STIMULUS_NTM_MATRIX_DIFFERENTIATION_CASE_0 : boolean := false;
+  signal STIMULUS_NTM_MATRIX_INTEGRATION_CASE_0     : boolean := false;
+  signal STIMULUS_NTM_MATRIX_SOFTMAX_CASE_0         : boolean := false;
+
+  signal STIMULUS_NTM_MATRIX_DIFFERENTIATION_CASE_1 : boolean := false;
+  signal STIMULUS_NTM_MATRIX_INTEGRATION_CASE_1     : boolean := false;
+  signal STIMULUS_NTM_MATRIX_SOFTMAX_CASE_1         : boolean := false;
+
+
+  -- TENSOR-FUNCTIONALITY
+  signal STIMULUS_NTM_TENSOR_DIFFERENTIATION_TEST : boolean := false;
+  signal STIMULUS_NTM_TENSOR_INTEGRATION_TEST     : boolean := false;
+  signal STIMULUS_NTM_TENSOR_SOFTMAX_TEST         : boolean := false;
+
+  signal STIMULUS_NTM_TENSOR_DIFFERENTIATION_CASE_0 : boolean := false;
+  signal STIMULUS_NTM_TENSOR_INTEGRATION_CASE_0     : boolean := false;
+  signal STIMULUS_NTM_TENSOR_SOFTMAX_CASE_0         : boolean := false;
+
+  signal STIMULUS_NTM_TENSOR_DIFFERENTIATION_CASE_1 : boolean := false;
+  signal STIMULUS_NTM_TENSOR_INTEGRATION_CASE_1     : boolean := false;
+  signal STIMULUS_NTM_TENSOR_SOFTMAX_CASE_1         : boolean := false;
 
   -----------------------------------------------------------------------
   -- Components
   -----------------------------------------------------------------------
+
+  component ntm_calculus_stimulus is
+    generic (
+      -- SYSTEM-SIZE
+      DATA_SIZE    : integer := 128;
+      CONTROL_SIZE : integer := 64;
+
+      X : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- x in 0 to X-1
+      Y : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- y in 0 to Y-1
+      N : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- j in 0 to N-1
+      W : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- k in 0 to W-1
+      L : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- l in 0 to L-1
+      R : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE))  -- i in 0 to R-1
+      );
+    port (
+      -- GLOBAL
+      CLK : out std_logic;
+      RST : out std_logic;
+
+      -- VECTOR DIFFERENTIATION
+      -- CONTROL
+      VECTOR_DIFFERENTIATION_START : out std_logic;
+      VECTOR_DIFFERENTIATION_READY : in  std_logic;
+
+      VECTOR_DIFFERENTIATION_DATA_IN_ENABLE : out std_logic;
+
+      VECTOR_DIFFERENTIATION_DATA_ENABLE : in std_logic;
+
+      VECTOR_DIFFERENTIATION_DATA_OUT_ENABLE : in std_logic;
+
+      -- DATA
+      VECTOR_DIFFERENTIATION_SIZE_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      VECTOR_DIFFERENTIATION_LENGTH_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_DIFFERENTIATION_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_DIFFERENTIATION_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- VECTOR INTEGRATION
+      -- CONTROL
+      VECTOR_INTEGRATION_START : out std_logic;
+      VECTOR_INTEGRATION_READY : in  std_logic;
+
+      VECTOR_INTEGRATION_DATA_IN_ENABLE : out std_logic;
+
+      VECTOR_INTEGRATION_DATA_ENABLE : in std_logic;
+
+      VECTOR_INTEGRATION_DATA_OUT_ENABLE : in std_logic;
+
+      -- DATA
+      VECTOR_INTEGRATION_SIZE_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      VECTOR_INTEGRATION_LENGTH_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_INTEGRATION_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_INTEGRATION_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- VECTOR SOFTMAX
+      -- CONTROL
+      VECTOR_SOFTMAX_START : out std_logic;
+      VECTOR_SOFTMAX_READY : in  std_logic;
+
+      VECTOR_SOFTMAX_DATA_IN_ENABLE : out std_logic;
+
+      VECTOR_SOFTMAX_DATA_ENABLE : in std_logic;
+
+      VECTOR_SOFTMAX_DATA_OUT_ENABLE : in std_logic;
+
+      -- DATA
+      VECTOR_SOFTMAX_SIZE_IN  : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      VECTOR_SOFTMAX_DATA_IN  : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_SOFTMAX_DATA_OUT : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- MATRIX DIFFERENTIATION
+      -- CONTROL
+      MATRIX_DIFFERENTIATION_START : out std_logic;
+      MATRIX_DIFFERENTIATION_READY : in  std_logic;
+
+      MATRIX_DIFFERENTIATION_CONTROL : out std_logic;
+
+      MATRIX_DIFFERENTIATION_DATA_IN_I_ENABLE : out std_logic;
+      MATRIX_DIFFERENTIATION_DATA_IN_J_ENABLE : out std_logic;
+
+      MATRIX_DIFFERENTIATION_DATA_I_ENABLE : in std_logic;
+      MATRIX_DIFFERENTIATION_DATA_J_ENABLE : in std_logic;
+
+      MATRIX_DIFFERENTIATION_DATA_OUT_I_ENABLE : in std_logic;
+      MATRIX_DIFFERENTIATION_DATA_OUT_J_ENABLE : in std_logic;
+
+      -- DATA
+      MATRIX_DIFFERENTIATION_SIZE_I_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_DIFFERENTIATION_SIZE_J_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_DIFFERENTIATION_LENGTH_I_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_DIFFERENTIATION_LENGTH_J_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_DIFFERENTIATION_DATA_IN     : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_DIFFERENTIATION_DATA_OUT    : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- MATRIX INTEGRATION
+      -- CONTROL
+      MATRIX_INTEGRATION_START : out std_logic;
+      MATRIX_INTEGRATION_READY : in  std_logic;
+
+      MATRIX_INTEGRATION_DATA_IN_I_ENABLE : out std_logic;
+      MATRIX_INTEGRATION_DATA_IN_J_ENABLE : out std_logic;
+
+      MATRIX_INTEGRATION_DATA_I_ENABLE : in std_logic;
+      MATRIX_INTEGRATION_DATA_J_ENABLE : in std_logic;
+
+      MATRIX_INTEGRATION_DATA_OUT_I_ENABLE : in std_logic;
+      MATRIX_INTEGRATION_DATA_OUT_J_ENABLE : in std_logic;
+
+      -- DATA
+      MATRIX_INTEGRATION_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_INTEGRATION_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_INTEGRATION_LENGTH_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_INTEGRATION_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_INTEGRATION_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- MATRIX SOFTMAX
+      -- CONTROL
+      MATRIX_SOFTMAX_START : out std_logic;
+      MATRIX_SOFTMAX_READY : in  std_logic;
+
+      MATRIX_SOFTMAX_DATA_IN_I_ENABLE : out std_logic;
+      MATRIX_SOFTMAX_DATA_IN_J_ENABLE : out std_logic;
+
+      MATRIX_SOFTMAX_DATA_I_ENABLE : in std_logic;
+      MATRIX_SOFTMAX_DATA_J_ENABLE : in std_logic;
+
+      MATRIX_SOFTMAX_DATA_OUT_I_ENABLE : in std_logic;
+      MATRIX_SOFTMAX_DATA_OUT_J_ENABLE : in std_logic;
+
+      -- DATA
+      MATRIX_SOFTMAX_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_SOFTMAX_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_SOFTMAX_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_SOFTMAX_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- TENSOR DIFFERENTIATION
+      -- CONTROL
+      TENSOR_DIFFERENTIATION_START : out std_logic;
+      TENSOR_DIFFERENTIATION_READY : in  std_logic;
+
+      TENSOR_DIFFERENTIATION_CONTROL : out std_logic_vector(1 downto 0);
+
+      TENSOR_DIFFERENTIATION_DATA_IN_I_ENABLE : out std_logic;
+      TENSOR_DIFFERENTIATION_DATA_IN_J_ENABLE : out std_logic;
+      TENSOR_DIFFERENTIATION_DATA_IN_K_ENABLE : out std_logic;
+
+      TENSOR_DIFFERENTIATION_DATA_I_ENABLE : in std_logic;
+      TENSOR_DIFFERENTIATION_DATA_J_ENABLE : in std_logic;
+      TENSOR_DIFFERENTIATION_DATA_K_ENABLE : in std_logic;
+
+      TENSOR_DIFFERENTIATION_DATA_OUT_I_ENABLE : in std_logic;
+      TENSOR_DIFFERENTIATION_DATA_OUT_J_ENABLE : in std_logic;
+      TENSOR_DIFFERENTIATION_DATA_OUT_K_ENABLE : in std_logic;
+
+      -- DATA
+      TENSOR_DIFFERENTIATION_SIZE_I_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_DIFFERENTIATION_SIZE_J_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_DIFFERENTIATION_SIZE_K_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_DIFFERENTIATION_LENGTH_I_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_DIFFERENTIATION_LENGTH_J_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_DIFFERENTIATION_LENGTH_K_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_DIFFERENTIATION_DATA_IN     : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_DIFFERENTIATION_DATA_OUT    : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- TENSOR INTEGRATION
+      -- CONTROL
+      TENSOR_INTEGRATION_START : out std_logic;
+      TENSOR_INTEGRATION_READY : in  std_logic;
+
+      TENSOR_INTEGRATION_DATA_IN_I_ENABLE : out std_logic;
+      TENSOR_INTEGRATION_DATA_IN_J_ENABLE : out std_logic;
+      TENSOR_INTEGRATION_DATA_IN_K_ENABLE : out std_logic;
+
+      TENSOR_INTEGRATION_DATA_I_ENABLE : in std_logic;
+      TENSOR_INTEGRATION_DATA_J_ENABLE : in std_logic;
+      TENSOR_INTEGRATION_DATA_K_ENABLE : in std_logic;
+
+      TENSOR_INTEGRATION_DATA_OUT_I_ENABLE : in std_logic;
+      TENSOR_INTEGRATION_DATA_OUT_J_ENABLE : in std_logic;
+      TENSOR_INTEGRATION_DATA_OUT_K_ENABLE : in std_logic;
+
+      -- DATA
+      TENSOR_INTEGRATION_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_INTEGRATION_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_INTEGRATION_SIZE_K_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_INTEGRATION_LENGTH_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_INTEGRATION_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_INTEGRATION_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- TENSOR SOFTMAX
+      -- CONTROL
+      TENSOR_SOFTMAX_START : out std_logic;
+      TENSOR_SOFTMAX_READY : in  std_logic;
+
+      TENSOR_SOFTMAX_DATA_IN_I_ENABLE : out std_logic;
+      TENSOR_SOFTMAX_DATA_IN_J_ENABLE : out std_logic;
+      TENSOR_SOFTMAX_DATA_IN_K_ENABLE : out std_logic;
+
+      TENSOR_SOFTMAX_DATA_I_ENABLE : in std_logic;
+      TENSOR_SOFTMAX_DATA_J_ENABLE : in std_logic;
+      TENSOR_SOFTMAX_DATA_K_ENABLE : in std_logic;
+
+      TENSOR_SOFTMAX_DATA_OUT_I_ENABLE : in std_logic;
+      TENSOR_SOFTMAX_DATA_OUT_J_ENABLE : in std_logic;
+      TENSOR_SOFTMAX_DATA_OUT_K_ENABLE : in std_logic;
+
+      -- DATA
+      TENSOR_SOFTMAX_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_SOFTMAX_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_SOFTMAX_SIZE_K_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_SOFTMAX_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_SOFTMAX_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0)
+      );
+  end component;
 
   -- VECTOR
   component ntm_vector_differentiation is

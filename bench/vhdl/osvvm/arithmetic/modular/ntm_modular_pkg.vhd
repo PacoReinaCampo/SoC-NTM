@@ -85,43 +85,452 @@ package ntm_modular_pkg is
   constant R : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- i in 0 to R-1
 
   -- INTEGERS
-  constant P_ZERO  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(0, DATA_SIZE));
-  constant P_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(1, DATA_SIZE));
-  constant P_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(2, DATA_SIZE));
-  constant P_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(3, DATA_SIZE));
-  constant P_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(4, DATA_SIZE));
-  constant P_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(5, DATA_SIZE));
-  constant P_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(6, DATA_SIZE));
-  constant P_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(7, DATA_SIZE));
-  constant P_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(8, DATA_SIZE));
-  constant P_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(9, DATA_SIZE));
+  constant INT_P_ZERO  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(0, DATA_SIZE));
+  constant INT_P_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(1, DATA_SIZE));
+  constant INT_P_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(2, DATA_SIZE));
+  constant INT_P_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(3, DATA_SIZE));
+  constant INT_P_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(4, DATA_SIZE));
+  constant INT_P_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(5, DATA_SIZE));
+  constant INT_P_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(6, DATA_SIZE));
+  constant INT_P_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(7, DATA_SIZE));
+  constant INT_P_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(8, DATA_SIZE));
+  constant INT_P_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(9, DATA_SIZE));
 
-  constant N_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-1, DATA_SIZE));
-  constant N_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-2, DATA_SIZE));
-  constant N_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-3, DATA_SIZE));
-  constant N_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-4, DATA_SIZE));
-  constant N_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-5, DATA_SIZE));
-  constant N_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-6, DATA_SIZE));
-  constant N_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-7, DATA_SIZE));
-  constant N_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-8, DATA_SIZE));
-  constant N_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-9, DATA_SIZE));
+  constant INT_N_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-1, DATA_SIZE));
+  constant INT_N_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-2, DATA_SIZE));
+  constant INT_N_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-3, DATA_SIZE));
+  constant INT_N_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-4, DATA_SIZE));
+  constant INT_N_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-5, DATA_SIZE));
+  constant INT_N_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-6, DATA_SIZE));
+  constant INT_N_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-7, DATA_SIZE));
+  constant INT_N_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-8, DATA_SIZE));
+  constant INT_N_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_signed(-9, DATA_SIZE));
+
+  -- FLOATS
+  constant FLOAT_P_ZERO  : std_logic_vector(DATA_SIZE-1 downto 0) := X"00000000";
+  constant FLOAT_P_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := X"3f8ccccd";
+  constant FLOAT_P_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := X"400ccccd";
+  constant FLOAT_P_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := X"40533333";
+  constant FLOAT_P_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := X"408ccccd";
+  constant FLOAT_P_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := X"40b00000";
+  constant FLOAT_P_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := X"40d33333";
+  constant FLOAT_P_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := X"40f66666";
+  constant FLOAT_P_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := X"410ccccd";
+  constant FLOAT_P_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := X"411e6666";
+  constant FLOAT_P_INF   : std_logic_vector(DATA_SIZE-1 downto 0) := X"7f800000";
+
+  constant FLOAT_N_ZERO  : std_logic_vector(DATA_SIZE-1 downto 0) := X"80000000";
+  constant FLOAT_N_ONE   : std_logic_vector(DATA_SIZE-1 downto 0) := X"bf8ccccd";
+  constant FLOAT_N_TWO   : std_logic_vector(DATA_SIZE-1 downto 0) := X"c00ccccd";
+  constant FLOAT_N_THREE : std_logic_vector(DATA_SIZE-1 downto 0) := X"c0533333";
+  constant FLOAT_N_FOUR  : std_logic_vector(DATA_SIZE-1 downto 0) := X"c08ccccd";
+  constant FLOAT_N_FIVE  : std_logic_vector(DATA_SIZE-1 downto 0) := X"c0b00000";
+  constant FLOAT_N_SIX   : std_logic_vector(DATA_SIZE-1 downto 0) := X"c0d33333";
+  constant FLOAT_N_SEVEN : std_logic_vector(DATA_SIZE-1 downto 0) := X"c0f66666";
+  constant FLOAT_N_EIGHT : std_logic_vector(DATA_SIZE-1 downto 0) := X"c10ccccd";
+  constant FLOAT_N_NINE  : std_logic_vector(DATA_SIZE-1 downto 0) := X"c11e6666";
+  constant FLOAT_N_INF   : std_logic_vector(DATA_SIZE-1 downto 0) := X"ff800000";
 
   -- Buffer
-  constant TENSOR_SAMPLE_A : tensor_buffer := (((P_TWO, P_ONE, P_FOUR), (P_NINE, P_FOUR, P_TWO), (P_ONE, P_ONE, P_TWO)), ((P_EIGHT, P_SIX, P_TWO), (P_EIGHT, P_FIVE, P_TWO), (P_ONE, P_FOUR, P_ONE)), ((P_THREE, P_ONE, P_SIX), (P_FIVE, P_ZERO, P_FOUR), (P_FIVE, P_EIGHT, P_FIVE)));
-  constant TENSOR_SAMPLE_B : tensor_buffer := (((P_ONE, P_THREE, P_ONE), (P_TWO, P_FOUR, P_EIGHT), (P_FOUR, P_ONE, P_TWO)), ((P_NINE, P_ONE, P_FIVE), (P_NINE, P_EIGHT, P_ONE), (P_FIVE, P_EIGHT, P_FOUR)), ((P_FIVE, P_FOUR, P_ONE), (P_THREE, P_FOUR, P_SIX), (P_ONE, P_EIGHT, P_EIGHT)));
+  constant TENSOR_SAMPLE_A : tensor_buffer := (((INT_P_TWO, INT_P_ONE, INT_P_FOUR), (INT_P_NINE, INT_P_FOUR, INT_P_TWO), (INT_P_ONE, INT_P_ONE, INT_P_TWO)), ((INT_P_EIGHT, INT_P_SIX, INT_P_TWO), (INT_P_EIGHT, INT_P_FIVE, INT_P_TWO), (INT_P_ONE, INT_P_FOUR, INT_P_ONE)), ((INT_P_THREE, INT_P_ONE, INT_P_SIX), (INT_P_FIVE, INT_P_ZERO, INT_P_FOUR), (INT_P_FIVE, INT_P_EIGHT, INT_P_FIVE)));
+  constant TENSOR_SAMPLE_B : tensor_buffer := (((INT_P_ONE, INT_P_THREE, INT_P_ONE), (INT_P_TWO, INT_P_FOUR, INT_P_EIGHT), (INT_P_FOUR, INT_P_ONE, INT_P_TWO)), ((INT_P_NINE, INT_P_ONE, INT_P_FIVE), (INT_P_NINE, INT_P_EIGHT, INT_P_ONE), (INT_P_FIVE, INT_P_EIGHT, INT_P_FOUR)), ((INT_P_FIVE, INT_P_FOUR, INT_P_ONE), (INT_P_THREE, INT_P_FOUR, INT_P_SIX), (INT_P_ONE, INT_P_EIGHT, INT_P_EIGHT)));
 
-  constant MATRIX_SAMPLE_A : matrix_buffer := ((P_ONE, P_FOUR, P_ONE), (P_ZERO, P_EIGHT, P_FOUR), (P_FIVE, P_THREE, P_NINE));
-  constant MATRIX_SAMPLE_B : matrix_buffer := ((P_ONE, P_TWO, P_SIX), (P_ONE, P_THREE, P_SIX), (P_EIGHT, P_FOUR, P_FOUR));
+  constant MATRIX_SAMPLE_A : matrix_buffer := ((INT_P_ONE, INT_P_FOUR, INT_P_ONE), (INT_P_ZERO, INT_P_EIGHT, INT_P_FOUR), (INT_P_FIVE, INT_P_THREE, INT_P_NINE));
+  constant MATRIX_SAMPLE_B : matrix_buffer := ((INT_P_ONE, INT_P_TWO, INT_P_SIX), (INT_P_ONE, INT_P_THREE, INT_P_SIX), (INT_P_EIGHT, INT_P_FOUR, INT_P_FOUR));
 
-  constant VECTOR_SAMPLE_A : vector_buffer := (P_FOUR, P_SEVEN, P_THREE);
-  constant VECTOR_SAMPLE_B : vector_buffer := (P_THREE, P_NINE, P_ONE);
+  constant VECTOR_SAMPLE_A : vector_buffer := (INT_P_FOUR, INT_P_SEVEN, INT_N_THREE);
+  constant VECTOR_SAMPLE_B : vector_buffer := (INT_P_THREE, INT_N_NINE, INT_N_ONE);
 
-  constant SCALAR_SAMPLE_A : std_logic_vector(DATA_SIZE-1 downto 0) := P_NINE;
-  constant SCALAR_SAMPLE_B : std_logic_vector(DATA_SIZE-1 downto 0) := P_FOUR;
+  constant SCALAR_SAMPLE_A : std_logic_vector(DATA_SIZE-1 downto 0) := INT_P_NINE;
+  constant SCALAR_SAMPLE_B : std_logic_vector(DATA_SIZE-1 downto 0) := INT_N_FOUR;
+
+  -- SCALAR-FUNCTIONALITY
+  signal STIMULUS_NTM_SCALAR_MODULAR_MOD_TEST        : boolean := false;
+  signal STIMULUS_NTM_SCALAR_MODULAR_ADDER_TEST      : boolean := false;
+  signal STIMULUS_NTM_SCALAR_MODULAR_MULTIPLIER_TEST : boolean := false;
+  signal STIMULUS_NTM_SCALAR_MODULAR_INVERTER_TEST   : boolean := false;
+
+  signal STIMULUS_NTM_SCALAR_MODULAR_MOD_CASE_0        : boolean := false;
+  signal STIMULUS_NTM_SCALAR_MODULAR_ADDER_CASE_0      : boolean := false;
+  signal STIMULUS_NTM_SCALAR_MODULAR_MULTIPLIER_CASE_0 : boolean := false;
+  signal STIMULUS_NTM_SCALAR_MODULAR_INVERTER_CASE_0   : boolean := false;
+
+  signal STIMULUS_NTM_SCALAR_MODULAR_MOD_CASE_1        : boolean := false;
+  signal STIMULUS_NTM_SCALAR_MODULAR_ADDER_CASE_1      : boolean := false;
+  signal STIMULUS_NTM_SCALAR_MODULAR_MULTIPLIER_CASE_1 : boolean := false;
+  signal STIMULUS_NTM_SCALAR_MODULAR_INVERTER_CASE_1   : boolean := false;
+
+  -- VECTOR-FUNCTIONALITY
+  signal STIMULUS_NTM_VECTOR_MODULAR_MOD_TEST        : boolean := false;
+  signal STIMULUS_NTM_VECTOR_MODULAR_ADDER_TEST      : boolean := false;
+  signal STIMULUS_NTM_VECTOR_MODULAR_MULTIPLIER_TEST : boolean := false;
+  signal STIMULUS_NTM_VECTOR_MODULAR_INVERTER_TEST   : boolean := false;
+
+  signal STIMULUS_NTM_VECTOR_MODULAR_MOD_CASE_0        : boolean := false;
+  signal STIMULUS_NTM_VECTOR_MODULAR_ADDER_CASE_0      : boolean := false;
+  signal STIMULUS_NTM_VECTOR_MODULAR_MULTIPLIER_CASE_0 : boolean := false;
+  signal STIMULUS_NTM_VECTOR_MODULAR_INVERTER_CASE_0   : boolean := false;
+
+  signal STIMULUS_NTM_VECTOR_MODULAR_MOD_CASE_1        : boolean := false;
+  signal STIMULUS_NTM_VECTOR_MODULAR_ADDER_CASE_1      : boolean := false;
+  signal STIMULUS_NTM_VECTOR_MODULAR_MULTIPLIER_CASE_1 : boolean := false;
+  signal STIMULUS_NTM_VECTOR_MODULAR_INVERTER_CASE_1   : boolean := false;
+
+  -- MATRIX-FUNCTIONALITY
+  signal STIMULUS_NTM_MATRIX_MODULAR_MOD_TEST        : boolean := false;
+  signal STIMULUS_NTM_MATRIX_MODULAR_ADDER_TEST      : boolean := false;
+  signal STIMULUS_NTM_MATRIX_MODULAR_MULTIPLIER_TEST : boolean := false;
+  signal STIMULUS_NTM_MATRIX_MODULAR_INVERTER_TEST   : boolean := false;
+
+  signal STIMULUS_NTM_MATRIX_MODULAR_MOD_CASE_0        : boolean := false;
+  signal STIMULUS_NTM_MATRIX_MODULAR_ADDER_CASE_0      : boolean := false;
+  signal STIMULUS_NTM_MATRIX_MODULAR_MULTIPLIER_CASE_0 : boolean := false;
+  signal STIMULUS_NTM_MATRIX_MODULAR_INVERTER_CASE_0   : boolean := false;
+
+  signal STIMULUS_NTM_MATRIX_MODULAR_MOD_CASE_1        : boolean := false;
+  signal STIMULUS_NTM_MATRIX_MODULAR_ADDER_CASE_1      : boolean := false;
+  signal STIMULUS_NTM_MATRIX_MODULAR_MULTIPLIER_CASE_1 : boolean := false;
+  signal STIMULUS_NTM_MATRIX_MODULAR_INVERTER_CASE_1   : boolean := false;
+
+  -- TENSOR-FUNCTIONALITY
+  signal STIMULUS_NTM_TENSOR_MODULAR_MOD_TEST        : boolean := false;
+  signal STIMULUS_NTM_TENSOR_MODULAR_ADDER_TEST      : boolean := false;
+  signal STIMULUS_NTM_TENSOR_MODULAR_MULTIPLIER_TEST : boolean := false;
+  signal STIMULUS_NTM_TENSOR_MODULAR_INVERTER_TEST   : boolean := false;
+
+  signal STIMULUS_NTM_TENSOR_MODULAR_MOD_CASE_0        : boolean := false;
+  signal STIMULUS_NTM_TENSOR_MODULAR_ADDER_CASE_0      : boolean := false;
+  signal STIMULUS_NTM_TENSOR_MODULAR_MULTIPLIER_CASE_0 : boolean := false;
+  signal STIMULUS_NTM_TENSOR_MODULAR_INVERTER_CASE_0   : boolean := false;
+
+  signal STIMULUS_NTM_TENSOR_MODULAR_MOD_CASE_1        : boolean := false;
+  signal STIMULUS_NTM_TENSOR_MODULAR_ADDER_CASE_1      : boolean := false;
+  signal STIMULUS_NTM_TENSOR_MODULAR_MULTIPLIER_CASE_1 : boolean := false;
+  signal STIMULUS_NTM_TENSOR_MODULAR_INVERTER_CASE_1   : boolean := false;
 
   -----------------------------------------------------------------------
   -- Components
   -----------------------------------------------------------------------
+
+  component ntm_modular_stimulus is
+    generic (
+      -- SYSTEM-SIZE
+      DATA_SIZE    : integer := 128;
+      CONTROL_SIZE : integer := 64;
+
+      X : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- x in 0 to X-1
+      Y : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- y in 0 to Y-1
+      N : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- j in 0 to N-1
+      W : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- k in 0 to W-1
+      L : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE));  -- l in 0 to L-1
+      R : std_logic_vector(DATA_SIZE-1 downto 0) := std_logic_vector(to_unsigned(64, DATA_SIZE))  -- i in 0 to R-1
+      );
+    port (
+      -- GLOBAL
+      CLK : out std_logic;
+      RST : out std_logic;
+
+      -----------------------------------------------------------------------
+      -- STIMULUS SCALAR
+      -----------------------------------------------------------------------
+
+      -- SCALAR MOD
+      -- CONTROL
+      SCALAR_MODULAR_MOD_START : out std_logic;
+      SCALAR_MODULAR_MOD_READY : in  std_logic;
+
+      -- DATA
+      SCALAR_MODULAR_MOD_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_MOD_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_MOD_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- SCALAR ADDER
+      -- CONTROL
+      SCALAR_MODULAR_ADDER_START : out std_logic;
+      SCALAR_MODULAR_ADDER_READY : in  std_logic;
+
+      SCALAR_MODULAR_ADDER_OPERATION : out std_logic;
+
+      -- DATA
+      SCALAR_MODULAR_ADDER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_ADDER_DATA_A_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_ADDER_DATA_B_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_ADDER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- SCALAR MULTIPLIER
+      -- CONTROL
+      SCALAR_MODULAR_MULTIPLIER_START : out std_logic;
+      SCALAR_MODULAR_MULTIPLIER_READY : in  std_logic;
+
+      -- DATA
+      SCALAR_MODULAR_MULTIPLIER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_MULTIPLIER_DATA_A_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_MULTIPLIER_DATA_B_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_MULTIPLIER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- SCALAR INVERTER
+      -- CONTROL
+      SCALAR_MODULAR_INVERTER_START : out std_logic;
+      SCALAR_MODULAR_INVERTER_READY : in  std_logic;
+
+      -- DATA
+      SCALAR_MODULAR_INVERTER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_INVERTER_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      SCALAR_MODULAR_INVERTER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -----------------------------------------------------------------------
+      -- STIMULUS VECTOR
+      -----------------------------------------------------------------------
+
+      -- VECTOR MOD
+      -- CONTROL
+      VECTOR_MODULAR_MOD_START : out std_logic;
+      VECTOR_MODULAR_MOD_READY : in  std_logic;
+
+      VECTOR_MODULAR_MOD_DATA_IN_ENABLE : out std_logic;
+
+      VECTOR_MODULAR_MOD_DATA_OUT_ENABLE : in std_logic;
+
+      -- DATA
+      VECTOR_MODULAR_MOD_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_MOD_SIZE_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      VECTOR_MODULAR_MOD_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_MOD_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- VECTOR ADDER
+      -- CONTROL
+      VECTOR_MODULAR_ADDER_START : out std_logic;
+      VECTOR_MODULAR_ADDER_READY : in  std_logic;
+
+      VECTOR_MODULAR_ADDER_OPERATION : out std_logic;
+
+      VECTOR_MODULAR_ADDER_DATA_A_IN_ENABLE : out std_logic;
+      VECTOR_MODULAR_ADDER_DATA_B_IN_ENABLE : out std_logic;
+
+      VECTOR_MODULAR_ADDER_DATA_OUT_ENABLE : in std_logic;
+
+      -- DATA
+      VECTOR_MODULAR_ADDER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_ADDER_SIZE_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      VECTOR_MODULAR_ADDER_DATA_A_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_ADDER_DATA_B_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_ADDER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- VECTOR MULTIPLIER
+      -- CONTROL
+      VECTOR_MODULAR_MULTIPLIER_START : out std_logic;
+      VECTOR_MODULAR_MULTIPLIER_READY : in  std_logic;
+
+      VECTOR_MODULAR_MULTIPLIER_DATA_A_IN_ENABLE : out std_logic;
+      VECTOR_MODULAR_MULTIPLIER_DATA_B_IN_ENABLE : out std_logic;
+
+      VECTOR_MODULAR_MULTIPLIER_DATA_OUT_ENABLE : in std_logic;
+
+      -- DATA
+      VECTOR_MODULAR_MULTIPLIER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_MULTIPLIER_SIZE_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      VECTOR_MODULAR_MULTIPLIER_DATA_A_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_MULTIPLIER_DATA_B_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_MULTIPLIER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- VECTOR INVERTER
+      -- CONTROL
+      VECTOR_MODULAR_INVERTER_START : out std_logic;
+      VECTOR_MODULAR_INVERTER_READY : in  std_logic;
+
+      VECTOR_MODULAR_INVERTER_DATA_IN_ENABLE : out std_logic;
+
+      VECTOR_MODULAR_INVERTER_DATA_OUT_ENABLE : in std_logic;
+
+      -- DATA
+      VECTOR_MODULAR_INVERTER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_INVERTER_SIZE_IN   : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      VECTOR_MODULAR_INVERTER_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      VECTOR_MODULAR_INVERTER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -----------------------------------------------------------------------
+      -- STIMULUS MATRIX
+      -----------------------------------------------------------------------
+
+      -- MATRIX MOD
+      -- CONTROL
+      MATRIX_MODULAR_MOD_START : out std_logic;
+      MATRIX_MODULAR_MOD_READY : in  std_logic;
+
+      MATRIX_MODULAR_MOD_DATA_IN_I_ENABLE : out std_logic;
+      MATRIX_MODULAR_MOD_DATA_IN_J_ENABLE : out std_logic;
+
+      MATRIX_MODULAR_MOD_DATA_OUT_I_ENABLE : in std_logic;
+      MATRIX_MODULAR_MOD_DATA_OUT_J_ENABLE : in std_logic;
+
+      -- DATA
+      MATRIX_MODULAR_MOD_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_MOD_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_MODULAR_MOD_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_MODULAR_MOD_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_MOD_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- MATRIX ADDER
+      -- CONTROL
+      MATRIX_MODULAR_ADDER_START : out std_logic;
+      MATRIX_MODULAR_ADDER_READY : in  std_logic;
+
+      MATRIX_MODULAR_ADDER_OPERATION : out std_logic;
+
+      MATRIX_MODULAR_ADDER_DATA_A_IN_I_ENABLE : out std_logic;
+      MATRIX_MODULAR_ADDER_DATA_A_IN_J_ENABLE : out std_logic;
+      MATRIX_MODULAR_ADDER_DATA_B_IN_I_ENABLE : out std_logic;
+      MATRIX_MODULAR_ADDER_DATA_B_IN_J_ENABLE : out std_logic;
+
+      MATRIX_MODULAR_ADDER_DATA_OUT_I_ENABLE : in std_logic;
+      MATRIX_MODULAR_ADDER_DATA_OUT_J_ENABLE : in std_logic;
+
+      -- DATA
+      MATRIX_MODULAR_ADDER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_ADDER_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_MODULAR_ADDER_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_MODULAR_ADDER_DATA_A_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_ADDER_DATA_B_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_ADDER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- MATRIX MULTIPLIER
+      -- CONTROL
+      MATRIX_MODULAR_MULTIPLIER_START : out std_logic;
+      MATRIX_MODULAR_MULTIPLIER_READY : in  std_logic;
+
+      MATRIX_MODULAR_MULTIPLIER_DATA_A_IN_I_ENABLE : out std_logic;
+      MATRIX_MODULAR_MULTIPLIER_DATA_A_IN_J_ENABLE : out std_logic;
+      MATRIX_MODULAR_MULTIPLIER_DATA_B_IN_I_ENABLE : out std_logic;
+      MATRIX_MODULAR_MULTIPLIER_DATA_B_IN_J_ENABLE : out std_logic;
+
+      MATRIX_MODULAR_MULTIPLIER_DATA_OUT_I_ENABLE : in std_logic;
+      MATRIX_MODULAR_MULTIPLIER_DATA_OUT_J_ENABLE : in std_logic;
+
+      -- DATA
+      MATRIX_MODULAR_MULTIPLIER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_MULTIPLIER_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_MODULAR_MULTIPLIER_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_MODULAR_MULTIPLIER_DATA_A_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_MULTIPLIER_DATA_B_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_MULTIPLIER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- MATRIX INVERTER
+      -- CONTROL
+      MATRIX_MODULAR_INVERTER_START : out std_logic;
+      MATRIX_MODULAR_INVERTER_READY : in  std_logic;
+
+      MATRIX_MODULAR_INVERTER_DATA_IN_I_ENABLE : out std_logic;
+      MATRIX_MODULAR_INVERTER_DATA_IN_J_ENABLE : out std_logic;
+
+      MATRIX_MODULAR_INVERTER_DATA_OUT_I_ENABLE : in std_logic;
+      MATRIX_MODULAR_INVERTER_DATA_OUT_J_ENABLE : in std_logic;
+
+      -- DATA
+      MATRIX_MODULAR_INVERTER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_INVERTER_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_MODULAR_INVERTER_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      MATRIX_MODULAR_INVERTER_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      MATRIX_MODULAR_INVERTER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -----------------------------------------------------------------------
+      -- STIMULUS TENSOR
+      -----------------------------------------------------------------------
+
+      -- TENSOR MOD
+      -- CONTROL
+      TENSOR_MODULAR_MOD_START : out std_logic;
+      TENSOR_MODULAR_MOD_READY : in  std_logic;
+
+      TENSOR_MODULAR_MOD_DATA_IN_I_ENABLE : out std_logic;
+      TENSOR_MODULAR_MOD_DATA_IN_J_ENABLE : out std_logic;
+      TENSOR_MODULAR_MOD_DATA_IN_K_ENABLE : out std_logic;
+
+      TENSOR_MODULAR_MOD_DATA_OUT_I_ENABLE : in std_logic;
+      TENSOR_MODULAR_MOD_DATA_OUT_J_ENABLE : in std_logic;
+      TENSOR_MODULAR_MOD_DATA_OUT_K_ENABLE : in std_logic;
+
+      -- DATA
+      TENSOR_MODULAR_MOD_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_MOD_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_MOD_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_MOD_SIZE_K_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_MOD_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_MOD_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- TENSOR ADDER
+      -- CONTROL
+      TENSOR_MODULAR_ADDER_START : out std_logic;
+      TENSOR_MODULAR_ADDER_READY : in  std_logic;
+
+      TENSOR_MODULAR_ADDER_OPERATION : out std_logic;
+
+      TENSOR_MODULAR_ADDER_DATA_A_IN_I_ENABLE : out std_logic;
+      TENSOR_MODULAR_ADDER_DATA_A_IN_J_ENABLE : out std_logic;
+      TENSOR_MODULAR_ADDER_DATA_A_IN_K_ENABLE : out std_logic;
+      TENSOR_MODULAR_ADDER_DATA_B_IN_I_ENABLE : out std_logic;
+      TENSOR_MODULAR_ADDER_DATA_B_IN_J_ENABLE : out std_logic;
+      TENSOR_MODULAR_ADDER_DATA_B_IN_K_ENABLE : out std_logic;
+
+      TENSOR_MODULAR_ADDER_DATA_OUT_I_ENABLE : in std_logic;
+      TENSOR_MODULAR_ADDER_DATA_OUT_J_ENABLE : in std_logic;
+      TENSOR_MODULAR_ADDER_DATA_OUT_K_ENABLE : in std_logic;
+
+      -- DATA
+      TENSOR_MODULAR_ADDER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_ADDER_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_ADDER_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_ADDER_SIZE_K_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_ADDER_DATA_A_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_ADDER_DATA_B_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_ADDER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- TENSOR MULTIPLIER
+      -- CONTROL
+      TENSOR_MODULAR_MULTIPLIER_START : out std_logic;
+      TENSOR_MODULAR_MULTIPLIER_READY : in  std_logic;
+
+      TENSOR_MODULAR_MULTIPLIER_DATA_A_IN_I_ENABLE : out std_logic;
+      TENSOR_MODULAR_MULTIPLIER_DATA_A_IN_J_ENABLE : out std_logic;
+      TENSOR_MODULAR_MULTIPLIER_DATA_A_IN_K_ENABLE : out std_logic;
+      TENSOR_MODULAR_MULTIPLIER_DATA_B_IN_I_ENABLE : out std_logic;
+      TENSOR_MODULAR_MULTIPLIER_DATA_B_IN_J_ENABLE : out std_logic;
+      TENSOR_MODULAR_MULTIPLIER_DATA_B_IN_K_ENABLE : out std_logic;
+
+      TENSOR_MODULAR_MULTIPLIER_DATA_OUT_I_ENABLE : in std_logic;
+      TENSOR_MODULAR_MULTIPLIER_DATA_OUT_J_ENABLE : in std_logic;
+      TENSOR_MODULAR_MULTIPLIER_DATA_OUT_K_ENABLE : in std_logic;
+
+      -- DATA
+      TENSOR_MODULAR_MULTIPLIER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_MULTIPLIER_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_MULTIPLIER_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_MULTIPLIER_SIZE_K_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_MULTIPLIER_DATA_A_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_MULTIPLIER_DATA_B_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_MULTIPLIER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+
+      -- TENSOR INVERTER
+      -- CONTROL
+      TENSOR_MODULAR_INVERTER_START : out std_logic;
+      TENSOR_MODULAR_INVERTER_READY : in  std_logic;
+
+      TENSOR_MODULAR_INVERTER_DATA_IN_I_ENABLE : out std_logic;
+      TENSOR_MODULAR_INVERTER_DATA_IN_J_ENABLE : out std_logic;
+      TENSOR_MODULAR_INVERTER_DATA_IN_K_ENABLE : out std_logic;
+
+      TENSOR_MODULAR_INVERTER_DATA_OUT_I_ENABLE : in std_logic;
+      TENSOR_MODULAR_INVERTER_DATA_OUT_J_ENABLE : in std_logic;
+      TENSOR_MODULAR_INVERTER_DATA_OUT_K_ENABLE : in std_logic;
+
+      -- DATA
+      TENSOR_MODULAR_INVERTER_MODULO_IN : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_INVERTER_SIZE_I_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_INVERTER_SIZE_J_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_INVERTER_SIZE_K_IN : out std_logic_vector(CONTROL_SIZE-1 downto 0);
+      TENSOR_MODULAR_INVERTER_DATA_IN   : out std_logic_vector(DATA_SIZE-1 downto 0);
+      TENSOR_MODULAR_INVERTER_DATA_OUT  : in  std_logic_vector(DATA_SIZE-1 downto 0)
+      );
+  end component;
 
   -- SCALAR
   component ntm_scalar_modular_mod is
