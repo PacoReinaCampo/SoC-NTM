@@ -65,6 +65,7 @@ entity dnc_free_gates is
     F_OUT_ENABLE : out std_logic;       -- for i in 0 to R-1
 
     -- DATA
+    SIZE_M_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
 
     F_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
@@ -94,7 +95,9 @@ architecture dnc_free_gates_urchitecture of dnc_free_gates is
   signal free_gates_ctrl_fsm_int : free_gates_ctrl_fsm;
 
   -- Buffer
-  signal vector_xi_int : vector_buffer;
+  signal matrix_rho_int : matrix_buffer;
+
+  signal vector_in_int : vector_buffer;
 
   signal vector_out_int : vector_buffer;
 
@@ -148,14 +151,14 @@ begin
 
           if (F_IN_ENABLE = '1') then
             -- Data Inputs
-            vector_xi_int(to_integer(unsigned(index_i_loop))) <= F_IN;
+            vector_in_int(to_integer(unsigned(index_i_loop))) <= F_IN;
 
             -- Data Internal
             vector_out_int <= function_dnc_free_gates (
-              SIZE_S_IN => SIZE_R_IN,
+              SIZE_M_IN => SIZE_M_IN,
               SIZE_R_IN => SIZE_R_IN,
 
-              vector_xi_input => vector_xi_int
+              matrix_rho_input => matrix_rho_int
               );
 
             -- FSM Control

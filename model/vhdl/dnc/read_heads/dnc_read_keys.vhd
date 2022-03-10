@@ -70,8 +70,9 @@ entity dnc_read_keys is
     K_OUT_K_ENABLE : out std_logic;     -- for k in 0 to W-1
 
     -- DATA
+    SIZE_M_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
-    SIZE_K_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_W_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
 
     K_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
 
@@ -102,9 +103,10 @@ architecture dnc_read_keys_architecture of dnc_read_keys is
   signal read_keys_ctrl_fsm_int : read_keys_ctrl_fsm;
 
   -- Buffer
-  signal matrix_k_int : matrix_buffer;
 
-  signal vector_xi_int : vector_buffer;
+  signal matrix_rho_int : matrix_buffer;
+
+  signal matrix_k_int : matrix_buffer;
 
   signal matrix_out_int : matrix_buffer;
 
@@ -178,11 +180,11 @@ begin
 
             -- Data Internal
             matrix_out_int <= function_dnc_read_keys (
-              SIZE_S_IN => SIZE_R_IN,
+              SIZE_M_IN => SIZE_M_IN,
               SIZE_R_IN => SIZE_R_IN,
-              SIZE_W_IN => SIZE_R_IN,
+              SIZE_W_IN => SIZE_W_IN,
 
-              vector_xi_input => vector_xi_int
+              matrix_rho_input => matrix_rho_int
               );
 
             -- FSM Control
@@ -203,7 +205,7 @@ begin
             matrix_k_int(to_integer(unsigned(index_i_loop)), to_integer(unsigned(index_j_loop))) <= K_IN;
 
             -- FSM Control
-            if (unsigned(index_j_loop) = unsigned(SIZE_K_IN)-unsigned(ONE_CONTROL)) then
+            if (unsigned(index_j_loop) = unsigned(SIZE_W_IN)-unsigned(ONE_CONTROL)) then
               read_keys_ctrl_fsm_int <= CLEAN_I_STATE;
             else
               read_keys_ctrl_fsm_int <= CLEAN_J_STATE;
@@ -217,7 +219,7 @@ begin
 
         when CLEAN_I_STATE =>           -- STEP 3
 
-          if ((unsigned(index_i_loop) = unsigned(SIZE_R_IN)-unsigned(ONE_CONTROL)) and (unsigned(index_j_loop) = unsigned(SIZE_K_IN)-unsigned(ONE_CONTROL))) then
+          if ((unsigned(index_i_loop) = unsigned(SIZE_R_IN)-unsigned(ONE_CONTROL)) and (unsigned(index_j_loop) = unsigned(SIZE_W_IN)-unsigned(ONE_CONTROL))) then
             -- Data Outputs
             K_OUT <= matrix_out_int(to_integer(unsigned(index_j_loop)), to_integer(unsigned(index_j_loop)));
 
@@ -236,7 +238,7 @@ begin
 
             -- FSM Control
             read_keys_ctrl_fsm_int <= STARTER_STATE;
-          elsif ((unsigned(index_i_loop) < unsigned(SIZE_R_IN)-unsigned(ONE_CONTROL)) and (unsigned(index_j_loop) = unsigned(SIZE_K_IN)-unsigned(ONE_CONTROL))) then
+          elsif ((unsigned(index_i_loop) < unsigned(SIZE_R_IN)-unsigned(ONE_CONTROL)) and (unsigned(index_j_loop) = unsigned(SIZE_W_IN)-unsigned(ONE_CONTROL))) then
             -- Data Outputs
             K_OUT <= matrix_out_int(to_integer(unsigned(index_j_loop)), to_integer(unsigned(index_j_loop)));
 
@@ -257,7 +259,7 @@ begin
 
         when CLEAN_J_STATE =>           -- STEP 4
 
-          if (unsigned(index_j_loop) < unsigned(SIZE_K_IN)-unsigned(ONE_CONTROL)) then
+          if (unsigned(index_j_loop) < unsigned(SIZE_W_IN)-unsigned(ONE_CONTROL)) then
             -- Data Outputs
             K_OUT <= matrix_out_int(to_integer(unsigned(index_j_loop)), to_integer(unsigned(index_j_loop)));
 

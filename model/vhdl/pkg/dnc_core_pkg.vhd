@@ -707,6 +707,7 @@ package dnc_core_pkg is
       F_OUT_ENABLE : out std_logic;     -- for i in 0 to R-1
 
       -- DATA
+      SIZE_M_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
       SIZE_R_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
 
       F_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
@@ -739,6 +740,7 @@ package dnc_core_pkg is
       K_OUT_K_ENABLE : out std_logic;   -- for k in 0 to W-1
 
       -- DATA
+      SIZE_M_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
       SIZE_R_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
       SIZE_W_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
 
@@ -769,6 +771,7 @@ package dnc_core_pkg is
       PI_OUT_P_ENABLE : out std_logic;  -- for i in 0 to 2
 
       -- DATA
+      SIZE_M_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
       SIZE_R_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
 
       PI_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
@@ -796,6 +799,7 @@ package dnc_core_pkg is
       BETA_OUT_ENABLE : out std_logic;  -- for i in 0 to R-1
 
       -- DATA
+      SIZE_M_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
       SIZE_R_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
 
       BETA_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
@@ -1305,33 +1309,33 @@ package dnc_core_pkg is
   -----------------------------------------------------------------------
 
   function function_dnc_free_gates (
-    SIZE_S_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_M_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-    vector_xi_input : vector_buffer
+    matrix_rho_input : matrix_buffer
     ) return vector_buffer;
 
   function function_dnc_read_keys (
-    SIZE_S_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_M_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_W_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-    vector_xi_input : vector_buffer
+    matrix_rho_input : matrix_buffer
     ) return matrix_buffer;
 
   function function_dnc_read_modes (
-    SIZE_S_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_M_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-    vector_xi_input : vector_buffer
+    matrix_rho_input : matrix_buffer
     ) return matrix_buffer;
 
   function function_dnc_read_strengths (
-    SIZE_S_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_M_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_W_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-    vector_xi_input : vector_buffer
+    matrix_rho_input : matrix_buffer
     ) return vector_buffer;
 
   -----------------------------------------------------------------------
@@ -2236,10 +2240,10 @@ package body dnc_core_pkg is
   -- [RHO] = W + 5
 
   function function_dnc_free_gates (
-    SIZE_S_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_M_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-    vector_xi_input : vector_buffer
+    matrix_rho_input : matrix_buffer
     ) return vector_buffer is
 
     variable vector_f_int : vector_buffer;
@@ -2249,8 +2253,6 @@ package body dnc_core_pkg is
   begin
 
     -- f(t;i) = sigmoid(f^(t;i))
-
-    vector_f_int := vector_xi_input(4*to_integer(unsigned(SIZE_R_IN)) + 1 downto 3*to_integer(unsigned(SIZE_R_IN)) + 2);
 
     vector_f_output := function_vector_logistic (
       SIZE_IN => SIZE_R_IN,
@@ -2262,14 +2264,14 @@ package body dnc_core_pkg is
   end function function_dnc_free_gates;
 
   function function_dnc_read_keys (
-    SIZE_S_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_M_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_W_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-    vector_xi_input : vector_buffer
+    matrix_rho_input : matrix_buffer
     ) return matrix_buffer is
 
-    variable vector_xi_int : vector_buffer;
+    variable matrix_rho_int : matrix_buffer;
 
     variable matrix_k_output : matrix_buffer;
 
@@ -2277,25 +2279,17 @@ package body dnc_core_pkg is
 
     -- k(t;i;k) = k^(t;i;k)
 
-    vector_xi_int := vector_xi_input(to_integer(unsigned(SIZE_S_IN))-1 downto 3*to_integer(unsigned(SIZE_W_IN)) + 5*to_integer(unsigned(SIZE_R_IN)) + 3);
-
-    for i in 0 to to_integer(unsigned(SIZE_R_IN))-1 loop
-      for k in 0 to to_integer(unsigned(SIZE_W_IN))-1 loop
-        matrix_k_output(i, k) := vector_xi_int(to_integer(unsigned(SIZE_R_IN))*i + k);
-      end loop;
-    end loop;
-
     return matrix_k_output;
   end function function_dnc_read_keys;
 
   function function_dnc_read_modes (
-    SIZE_S_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_M_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-    vector_xi_input : vector_buffer
+    matrix_rho_input : matrix_buffer
     ) return matrix_buffer is
 
-    variable vector_xi_int : vector_buffer;
+    variable matrix_rho_int : matrix_buffer;
 
     variable matrix_pi_int : matrix_buffer;
 
@@ -2304,14 +2298,6 @@ package body dnc_core_pkg is
   begin
 
     -- pi(t;i;p) = softmax(pi^(t;i;p))
-
-    vector_xi_int := vector_xi_input(3*to_integer(unsigned(SIZE_R_IN))-1 downto 0);
-
-    for i in 0 to to_integer(unsigned(SIZE_R_IN))-1 loop
-      for p in 0 to to_integer(unsigned(THREE_CONTROL))-1 loop
-        matrix_pi_int(i, p) := vector_xi_int(to_integer(unsigned(SIZE_R_IN))*i + p);
-      end loop;
-    end loop;
 
     matrix_pi_output := function_matrix_softmax (
       SIZE_I_IN => SIZE_R_IN,
@@ -2324,11 +2310,11 @@ package body dnc_core_pkg is
   end function function_dnc_read_modes;
 
   function function_dnc_read_strengths (
-    SIZE_S_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_M_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_W_IN : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-    vector_xi_input : vector_buffer
+    matrix_rho_input : matrix_buffer
     ) return vector_buffer is
 
     variable vector_beta_int : vector_buffer;
@@ -2338,8 +2324,6 @@ package body dnc_core_pkg is
   begin
 
     -- beta(t;i) = oneplus(beta^(t;i))
-
-    vector_beta_int := vector_xi_input(3*to_integer(unsigned(SIZE_W_IN)) + 5*to_integer(unsigned(SIZE_R_IN)) + 2 downto 3*to_integer(unsigned(SIZE_W_IN)) + 4*to_integer(unsigned(SIZE_R_IN)) + 3);
 
     vector_beta_output := function_vector_oneplus (
       SIZE_IN => SIZE_R_IN,
@@ -2874,42 +2858,42 @@ package body dnc_core_pkg is
 
     -- f(t;i) = sigmoid(f^(t;i))
     vector_f_int := function_dnc_free_gates (
-      SIZE_S_IN => SIZE_S_IN,
+      SIZE_M_IN => SIZE_M_IN,
       SIZE_R_IN => SIZE_R_IN,
 
-      vector_xi_input => vector_xi_int
+      matrix_rho_input => matrix_rho_int
       );
 
     -- READ_KEYS_STATE
 
     -- k(t;i;k) = k^(t;i;k)
     matrix_k_int := function_dnc_read_keys (
-      SIZE_S_IN => SIZE_S_IN,
+      SIZE_M_IN => SIZE_M_IN,
       SIZE_R_IN => SIZE_R_IN,
       SIZE_W_IN => SIZE_W_IN,
 
-      vector_xi_input => vector_xi_int
+      matrix_rho_input => matrix_rho_int
       );
 
     -- READ_MODES_STATE
 
     -- pi(t;i;p) = softmax(pi^(t;i;p))
     matrix_pi_int := function_dnc_read_modes (
-      SIZE_S_IN => SIZE_S_IN,
+      SIZE_M_IN => SIZE_M_IN,
       SIZE_R_IN => SIZE_R_IN,
 
-      vector_xi_input => vector_xi_int
+      matrix_rho_input => matrix_rho_int
       );
 
     -- READ_STRENGTHS_STATE
 
     -- beta(t;i) = oneplus(beta^(t;i))
     vector_beta_int := function_dnc_read_strengths (
-      SIZE_S_IN => SIZE_S_IN,
+      SIZE_M_IN => SIZE_M_IN,
       SIZE_R_IN => SIZE_R_IN,
       SIZE_W_IN => SIZE_W_IN,
 
-      vector_xi_input => vector_xi_int
+      matrix_rho_input => matrix_rho_int
       );
 
 
@@ -2920,7 +2904,7 @@ package body dnc_core_pkg is
 
     -- ga(t) = sigmoid(g^(t))
     scalar_ga_int := function_dnc_allocation_gate (
-      SIZE_S_IN => SIZE_S_IN,
+      SIZE_S_IN => SIZE_M_IN,
       SIZE_R_IN => SIZE_R_IN,
 
       vector_xi_input => vector_xi_int
