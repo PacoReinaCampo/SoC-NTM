@@ -63,14 +63,40 @@ entity ntm_controller is
     W_IN_L_ENABLE : in std_logic;       -- for l in 0 to L-1
     W_IN_X_ENABLE : in std_logic;       -- for x in 0 to X-1
 
+    W_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
+    W_OUT_X_ENABLE : out std_logic;     -- for x in 0 to X-1
+
     K_IN_I_ENABLE : in std_logic;       -- for i in 0 to R-1 (read heads flow)
     K_IN_L_ENABLE : in std_logic;       -- for l in 0 to L-1
     K_IN_K_ENABLE : in std_logic;       -- for k in 0 to W-1
 
+    K_OUT_I_ENABLE : out std_logic;     -- for i in 0 to R-1 (read heads flow)
+    K_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
+    K_OUT_K_ENABLE : out std_logic;     -- for k in 0 to W-1
+
+    D_IN_I_ENABLE : in std_logic;       -- for i in 0 to R-1 (read heads flow)
+    D_IN_L_ENABLE : in std_logic;       -- for l in 0 to L-1
+    D_IN_M_ENABLE : in std_logic;       -- for m in 0 to M-1
+
+    D_OUT_I_ENABLE : out std_logic;     -- for i in 0 to R-1 (read heads flow)
+    D_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
+    D_OUT_M_ENABLE : out std_logic;     -- for m in 0 to M-1
+
     U_IN_L_ENABLE : in std_logic;       -- for l in 0 to L-1
     U_IN_P_ENABLE : in std_logic;       -- for p in 0 to L-1
 
+    U_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
+    U_OUT_P_ENABLE : out std_logic;     -- for p in 0 to L-1
+
+    V_IN_L_ENABLE : in std_logic;       -- for l in 0 to L-1
+    V_IN_S_ENABLE : in std_logic;       -- for s in 0 to S-1
+
+    V_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
+    V_OUT_S_ENABLE : out std_logic;     -- for s in 0 to S-1
+
     B_IN_ENABLE : in std_logic;         -- for l in 0 to L-1
+
+    B_OUT_ENABLE : out std_logic;       -- for l in 0 to L-1
 
     X_IN_ENABLE : in std_logic;         -- for x in 0 to X-1
 
@@ -82,19 +108,17 @@ entity ntm_controller is
     R_OUT_I_ENABLE : out std_logic;     -- for i in 0 to R-1 (read heads flow)
     R_OUT_K_ENABLE : out std_logic;     -- for k in 0 to W-1
 
+    RHO_IN_I_ENABLE : in std_logic;     -- for i in 0 to R-1 (read heads flow)
+    RHO_IN_M_ENABLE : in std_logic;     -- for m in 0 to M-1
+
+    RHO_OUT_I_ENABLE : out std_logic;   -- for i in 0 to R-1 (read heads flow)
+    RHO_OUT_M_ENABLE : out std_logic;   -- for m in 0 to M-1
+
+    XI_IN_ENABLE : in std_logic;        -- for s in 0 to S-1
+
+    XI_OUT_ENABLE : out std_logic;      -- for s in 0 to S-1
+
     H_IN_ENABLE : in std_logic;         -- for l in 0 to L-1
-
-    W_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
-    W_OUT_X_ENABLE : out std_logic;     -- for x in 0 to X-1
-
-    K_OUT_I_ENABLE : out std_logic;     -- for i in 0 to R-1 (read heads flow)
-    K_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
-    K_OUT_K_ENABLE : out std_logic;     -- for k in 0 to W-1
-
-    U_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
-    U_OUT_P_ENABLE : out std_logic;     -- for p in 0 to L-1
-
-    B_OUT_ENABLE : out std_logic;       -- for l in 0 to L-1
 
     H_OUT_ENABLE : out std_logic;       -- for l in 0 to L-1
 
@@ -103,19 +127,27 @@ entity ntm_controller is
     SIZE_W_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_L_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
     SIZE_R_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_S_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
+    SIZE_M_IN : in std_logic_vector(CONTROL_SIZE-1 downto 0);
 
     W_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
+    D_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
     K_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
     U_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
+    V_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
     B_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
 
-    X_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
-    R_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
-    H_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
+    X_IN   : in std_logic_vector(DATA_SIZE-1 downto 0);
+    R_IN   : in std_logic_vector(DATA_SIZE-1 downto 0);
+    RHO_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
+    XI_IN  : in std_logic_vector(DATA_SIZE-1 downto 0);
+    H_IN   : in std_logic_vector(DATA_SIZE-1 downto 0);
 
     W_OUT : out std_logic_vector(DATA_SIZE-1 downto 0);
+    D_OUT : out std_logic_vector(DATA_SIZE-1 downto 0);
     K_OUT : out std_logic_vector(DATA_SIZE-1 downto 0);
     U_OUT : out std_logic_vector(DATA_SIZE-1 downto 0);
+    V_OUT : out std_logic_vector(DATA_SIZE-1 downto 0);
     B_OUT : out std_logic_vector(DATA_SIZE-1 downto 0);
 
     H_OUT : out std_logic_vector(DATA_SIZE-1 downto 0)
@@ -130,13 +162,12 @@ architecture ntm_controller_architecture of ntm_controller is
 
   type controller_ctrl_fsm is (
     STARTER_STATE,                      -- STEP 0
-    INPUT_STATE,                        -- STEP 1
-    VECTOR_ACTIVATION_STATE,            -- STEP 2
-    VECTOR_FORGET_STATE,                -- STEP 3
-    VECTOR_INPUT_STATE,                 -- STEP 4
-    VECTOR_STATE_STATE,                 -- STEP 5
-    VECTOR_OUTPUT_GATE,                 -- STEP 6
-    VECTOR_HIDDEN_GATE                  -- STEP 7
+    VECTOR_ACTIVATION_STATE,            -- STEP 1
+    VECTOR_FORGET_STATE,                -- STEP 2
+    VECTOR_INPUT_STATE,                 -- STEP 3
+    VECTOR_STATE_STATE,                 -- STEP 4
+    VECTOR_OUTPUT_GATE,                 -- STEP 5
+    VECTOR_HIDDEN_GATE                  -- STEP 6
     );
 
   -----------------------------------------------------------------------
@@ -164,10 +195,6 @@ architecture ntm_controller_architecture of ntm_controller is
   signal w_out_l_enable_activation_gate_vector : std_logic;
   signal w_out_x_enable_activation_gate_vector : std_logic;
 
-  signal x_in_enable_activation_gate_vector : std_logic;
-
-  signal x_out_enable_activation_gate_vector : std_logic;
-
   signal k_in_i_enable_activation_gate_vector : std_logic;
   signal k_in_l_enable_activation_gate_vector : std_logic;
   signal k_in_k_enable_activation_gate_vector : std_logic;
@@ -176,11 +203,13 @@ architecture ntm_controller_architecture of ntm_controller is
   signal k_out_l_enable_activation_gate_vector : std_logic;
   signal k_out_k_enable_activation_gate_vector : std_logic;
 
-  signal r_in_i_enable_activation_gate_vector : std_logic;
-  signal r_in_k_enable_activation_gate_vector : std_logic;
+  signal d_in_i_enable_activation_gate_vector : std_logic;
+  signal d_in_l_enable_activation_gate_vector : std_logic;
+  signal d_in_m_enable_activation_gate_vector : std_logic;
 
-  signal r_out_i_enable_activation_gate_vector : std_logic;
-  signal r_out_k_enable_activation_gate_vector : std_logic;
+  signal d_out_i_enable_activation_gate_vector : std_logic;
+  signal d_out_l_enable_activation_gate_vector : std_logic;
+  signal d_out_m_enable_activation_gate_vector : std_logic;
 
   signal u_in_l_enable_activation_gate_vector : std_logic;
   signal u_in_p_enable_activation_gate_vector : std_logic;
@@ -188,13 +217,39 @@ architecture ntm_controller_architecture of ntm_controller is
   signal u_out_l_enable_activation_gate_vector : std_logic;
   signal u_out_p_enable_activation_gate_vector : std_logic;
 
-  signal h_in_enable_activation_gate_vector : std_logic;
+  signal v_in_l_enable_activation_gate_vector : std_logic;
+  signal v_in_S_enable_activation_gate_vector : std_logic;
 
-  signal h_out_enable_activation_gate_vector : std_logic;
+  signal v_out_l_enable_activation_gate_vector : std_logic;
+  signal v_out_s_enable_activation_gate_vector : std_logic;
 
   signal b_in_enable_activation_gate_vector : std_logic;
 
   signal b_out_enable_activation_gate_vector : std_logic;
+
+  signal x_in_enable_activation_gate_vector : std_logic;
+
+  signal x_out_enable_activation_gate_vector : std_logic;
+
+  signal r_in_i_enable_activation_gate_vector : std_logic;
+  signal r_in_k_enable_activation_gate_vector : std_logic;
+
+  signal r_out_i_enable_activation_gate_vector : std_logic;
+  signal r_out_k_enable_activation_gate_vector : std_logic;
+
+  signal rho_in_i_enable_activation_gate_vector : std_logic;
+  signal rho_in_m_enable_activation_gate_vector : std_logic;
+
+  signal rho_out_i_enable_activation_gate_vector : std_logic;
+  signal rho_out_m_enable_activation_gate_vector : std_logic;
+
+  signal xi_in_enable_activation_gate_vector : std_logic;
+
+  signal xi_out_enable_activation_gate_vector : std_logic;
+
+  signal h_in_enable_activation_gate_vector : std_logic;
+
+  signal h_out_enable_activation_gate_vector : std_logic;
 
   signal a_out_enable_activation_gate_vector : std_logic;
 
@@ -203,6 +258,8 @@ architecture ntm_controller_architecture of ntm_controller is
   signal size_w_in_activation_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_l_in_activation_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_r_in_activation_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
+  signal size_s_in_activation_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
+  signal size_m_in_activation_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
   signal w_in_activation_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal x_in_activation_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
@@ -212,6 +269,12 @@ architecture ntm_controller_architecture of ntm_controller is
 
   signal u_in_activation_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal h_in_activation_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+
+  signal d_in_activation_gate_vector   : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal rho_in_activation_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+
+  signal v_in_activation_gate_vector  : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal xi_in_activation_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
   signal b_in_activation_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
@@ -286,10 +349,6 @@ architecture ntm_controller_architecture of ntm_controller is
   signal w_out_l_enable_input_gate_vector : std_logic;
   signal w_out_x_enable_input_gate_vector : std_logic;
 
-  signal x_in_enable_input_gate_vector : std_logic;
-
-  signal x_out_enable_input_gate_vector : std_logic;
-
   signal k_in_i_enable_input_gate_vector : std_logic;
   signal k_in_l_enable_input_gate_vector : std_logic;
   signal k_in_k_enable_input_gate_vector : std_logic;
@@ -298,11 +357,13 @@ architecture ntm_controller_architecture of ntm_controller is
   signal k_out_l_enable_input_gate_vector : std_logic;
   signal k_out_k_enable_input_gate_vector : std_logic;
 
-  signal r_in_i_enable_input_gate_vector : std_logic;
-  signal r_in_k_enable_input_gate_vector : std_logic;
+  signal d_in_i_enable_input_gate_vector : std_logic;
+  signal d_in_l_enable_input_gate_vector : std_logic;
+  signal d_in_m_enable_input_gate_vector : std_logic;
 
-  signal r_out_i_enable_input_gate_vector : std_logic;
-  signal r_out_k_enable_input_gate_vector : std_logic;
+  signal d_out_i_enable_input_gate_vector : std_logic;
+  signal d_out_l_enable_input_gate_vector : std_logic;
+  signal d_out_m_enable_input_gate_vector : std_logic;
 
   signal u_in_l_enable_input_gate_vector : std_logic;
   signal u_in_p_enable_input_gate_vector : std_logic;
@@ -310,13 +371,39 @@ architecture ntm_controller_architecture of ntm_controller is
   signal u_out_l_enable_input_gate_vector : std_logic;
   signal u_out_p_enable_input_gate_vector : std_logic;
 
-  signal h_in_enable_input_gate_vector : std_logic;
+  signal v_in_l_enable_input_gate_vector : std_logic;
+  signal v_in_s_enable_input_gate_vector : std_logic;
 
-  signal h_out_enable_input_gate_vector : std_logic;
+  signal v_out_l_enable_input_gate_vector : std_logic;
+  signal v_out_s_enable_input_gate_vector : std_logic;
 
   signal b_in_enable_input_gate_vector : std_logic;
 
   signal b_out_enable_input_gate_vector : std_logic;
+
+  signal x_in_enable_input_gate_vector : std_logic;
+
+  signal x_out_enable_input_gate_vector : std_logic;
+
+  signal r_in_i_enable_input_gate_vector : std_logic;
+  signal r_in_k_enable_input_gate_vector : std_logic;
+
+  signal r_out_i_enable_input_gate_vector : std_logic;
+  signal r_out_k_enable_input_gate_vector : std_logic;
+
+  signal rho_in_i_enable_input_gate_vector : std_logic;
+  signal rho_in_m_enable_input_gate_vector : std_logic;
+
+  signal rho_out_i_enable_input_gate_vector : std_logic;
+  signal rho_out_m_enable_input_gate_vector : std_logic;
+
+  signal xi_in_enable_input_gate_vector : std_logic;
+
+  signal xi_out_enable_input_gate_vector : std_logic;
+
+  signal h_in_enable_input_gate_vector : std_logic;
+
+  signal h_out_enable_input_gate_vector : std_logic;
 
   signal i_out_enable_input_gate_vector : std_logic;
 
@@ -325,6 +412,8 @@ architecture ntm_controller_architecture of ntm_controller is
   signal size_w_in_input_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_l_in_input_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_r_in_input_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
+  signal size_s_in_input_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
+  signal size_m_in_input_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
   signal w_in_input_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal x_in_input_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
@@ -334,6 +423,12 @@ architecture ntm_controller_architecture of ntm_controller is
 
   signal u_in_input_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal h_in_input_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+
+  signal d_in_input_gate_vector   : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal rho_in_input_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+
+  signal v_in_input_gate_vector  : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal xi_in_input_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
   signal b_in_input_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
@@ -408,10 +503,6 @@ architecture ntm_controller_architecture of ntm_controller is
   signal w_out_l_enable_output_gate_vector : std_logic;
   signal w_out_x_enable_output_gate_vector : std_logic;
 
-  signal x_in_enable_output_gate_vector : std_logic;
-
-  signal x_out_enable_output_gate_vector : std_logic;
-
   signal k_in_i_enable_output_gate_vector : std_logic;
   signal k_in_l_enable_output_gate_vector : std_logic;
   signal k_in_k_enable_output_gate_vector : std_logic;
@@ -420,11 +511,13 @@ architecture ntm_controller_architecture of ntm_controller is
   signal k_out_l_enable_output_gate_vector : std_logic;
   signal k_out_k_enable_output_gate_vector : std_logic;
 
-  signal r_in_i_enable_output_gate_vector : std_logic;
-  signal r_in_k_enable_output_gate_vector : std_logic;
+  signal d_in_i_enable_output_gate_vector : std_logic;
+  signal d_in_l_enable_output_gate_vector : std_logic;
+  signal d_in_m_enable_output_gate_vector : std_logic;
 
-  signal r_out_i_enable_output_gate_vector : std_logic;
-  signal r_out_k_enable_output_gate_vector : std_logic;
+  signal d_out_i_enable_output_gate_vector : std_logic;
+  signal d_out_l_enable_output_gate_vector : std_logic;
+  signal d_out_m_enable_output_gate_vector : std_logic;
 
   signal u_in_l_enable_output_gate_vector : std_logic;
   signal u_in_p_enable_output_gate_vector : std_logic;
@@ -432,13 +525,39 @@ architecture ntm_controller_architecture of ntm_controller is
   signal u_out_l_enable_output_gate_vector : std_logic;
   signal u_out_p_enable_output_gate_vector : std_logic;
 
-  signal h_in_enable_output_gate_vector : std_logic;
+  signal v_in_l_enable_output_gate_vector : std_logic;
+  signal v_in_s_enable_output_gate_vector : std_logic;
 
-  signal h_out_enable_output_gate_vector : std_logic;
+  signal v_out_l_enable_output_gate_vector : std_logic;
+  signal v_out_s_enable_output_gate_vector : std_logic;
 
   signal b_in_enable_output_gate_vector : std_logic;
 
   signal b_out_enable_output_gate_vector : std_logic;
+
+  signal x_in_enable_output_gate_vector : std_logic;
+
+  signal x_out_enable_output_gate_vector : std_logic;
+
+  signal r_in_i_enable_output_gate_vector : std_logic;
+  signal r_in_k_enable_output_gate_vector : std_logic;
+
+  signal r_out_i_enable_output_gate_vector : std_logic;
+  signal r_out_k_enable_output_gate_vector : std_logic;
+
+  signal rho_in_i_enable_output_gate_vector : std_logic;
+  signal rho_in_m_enable_output_gate_vector : std_logic;
+
+  signal rho_out_i_enable_output_gate_vector : std_logic;
+  signal rho_out_m_enable_output_gate_vector : std_logic;
+
+  signal xi_in_enable_output_gate_vector : std_logic;
+
+  signal xi_out_enable_output_gate_vector : std_logic;
+
+  signal h_in_enable_output_gate_vector : std_logic;
+
+  signal h_out_enable_output_gate_vector : std_logic;
 
   signal o_out_enable_output_gate_vector : std_logic;
 
@@ -447,6 +566,8 @@ architecture ntm_controller_architecture of ntm_controller is
   signal size_w_in_output_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_l_in_output_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_r_in_output_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
+  signal size_s_in_output_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
+  signal size_m_in_output_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
   signal w_in_output_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal x_in_output_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
@@ -456,6 +577,12 @@ architecture ntm_controller_architecture of ntm_controller is
 
   signal u_in_output_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal h_in_output_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+
+  signal d_in_output_gate_vector   : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal rho_in_output_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+
+  signal v_in_output_gate_vector  : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal xi_in_output_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
   signal b_in_output_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
@@ -527,10 +654,6 @@ architecture ntm_controller_architecture of ntm_controller is
   signal w_out_l_enable_forget_gate_vector : std_logic;
   signal w_out_x_enable_forget_gate_vector : std_logic;
 
-  signal x_in_enable_forget_gate_vector : std_logic;
-
-  signal x_out_enable_forget_gate_vector : std_logic;
-
   signal k_in_i_enable_forget_gate_vector : std_logic;
   signal k_in_l_enable_forget_gate_vector : std_logic;
   signal k_in_k_enable_forget_gate_vector : std_logic;
@@ -539,11 +662,13 @@ architecture ntm_controller_architecture of ntm_controller is
   signal k_out_l_enable_forget_gate_vector : std_logic;
   signal k_out_k_enable_forget_gate_vector : std_logic;
 
-  signal r_in_i_enable_forget_gate_vector : std_logic;
-  signal r_in_k_enable_forget_gate_vector : std_logic;
+  signal d_in_i_enable_forget_gate_vector : std_logic;
+  signal d_in_l_enable_forget_gate_vector : std_logic;
+  signal d_in_m_enable_forget_gate_vector : std_logic;
 
-  signal r_out_i_enable_forget_gate_vector : std_logic;
-  signal r_out_k_enable_forget_gate_vector : std_logic;
+  signal d_out_i_enable_forget_gate_vector : std_logic;
+  signal d_out_l_enable_forget_gate_vector : std_logic;
+  signal d_out_m_enable_forget_gate_vector : std_logic;
 
   signal u_in_l_enable_forget_gate_vector : std_logic;
   signal u_in_p_enable_forget_gate_vector : std_logic;
@@ -551,13 +676,39 @@ architecture ntm_controller_architecture of ntm_controller is
   signal u_out_l_enable_forget_gate_vector : std_logic;
   signal u_out_p_enable_forget_gate_vector : std_logic;
 
-  signal h_in_enable_forget_gate_vector : std_logic;
+  signal v_in_l_enable_forget_gate_vector : std_logic;
+  signal v_in_s_enable_forget_gate_vector : std_logic;
 
-  signal h_out_enable_forget_gate_vector : std_logic;
+  signal v_out_l_enable_forget_gate_vector : std_logic;
+  signal v_out_s_enable_forget_gate_vector : std_logic;
 
   signal b_in_enable_forget_gate_vector : std_logic;
 
   signal b_out_enable_forget_gate_vector : std_logic;
+
+  signal x_in_enable_forget_gate_vector : std_logic;
+
+  signal x_out_enable_forget_gate_vector : std_logic;
+
+  signal r_in_i_enable_forget_gate_vector : std_logic;
+  signal r_in_k_enable_forget_gate_vector : std_logic;
+
+  signal r_out_i_enable_forget_gate_vector : std_logic;
+  signal r_out_k_enable_forget_gate_vector : std_logic;
+
+  signal rho_in_i_enable_forget_gate_vector : std_logic;
+  signal rho_in_m_enable_forget_gate_vector : std_logic;
+
+  signal rho_out_i_enable_forget_gate_vector : std_logic;
+  signal rho_out_m_enable_forget_gate_vector : std_logic;
+
+  signal xi_in_enable_forget_gate_vector : std_logic;
+
+  signal xi_out_enable_forget_gate_vector : std_logic;
+
+  signal h_in_enable_forget_gate_vector : std_logic;
+
+  signal h_out_enable_forget_gate_vector : std_logic;
 
   signal f_out_enable_forget_gate_vector : std_logic;
 
@@ -566,6 +717,8 @@ architecture ntm_controller_architecture of ntm_controller is
   signal size_w_in_forget_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_l_in_forget_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_r_in_forget_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
+  signal size_s_in_forget_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
+  signal size_m_in_forget_gate_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
   signal w_in_forget_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal x_in_forget_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
@@ -575,6 +728,12 @@ architecture ntm_controller_architecture of ntm_controller is
 
   signal u_in_forget_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal h_in_forget_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+
+  signal d_in_forget_gate_vector   : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal rho_in_forget_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+
+  signal v_in_forget_gate_vector  : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal xi_in_forget_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
   signal b_in_forget_gate_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
@@ -724,17 +883,15 @@ begin
             start_activation_gate_vector <= '1';
 
             -- FSM Control
-            controller_ctrl_fsm_int <= INPUT_STATE;
+            controller_ctrl_fsm_int <= VECTOR_ACTIVATION_STATE;
           else
             -- Control Internal
             start_activation_gate_vector <= '0';
           end if;
 
-        when INPUT_STATE =>             -- STEP 1
+        when VECTOR_ACTIVATION_STATE =>  -- STEP 1
 
-        when VECTOR_ACTIVATION_STATE =>  -- STEP 2
-
-          -- a(t;l) = tanh(W(l;x)·x(t;x) + K(i;l;k)·r(t;i;k) + U(l;l)·h(t-1;l) + U(l-1;l-1)·h(t;l-1) + b(t;l))
+          -- a(t;l) = tanh(W(l;x)*x(t;x) + K(i;l;k)*r(t;i;k) + U(l;l)*h(t-1;l) + U(l-1;l-1)*h(t;l-1) + b(t;l))
 
           if (ready_activation_gate_vector = '1') then
             -- Control Internal
@@ -747,9 +904,9 @@ begin
             start_activation_gate_vector <= '0';
           end if;
 
-        when VECTOR_FORGET_STATE =>     -- STEP 3
+        when VECTOR_FORGET_STATE =>     -- STEP 2
 
-          -- f(t;l) = sigmoid(W(l;x)·x(t;x) + K(i;l;k)·r(t;i;k) + U(l;l)·h(t-1;l) + U(l-1;l-1)·h(t;l-1) + b(t;l))
+          -- f(t;l) = sigmoid(W(l;x)*x(t;x) + K(i;l;k)*r(t;i;k) + U(l;l)*h(t-1;l) + U(l-1;l-1)*h(t;l-1) + b(t;l))
 
           if (ready_forget_gate_vector = '1') then
             -- Control Internal
@@ -762,9 +919,9 @@ begin
             start_forget_gate_vector <= '0';
           end if;
 
-        when VECTOR_INPUT_STATE =>      -- STEP 4
+        when VECTOR_INPUT_STATE =>      -- STEP 3
 
-          -- i(t;l) = sigmoid(W(l;x)·x(t;x) + K(i;l;k)·r(t;i;k) + U(l;l)·h(t-1;l) + U(l-1;l-1)·h(t;l-1) + b(t;l))
+          -- i(t;l) = sigmoid(W(l;x)*x(t;x) + K(i;l;k)*r(t;i;k) + U(l;l)*h(t-1;l) + U(l-1;l-1)*h(t;l-1) + b(t;l))
 
           if (ready_input_gate_vector = '1') then
             -- Control Internal
@@ -777,7 +934,7 @@ begin
             start_input_gate_vector <= '0';
           end if;
 
-        when VECTOR_STATE_STATE =>      -- STEP 5
+        when VECTOR_STATE_STATE =>      -- STEP 4
 
           -- s(t;l) = f(t;l) o s(t-1;l) + i(t;l) o a(t;l)
           -- s(t=0;l) = 0
@@ -793,9 +950,9 @@ begin
             start_state_gate_vector <= '0';
           end if;
 
-        when VECTOR_OUTPUT_GATE =>      -- STEP 6
+        when VECTOR_OUTPUT_GATE =>      -- STEP 5
 
-          -- o(t;l) = sigmoid(W(l;x)·x(t;x) + K(i;l;k)·r(t;i;k) + U(l;l)·h(t-1;l) + U(l-1;l-1)·h(t;l-1) + b(t;l))
+          -- o(t;l) = sigmoid(W(l;x)*x(t;x) + K(i;l;k)*r(t;i;k) + U(l;l)*h(t-1;l) + U(l-1;l-1)*h(t;l-1) + b(t;l))
 
           if (ready_output_gate_vector = '1') then
             -- Control Internal
@@ -808,7 +965,7 @@ begin
             start_output_gate_vector <= '0';
           end if;
 
-        when VECTOR_HIDDEN_GATE =>      -- STEP 7
+        when VECTOR_HIDDEN_GATE =>      -- STEP 6
 
           -- h(t;l) = o(t;l) o tanh(s(t;l))
           -- h(t=0;l) = 0; h(t;l=0) = 0
@@ -1110,10 +1267,6 @@ begin
       W_OUT_L_ENABLE => w_out_l_enable_activation_gate_vector,
       W_OUT_X_ENABLE => w_out_x_enable_activation_gate_vector,
 
-      X_IN_ENABLE => x_in_enable_activation_gate_vector,
-
-      X_OUT_ENABLE => x_out_enable_activation_gate_vector,
-
       K_IN_I_ENABLE => k_in_i_enable_activation_gate_vector,
       K_IN_L_ENABLE => k_in_l_enable_activation_gate_vector,
       K_IN_K_ENABLE => k_in_k_enable_activation_gate_vector,
@@ -1122,11 +1275,13 @@ begin
       K_OUT_L_ENABLE => k_out_l_enable_activation_gate_vector,
       K_OUT_K_ENABLE => k_out_k_enable_activation_gate_vector,
 
-      R_IN_I_ENABLE => r_in_i_enable_activation_gate_vector,
-      R_IN_K_ENABLE => r_in_k_enable_activation_gate_vector,
+      D_IN_I_ENABLE => d_in_i_enable_activation_gate_vector,
+      D_IN_L_ENABLE => d_in_l_enable_activation_gate_vector,
+      D_IN_M_ENABLE => d_in_m_enable_activation_gate_vector,
 
-      R_OUT_I_ENABLE => r_out_i_enable_activation_gate_vector,
-      R_OUT_K_ENABLE => r_out_k_enable_activation_gate_vector,
+      D_OUT_I_ENABLE => d_out_i_enable_activation_gate_vector,
+      D_OUT_L_ENABLE => d_out_l_enable_activation_gate_vector,
+      D_OUT_M_ENABLE => d_out_m_enable_activation_gate_vector,
 
       U_IN_L_ENABLE => u_in_l_enable_activation_gate_vector,
       U_IN_P_ENABLE => u_in_p_enable_activation_gate_vector,
@@ -1134,13 +1289,39 @@ begin
       U_OUT_L_ENABLE => u_out_l_enable_activation_gate_vector,
       U_OUT_P_ENABLE => u_out_p_enable_activation_gate_vector,
 
-      H_IN_ENABLE => h_in_enable_activation_gate_vector,
+      V_IN_L_ENABLE => v_in_l_enable_activation_gate_vector,
+      V_IN_S_ENABLE => v_in_s_enable_activation_gate_vector,
 
-      H_OUT_ENABLE => h_out_enable_activation_gate_vector,
+      V_OUT_L_ENABLE => v_out_l_enable_activation_gate_vector,
+      V_OUT_S_ENABLE => v_out_s_enable_activation_gate_vector,
 
       B_IN_ENABLE => b_in_enable_activation_gate_vector,
 
       B_OUT_ENABLE => b_out_enable_activation_gate_vector,
+
+      X_IN_ENABLE => x_in_enable_activation_gate_vector,
+
+      X_OUT_ENABLE => x_out_enable_activation_gate_vector,
+
+      R_IN_I_ENABLE => r_in_i_enable_activation_gate_vector,
+      R_IN_K_ENABLE => r_in_k_enable_activation_gate_vector,
+
+      R_OUT_I_ENABLE => r_out_i_enable_activation_gate_vector,
+      R_OUT_K_ENABLE => r_out_k_enable_activation_gate_vector,
+
+      RHO_IN_I_ENABLE => rho_in_i_enable_activation_gate_vector,
+      RHO_IN_M_ENABLE => rho_in_m_enable_activation_gate_vector,
+
+      RHO_OUT_I_ENABLE => rho_out_i_enable_activation_gate_vector,
+      RHO_OUT_M_ENABLE => rho_out_m_enable_activation_gate_vector,
+
+      XI_IN_ENABLE => xi_in_enable_activation_gate_vector,
+
+      XI_OUT_ENABLE => xi_out_enable_activation_gate_vector,
+
+      H_IN_ENABLE => h_in_enable_activation_gate_vector,
+
+      H_OUT_ENABLE => h_out_enable_activation_gate_vector,
 
       A_OUT_ENABLE => a_out_enable_activation_gate_vector,
 
@@ -1149,6 +1330,8 @@ begin
       SIZE_W_IN => size_w_in_activation_gate_vector,
       SIZE_L_IN => size_l_in_activation_gate_vector,
       SIZE_R_IN => size_r_in_activation_gate_vector,
+      SIZE_S_IN => size_s_in_activation_gate_vector,
+      SIZE_M_IN => size_m_in_activation_gate_vector,
 
       W_IN => w_in_activation_gate_vector,
       X_IN => x_in_activation_gate_vector,
@@ -1156,8 +1339,14 @@ begin
       K_IN => k_in_activation_gate_vector,
       R_IN => r_in_activation_gate_vector,
 
+      D_IN   => d_in_activation_gate_vector,
+      RHO_IN => rho_in_activation_gate_vector,
+
       U_IN => u_in_activation_gate_vector,
       H_IN => h_in_activation_gate_vector,
+
+      V_IN  => v_in_activation_gate_vector,
+      XI_IN => xi_in_activation_gate_vector,
 
       B_IN => b_in_activation_gate_vector,
 
@@ -1254,10 +1443,6 @@ begin
       W_OUT_L_ENABLE => w_out_l_enable_input_gate_vector,
       W_OUT_X_ENABLE => w_out_x_enable_input_gate_vector,
 
-      X_IN_ENABLE => x_in_enable_input_gate_vector,
-
-      X_OUT_ENABLE => x_out_enable_input_gate_vector,
-
       K_IN_I_ENABLE => k_in_i_enable_input_gate_vector,
       K_IN_L_ENABLE => k_in_l_enable_input_gate_vector,
       K_IN_K_ENABLE => k_in_k_enable_input_gate_vector,
@@ -1266,11 +1451,13 @@ begin
       K_OUT_L_ENABLE => k_out_l_enable_input_gate_vector,
       K_OUT_K_ENABLE => k_out_k_enable_input_gate_vector,
 
-      R_IN_I_ENABLE => r_in_i_enable_input_gate_vector,
-      R_IN_K_ENABLE => r_in_k_enable_input_gate_vector,
+      D_IN_I_ENABLE => d_in_i_enable_input_gate_vector,
+      D_IN_L_ENABLE => d_in_l_enable_input_gate_vector,
+      D_IN_M_ENABLE => d_in_m_enable_input_gate_vector,
 
-      R_OUT_I_ENABLE => r_out_i_enable_input_gate_vector,
-      R_OUT_K_ENABLE => r_out_k_enable_input_gate_vector,
+      D_OUT_I_ENABLE => d_out_i_enable_input_gate_vector,
+      D_OUT_L_ENABLE => d_out_l_enable_input_gate_vector,
+      D_OUT_M_ENABLE => d_out_m_enable_input_gate_vector,
 
       U_IN_L_ENABLE => u_in_l_enable_input_gate_vector,
       U_IN_P_ENABLE => u_in_p_enable_input_gate_vector,
@@ -1278,13 +1465,39 @@ begin
       U_OUT_L_ENABLE => u_out_l_enable_input_gate_vector,
       U_OUT_P_ENABLE => u_out_p_enable_input_gate_vector,
 
-      H_IN_ENABLE => h_in_enable_input_gate_vector,
+      V_IN_L_ENABLE => v_in_l_enable_input_gate_vector,
+      V_IN_S_ENABLE => v_in_s_enable_input_gate_vector,
 
-      H_OUT_ENABLE => h_out_enable_input_gate_vector,
+      V_OUT_L_ENABLE => v_out_l_enable_input_gate_vector,
+      V_OUT_S_ENABLE => v_out_s_enable_input_gate_vector,
 
       B_IN_ENABLE => b_in_enable_input_gate_vector,
 
       B_OUT_ENABLE => b_out_enable_input_gate_vector,
+
+      X_IN_ENABLE => x_in_enable_input_gate_vector,
+
+      X_OUT_ENABLE => x_out_enable_input_gate_vector,
+
+      R_IN_I_ENABLE => r_in_i_enable_input_gate_vector,
+      R_IN_K_ENABLE => r_in_k_enable_input_gate_vector,
+
+      R_OUT_I_ENABLE => r_out_i_enable_input_gate_vector,
+      R_OUT_K_ENABLE => r_out_k_enable_input_gate_vector,
+
+      RHO_IN_I_ENABLE => rho_in_i_enable_input_gate_vector,
+      RHO_IN_M_ENABLE => rho_in_m_enable_input_gate_vector,
+
+      RHO_OUT_I_ENABLE => rho_out_i_enable_input_gate_vector,
+      RHO_OUT_M_ENABLE => rho_out_m_enable_input_gate_vector,
+
+      XI_IN_ENABLE => xi_in_enable_input_gate_vector,
+
+      XI_OUT_ENABLE => xi_out_enable_input_gate_vector,
+
+      H_IN_ENABLE => h_in_enable_input_gate_vector,
+
+      H_OUT_ENABLE => h_out_enable_input_gate_vector,
 
       I_OUT_ENABLE => i_out_enable_input_gate_vector,
 
@@ -1293,6 +1506,8 @@ begin
       SIZE_W_IN => size_w_in_input_gate_vector,
       SIZE_L_IN => size_l_in_input_gate_vector,
       SIZE_R_IN => size_r_in_input_gate_vector,
+      SIZE_S_IN => size_s_in_input_gate_vector,
+      SIZE_M_IN => size_m_in_input_gate_vector,
 
       W_IN => w_in_input_gate_vector,
       X_IN => x_in_input_gate_vector,
@@ -1300,8 +1515,14 @@ begin
       K_IN => k_in_input_gate_vector,
       R_IN => r_in_input_gate_vector,
 
+      D_IN   => d_in_input_gate_vector,
+      RHO_IN => rho_in_input_gate_vector,
+
       U_IN => u_in_input_gate_vector,
       H_IN => h_in_input_gate_vector,
+
+      V_IN  => v_in_input_gate_vector,
+      XI_IN => xi_in_input_gate_vector,
 
       B_IN => b_in_input_gate_vector,
 
@@ -1398,10 +1619,6 @@ begin
       W_OUT_L_ENABLE => w_out_l_enable_output_gate_vector,
       W_OUT_X_ENABLE => w_out_x_enable_output_gate_vector,
 
-      X_IN_ENABLE => x_in_enable_output_gate_vector,
-
-      X_OUT_ENABLE => x_out_enable_output_gate_vector,
-
       K_IN_I_ENABLE => k_in_i_enable_output_gate_vector,
       K_IN_L_ENABLE => k_in_l_enable_output_gate_vector,
       K_IN_K_ENABLE => k_in_k_enable_output_gate_vector,
@@ -1410,11 +1627,13 @@ begin
       K_OUT_L_ENABLE => k_out_l_enable_output_gate_vector,
       K_OUT_K_ENABLE => k_out_k_enable_output_gate_vector,
 
-      R_IN_I_ENABLE => r_in_i_enable_output_gate_vector,
-      R_IN_K_ENABLE => r_in_k_enable_output_gate_vector,
+      D_IN_I_ENABLE => d_in_i_enable_output_gate_vector,
+      D_IN_L_ENABLE => d_in_l_enable_output_gate_vector,
+      D_IN_M_ENABLE => d_in_m_enable_output_gate_vector,
 
-      R_OUT_I_ENABLE => r_out_i_enable_output_gate_vector,
-      R_OUT_K_ENABLE => r_out_k_enable_output_gate_vector,
+      D_OUT_I_ENABLE => d_out_i_enable_output_gate_vector,
+      D_OUT_L_ENABLE => d_out_l_enable_output_gate_vector,
+      D_OUT_M_ENABLE => d_out_m_enable_output_gate_vector,
 
       U_IN_L_ENABLE => u_in_l_enable_output_gate_vector,
       U_IN_P_ENABLE => u_in_p_enable_output_gate_vector,
@@ -1422,13 +1641,39 @@ begin
       U_OUT_L_ENABLE => u_out_l_enable_output_gate_vector,
       U_OUT_P_ENABLE => u_out_p_enable_output_gate_vector,
 
-      H_IN_ENABLE => h_in_enable_output_gate_vector,
+      V_IN_L_ENABLE => v_in_l_enable_output_gate_vector,
+      V_IN_S_ENABLE => v_in_s_enable_output_gate_vector,
 
-      H_OUT_ENABLE => h_out_enable_output_gate_vector,
+      V_OUT_L_ENABLE => v_out_l_enable_output_gate_vector,
+      V_OUT_S_ENABLE => v_out_s_enable_output_gate_vector,
 
       B_IN_ENABLE => b_in_enable_output_gate_vector,
 
       B_OUT_ENABLE => b_out_enable_output_gate_vector,
+
+      X_IN_ENABLE => x_in_enable_output_gate_vector,
+
+      X_OUT_ENABLE => x_out_enable_output_gate_vector,
+
+      R_IN_I_ENABLE => r_in_i_enable_output_gate_vector,
+      R_IN_K_ENABLE => r_in_k_enable_output_gate_vector,
+
+      R_OUT_I_ENABLE => r_out_i_enable_output_gate_vector,
+      R_OUT_K_ENABLE => r_out_k_enable_output_gate_vector,
+
+      RHO_IN_I_ENABLE => rho_in_i_enable_output_gate_vector,
+      RHO_IN_M_ENABLE => rho_in_m_enable_output_gate_vector,
+
+      RHO_OUT_I_ENABLE => rho_out_i_enable_output_gate_vector,
+      RHO_OUT_M_ENABLE => rho_out_m_enable_output_gate_vector,
+
+      XI_IN_ENABLE => xi_in_enable_output_gate_vector,
+
+      XI_OUT_ENABLE => xi_out_enable_output_gate_vector,
+
+      H_IN_ENABLE => h_in_enable_output_gate_vector,
+
+      H_OUT_ENABLE => h_out_enable_output_gate_vector,
 
       O_OUT_ENABLE => o_out_enable_output_gate_vector,
 
@@ -1437,6 +1682,8 @@ begin
       SIZE_W_IN => size_w_in_output_gate_vector,
       SIZE_L_IN => size_l_in_output_gate_vector,
       SIZE_R_IN => size_r_in_output_gate_vector,
+      SIZE_S_IN => size_s_in_output_gate_vector,
+      SIZE_M_IN => size_m_in_output_gate_vector,
 
       W_IN => w_in_output_gate_vector,
       X_IN => x_in_output_gate_vector,
@@ -1444,8 +1691,14 @@ begin
       K_IN => k_in_output_gate_vector,
       R_IN => r_in_output_gate_vector,
 
+      D_IN   => d_in_output_gate_vector,
+      RHO_IN => rho_in_output_gate_vector,
+
       U_IN => u_in_output_gate_vector,
       H_IN => h_in_output_gate_vector,
+
+      V_IN  => v_in_output_gate_vector,
+      XI_IN => xi_in_output_gate_vector,
 
       B_IN => b_in_output_gate_vector,
 
@@ -1539,10 +1792,6 @@ begin
       W_OUT_L_ENABLE => w_out_l_enable_forget_gate_vector,
       W_OUT_X_ENABLE => w_out_x_enable_forget_gate_vector,
 
-      X_IN_ENABLE => x_in_enable_forget_gate_vector,
-
-      X_OUT_ENABLE => x_out_enable_forget_gate_vector,
-
       K_IN_I_ENABLE => k_in_i_enable_forget_gate_vector,
       K_IN_L_ENABLE => k_in_l_enable_forget_gate_vector,
       K_IN_K_ENABLE => k_in_k_enable_forget_gate_vector,
@@ -1551,11 +1800,13 @@ begin
       K_OUT_L_ENABLE => k_out_l_enable_forget_gate_vector,
       K_OUT_K_ENABLE => k_out_k_enable_forget_gate_vector,
 
-      R_IN_I_ENABLE => r_in_i_enable_forget_gate_vector,
-      R_IN_K_ENABLE => r_in_k_enable_forget_gate_vector,
+      D_IN_I_ENABLE => d_in_i_enable_forget_gate_vector,
+      D_IN_L_ENABLE => d_in_l_enable_forget_gate_vector,
+      D_IN_M_ENABLE => d_in_m_enable_forget_gate_vector,
 
-      R_OUT_I_ENABLE => r_out_i_enable_forget_gate_vector,
-      R_OUT_K_ENABLE => r_out_k_enable_forget_gate_vector,
+      D_OUT_I_ENABLE => d_out_i_enable_forget_gate_vector,
+      D_OUT_L_ENABLE => d_out_l_enable_forget_gate_vector,
+      D_OUT_M_ENABLE => d_out_m_enable_forget_gate_vector,
 
       U_IN_L_ENABLE => u_in_l_enable_forget_gate_vector,
       U_IN_P_ENABLE => u_in_p_enable_forget_gate_vector,
@@ -1563,13 +1814,39 @@ begin
       U_OUT_L_ENABLE => u_out_l_enable_forget_gate_vector,
       U_OUT_P_ENABLE => u_out_p_enable_forget_gate_vector,
 
-      H_IN_ENABLE => h_in_enable_forget_gate_vector,
+      V_IN_L_ENABLE => v_in_l_enable_forget_gate_vector,
+      V_IN_S_ENABLE => v_in_s_enable_forget_gate_vector,
 
-      H_OUT_ENABLE => h_out_enable_forget_gate_vector,
+      V_OUT_L_ENABLE => v_out_l_enable_forget_gate_vector,
+      V_OUT_S_ENABLE => v_out_s_enable_forget_gate_vector,
 
       B_IN_ENABLE => b_in_enable_forget_gate_vector,
 
       B_OUT_ENABLE => b_out_enable_forget_gate_vector,
+
+      X_IN_ENABLE => x_in_enable_forget_gate_vector,
+
+      X_OUT_ENABLE => x_out_enable_forget_gate_vector,
+
+      R_IN_I_ENABLE => r_in_i_enable_forget_gate_vector,
+      R_IN_K_ENABLE => r_in_k_enable_forget_gate_vector,
+
+      R_OUT_I_ENABLE => r_out_i_enable_forget_gate_vector,
+      R_OUT_K_ENABLE => r_out_k_enable_forget_gate_vector,
+
+      RHO_IN_I_ENABLE => rho_in_i_enable_forget_gate_vector,
+      RHO_IN_M_ENABLE => rho_in_m_enable_forget_gate_vector,
+
+      RHO_OUT_I_ENABLE => rho_out_i_enable_forget_gate_vector,
+      RHO_OUT_M_ENABLE => rho_out_m_enable_forget_gate_vector,
+
+      XI_IN_ENABLE => xi_in_enable_forget_gate_vector,
+
+      XI_OUT_ENABLE => xi_out_enable_forget_gate_vector,
+
+      H_IN_ENABLE => h_in_enable_forget_gate_vector,
+
+      H_OUT_ENABLE => h_out_enable_forget_gate_vector,
 
       F_OUT_ENABLE => f_out_enable_forget_gate_vector,
 
@@ -1578,6 +1855,8 @@ begin
       SIZE_W_IN => size_w_in_forget_gate_vector,
       SIZE_L_IN => size_l_in_forget_gate_vector,
       SIZE_R_IN => size_r_in_forget_gate_vector,
+      SIZE_S_IN => size_s_in_forget_gate_vector,
+      SIZE_M_IN => size_m_in_forget_gate_vector,
 
       W_IN => w_in_forget_gate_vector,
       X_IN => x_in_forget_gate_vector,
@@ -1585,8 +1864,14 @@ begin
       K_IN => k_in_forget_gate_vector,
       R_IN => r_in_forget_gate_vector,
 
+      D_IN   => d_in_forget_gate_vector,
+      RHO_IN => rho_in_forget_gate_vector,
+
       U_IN => u_in_forget_gate_vector,
       H_IN => h_in_forget_gate_vector,
+
+      V_IN  => v_in_forget_gate_vector,
+      XI_IN => xi_in_forget_gate_vector,
 
       B_IN => b_in_forget_gate_vector,
 
