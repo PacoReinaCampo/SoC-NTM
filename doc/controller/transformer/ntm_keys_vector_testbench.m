@@ -47,13 +47,14 @@
 SIZE_T_IN = 3;
 SIZE_X_IN = 3;
 SIZE_Y_IN = 3;
-SIZE_N_IN = 3;
 SIZE_W_IN = 3;
 SIZE_L_IN = 3;
 SIZE_R_IN = 3;
 SIZE_M_IN = 3;
 SIZE_S_IN = 3;
+SIZE_N_IN = 3;
 
+W_HK_IN = rand(SIZE_L_IN, SIZE_N_IN);
 W_IN = rand(SIZE_L_IN, SIZE_X_IN);
 K_IN = rand(SIZE_R_IN, SIZE_L_IN, SIZE_W_IN);
 V_IN = rand(SIZE_L_IN, SIZE_S_IN);
@@ -63,4 +64,4 @@ R_IN = rand(SIZE_T_IN, SIZE_R_IN, SIZE_W_IN);
 XI_IN = rand(SIZE_T_IN, SIZE_S_IN);
 RHO_IN = rand(SIZE_T_IN, SIZE_R_IN, SIZE_M_IN);
 
-K_OUT = ntm_keys_vector(W_IN, K_IN, V_IN, D_IN, X_IN, R_IN, XI_IN, RHO_IN);
+K_OUT = ntm_keys_vector(W_HK_IN, W_IN, K_IN, V_IN, D_IN, X_IN, R_IN, XI_IN, RHO_IN);

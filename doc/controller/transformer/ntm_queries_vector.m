@@ -44,14 +44,41 @@
 ###################################################################################
 %}
 
-function Q_OUT = ntm_values_vector(W_HQ_IN, X_IN)
+function Q_OUT = ntm_queries_vector(W_HQ_IN, W_IN, K_IN, V_IN, D_IN, X_IN, R_IN, XI_IN, RHO_IN)
   addpath(genpath('../../math/algebra/matrix'));
+
+  [SIZE_T_IN, SIZE_R_IN, SIZE_W_IN] = size(R_IN);
+
+  [SIZE_T_IN, SIZE_R_IN, SIZE_M_IN] = size(RHO_IN);
+
+  [SIZE_L_IN, SIZE_N_IN] = size(W_HQ_IN);
 
   % Q(t;l) = transpose(W(l;n))·x(t;l)
 
-  % transpose(W(l;n))
-  matrix_operation_int = ntm_transpose_matrix(W_HQ_IN);
+  r_int = zeros(SIZE_T_IN, SIZE_R_IN, SIZE_W_IN);
+  rho_int = zeros(SIZE_T_IN, SIZE_R_IN, SIZE_M_IN);
 
-  % transpose(W(l;n))·x(t;l)
-  Q_OUT = ntm_matrix_vector_product(matrix_operation_int, X_IN);
+  X_OUT = zeros(SIZE_T_IN, SIZE_L_IN);
+
+  Q_OUT = zeros(SIZE_N_IN, SIZE_L_IN);
+
+  % transpose(W(l;n))
+  matrix_operation_int = ntm_matrix_transpose(W_HQ_IN);
+
+  for t = 1:SIZE_T_IN
+    for i = 1:SIZE_R_IN
+      for k = 1:SIZE_W_IN
+        r_int(i, k) = R_IN(t, i, k);
+      end
+
+      for m = 1:SIZE_M_IN
+        rho_int(i, m) = RHO_IN(t, i, m);
+      end
+    end
+
+    X_OUT(t, :) = ntm_inputs_vector(W_IN, K_IN, V_IN, D_IN, X_IN(t, :), r_int, XI_IN(t, :), rho_int);
+
+    % transpose(W(l;n))·x(t;l)
+    Q_OUT(t, :) = ntm_matrix_vector_product(matrix_operation_int, X_OUT(t, :));
+  end
 end
