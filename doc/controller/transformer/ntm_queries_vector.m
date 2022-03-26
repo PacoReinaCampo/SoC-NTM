@@ -44,37 +44,14 @@
 ###################################################################################
 %}
 
-function Q_OUT = ntm_queries_vector(W_IN, K_IN, V_IN, D_IN, X_IN, R_IN, XI_IN, RHO_IN)
+function Q_OUT = ntm_values_vector(W_HQ_IN, X_IN)
   addpath(genpath('../../math/algebra/matrix'));
-  addpath(genpath('../../math/algebra/tensor'));
 
-  [SIZE_R_IN, SIZE_L_IN, SIZE_W_IN] = size(K_IN);
+  % Q(t;l) = transpose(W(l;n))·x(t;l)
 
-  % q(t;l) = W(l;x)*x(t;x) + K(i;l;k)*r(t;i;k) + D(i;l;m)*rho(t;i;m) + V(l;s)*xi(t;s)
-  
-  % W(l;x)*x(t;x)
-  vector_operation_int = ntm_matrix_vector_convolution(W_IN, X_IN);
+  % transpose(W(l;n))
+  matrix_operation_int = ntm_transpose_matrix(W_HQ_IN);
 
-  % K(i;l;k)*r(t;i;k)
-  matrix_operation_int = ntm_tensor_matrix_convolution(K_IN, R_IN);
-
-  for l = 1:SIZE_L_IN
-    for i = 1:SIZE_R_IN
-      vector_operation_int(l) = vector_operation_int(l) + matrix_operation_int(i, l);
-    end
-  end
-
-  % D(i;l;m)*rho(t;i;m)
-  matrix_operation_int = ntm_tensor_matrix_convolution(D_IN, RHO_IN);
-
-  for l = 1:SIZE_L_IN
-    for i = 1:SIZE_R_IN
-      vector_operation_int(l) = vector_operation_int(l) + matrix_operation_int(i, l);
-    end
-  end
-
-  % V(l;s)*xi(t;s)
-  Q_OUT = ntm_matrix_vector_convolution(V_IN, XI_IN);
-
-  Q_OUT = Q_OUT + vector_operation_int;
+  % transpose(W(l;n))·x(t;l)
+  Q_OUT = ntm_matrix_vector_product(matrix_operation_int, X_IN);
 end

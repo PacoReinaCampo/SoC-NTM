@@ -44,14 +44,23 @@
 ###################################################################################
 %}
 
-function V_OUT = ntm_values_vector(W_HV_IN, X_IN)
-  addpath(genpath('../../math/algebra/matrix'));
+SIZE_T_IN = 3;
+SIZE_X_IN = 3;
+SIZE_Y_IN = 3;
+SIZE_N_IN = 3;
+SIZE_W_IN = 3;
+SIZE_L_IN = 3;
+SIZE_R_IN = 3;
+SIZE_M_IN = 3;
+SIZE_S_IN = 3;
 
-  % V(t;l) = transpose(W(l;n))·x(t;l)
+W_IN = rand(SIZE_L_IN, SIZE_X_IN);
+K_IN = rand(SIZE_R_IN, SIZE_L_IN, SIZE_W_IN);
+V_IN = rand(SIZE_L_IN, SIZE_S_IN);
+D_IN = rand(SIZE_R_IN, SIZE_L_IN, SIZE_M_IN);
+X_IN = rand(SIZE_T_IN, SIZE_X_IN);
+R_IN = rand(SIZE_T_IN, SIZE_R_IN, SIZE_W_IN);
+XI_IN = rand(SIZE_T_IN, SIZE_S_IN);
+RHO_IN = rand(SIZE_T_IN, SIZE_R_IN, SIZE_M_IN);
 
-  % transpose(W(l;n))
-  matrix_operation_int = ntm_transpose_matrix(W_HV_IN);
-
-  % transpose(W(l;n))·x(t;l)
-  V_OUT = ntm_matrix_vector_product(matrix_operation_int, X_IN);
-end
+X_OUT = ntm_inputs_vector(W_IN, K_IN, V_IN, D_IN, X_IN, R_IN, XI_IN, RHO_IN);
