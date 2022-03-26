@@ -44,15 +44,23 @@
 ###################################################################################
 %}
 
-W_IN = rand(3, 3);
-K_IN = rand(3, 3, 3);
-U_IN = rand(3, 3);
-V_IN = rand(3, 3);
-D_IN = rand(3, 3, 3);
-X_IN = rand(3, 1);
-R_IN = rand(3, 3);
-XI_IN = rand(3, 1);
-RHO_IN = rand(3, 3);
-H_IN = rand(3, 1); 
+SIZE_T_IN = 3;
+SIZE_X_IN = 3;
+SIZE_Y_IN = 3;
+SIZE_N_IN = 3;
+SIZE_W_IN = 3;
+SIZE_L_IN = 3;
+SIZE_R_IN = 3;
+SIZE_M_IN = 3;
+SIZE_S_IN = 3;
 
-V_OUT = ntm_values_vector(W_IN, K_IN, U_IN, V_IN, D_IN, X_IN, R_IN, XI_IN, RHO_IN, H_IN);
+W_IN = rand(SIZE_L_IN, SIZE_X_IN);
+K_IN = rand(SIZE_R_IN, SIZE_L_IN, SIZE_W_IN);
+V_IN = rand(SIZE_L_IN, SIZE_S_IN);
+D_IN = rand(SIZE_R_IN, SIZE_L_IN, SIZE_M_IN);
+X_IN = rand(SIZE_T_IN, SIZE_X_IN);
+R_IN = rand(SIZE_T_IN, SIZE_R_IN, SIZE_W_IN);
+XI_IN = rand(SIZE_T_IN, SIZE_S_IN);
+RHO_IN = rand(SIZE_T_IN, SIZE_R_IN, SIZE_M_IN);
+
+V_OUT = ntm_values_vector(W_IN, K_IN, V_IN, D_IN, X_IN, R_IN, XI_IN, RHO_IN);
