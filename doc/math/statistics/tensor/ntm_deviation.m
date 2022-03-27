@@ -44,41 +44,16 @@
 ###################################################################################
 %}
 
-function K_OUT = ntm_keys_vector(W_HK_IN, W_IN, K_IN, V_IN, D_IN, X_IN, R_IN, XI_IN, RHO_IN)
-  addpath(genpath('../../math/algebra/matrix'));
+function DATA_OUT = ntm_deviation(DATA_IN, MEAN_IN)
+  LENGTH_IN = length(DATA_IN);
 
-  [SIZE_T_IN, SIZE_R_IN, SIZE_W_IN] = size(R_IN);
+  DATA_OUT = 0;
 
-  [SIZE_T_IN, SIZE_R_IN, SIZE_M_IN] = size(RHO_IN);
-
-  [SIZE_L_IN, SIZE_N_IN] = size(W_HK_IN);
-
-  % K(t;l) = transpose(W(l;n))·x(t;l)
-
-  r_int = zeros(SIZE_T_IN, SIZE_R_IN, SIZE_W_IN);
-  rho_int = zeros(SIZE_T_IN, SIZE_R_IN, SIZE_M_IN);
-
-  X_OUT = zeros(SIZE_T_IN, SIZE_L_IN);
-
-  K_OUT = zeros(SIZE_N_IN, SIZE_L_IN);
-
-  % transpose(W(l;n))
-  matrix_operation_int = ntm_matrix_transpose(W_HK_IN);
-
-  for t = 1:SIZE_T_IN
-    for i = 1:SIZE_R_IN
-      for k = 1:SIZE_W_IN
-        r_int(i, k) = R_IN(t, i, k);
-      end
-
-      for m = 1:SIZE_M_IN
-        rho_int(i, m) = RHO_IN(t, i, m);
-      end
-    end
-
-    X_OUT(t, :) = ntm_inputs_vector(W_IN, K_IN, V_IN, D_IN, X_IN(t, :), r_int, XI_IN(t, :), rho_int);
-
-    % transpose(W(l;n))·x(t;l)
-    K_OUT(t, :) = ntm_matrix_vector_product(matrix_operation_int, X_OUT(t, :));
+  for i = 1:LENGTH_IN
+    DATA_OUT = DATA_OUT + (DATA_IN(i) - MEAN_IN)^2;
   end
+
+  DATA_OUT = DATA_OUT/LENGTH_IN;
+
+  DATA_OUT = sqrt(DATA_OUT);
 end

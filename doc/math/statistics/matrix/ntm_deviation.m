@@ -44,22 +44,16 @@
 ###################################################################################
 %}
 
-SIZE_X_IN = 3;
-SIZE_Y_IN = 3;
-SIZE_N_IN = 3;
-SIZE_W_IN = 3;
-SIZE_L_IN = 3;
-SIZE_R_IN = 3;
-SIZE_M_IN = 3;
-SIZE_S_IN = 3;
+function DATA_OUT = ntm_deviation(DATA_IN, MEAN_IN)
+  LENGTH_IN = length(DATA_IN);
 
-W_IN = rand(SIZE_L_IN, SIZE_X_IN);
-K_IN = rand(SIZE_R_IN, SIZE_L_IN, SIZE_W_IN);
-V_IN = rand(SIZE_L_IN, SIZE_S_IN);
-D_IN = rand(SIZE_R_IN, SIZE_L_IN, SIZE_M_IN);
-X_IN = rand(SIZE_X_IN, 1);
-R_IN = rand(SIZE_R_IN, SIZE_W_IN);
-XI_IN = rand(SIZE_S_IN, 1);
-RHO_IN = rand(SIZE_R_IN, SIZE_M_IN);
+  DATA_OUT = 0;
 
-X_OUT = ntm_inputs_vector(W_IN, K_IN, V_IN, D_IN, X_IN, R_IN, XI_IN, RHO_IN);
+  for i = 1:LENGTH_IN
+    DATA_OUT = DATA_OUT + (DATA_IN(i) - MEAN_IN)^2;
+  end
+
+  DATA_OUT = DATA_OUT/LENGTH_IN;
+
+  DATA_OUT = sqrt(DATA_OUT);
+end
