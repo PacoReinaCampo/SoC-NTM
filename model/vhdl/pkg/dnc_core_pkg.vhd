@@ -2410,49 +2410,6 @@ package body dnc_core_pkg is
 
   begin
 
-    -- PRECEDENCE_WEIGHTING
-
-    -- p(t;j) = (1 - summation(w(t;j))[i in 1 to N])·p(t-1;j) + w(t;j)
-    -- p(t=0) = 0
-    vector_p_out_int := function_dnc_precedence_weighting (
-      SIZE_N_IN => SIZE_N_IN,
-
-      vector_w_input => vector_w_int,
-      vector_p_input => vector_p_in_int
-      );
-
-    -- TEMPORAL_LINK_MATRIX
-
-    -- L(t)[g;j] = (1 - w(t;j)[i] - w(t;j)[j])·L(t-1)[g;j] + w(t;j)[i]·p(t-1;j)[j]
-    -- L(t=0)[g,j] = 0
-    matrix_l_out_int := function_dnc_temporal_link_matrix (
-      SIZE_N_IN => SIZE_N_IN,
-
-      matrix_l_input => matrix_l_in_int,
-      vector_w_input => vector_w_int,
-      vector_p_input => vector_p_out_int
-      );
-
-    -- BACKWARD_FORWARD_WEIGHTING
-
-    -- b(t;i;j) = transpose(L(t;g;j))·w(t-1;i;j)
-    matrix_b_int := function_dnc_backward_weighting (
-      SIZE_R_IN => SIZE_R_IN,
-      SIZE_N_IN => SIZE_N_IN,
-
-      matrix_l_input => matrix_l_out_int,
-      matrix_w_input => matrix_w_int
-      );
-
-    -- f(t;i;j) = L(t;g;j)·w(t-1;i;j)
-    matrix_f_int := function_dnc_forward_weighting (
-      SIZE_R_IN => SIZE_R_IN,
-      SIZE_N_IN => SIZE_N_IN,
-
-      matrix_l_input => matrix_l_out_int,
-      matrix_w_input => matrix_w_int
-      );
-
     -- MEMORY_RETENTION_VECTOR
 
     -- psi(t;j) = multiplication(1 - f(t;i)·w(t-1;i;j))[i in 1 to R]
@@ -2484,18 +2441,7 @@ package body dnc_core_pkg is
       vector_u_input => vector_u_out_int
       );
 
-    -- READ_WRITE_CONTENT_WEIGHTING
-
-    -- c(t;i;j) = C(M(t-1;j;k),k(t;i;k),beta(t;i))
-    matrix_c_int := function_dnc_read_content_weighting (
-      SIZE_R_IN => SIZE_R_IN,
-      SIZE_N_IN => SIZE_N_IN,
-      SIZE_W_IN => SIZE_W_IN,
-
-      matrix_k_input    => matrix_k_read_input,
-      matrix_m_input    => matrix_m_in_int,
-      vector_beta_input => vector_beta_read_input
-      );
+    -- WRITE_CONTENT_WEIGHTING
 
     -- c(t;j) = C(M(t-1;j;k),k(t;k),beta(t))
     vector_c_int := function_dnc_write_content_weighting (
@@ -2507,19 +2453,7 @@ package body dnc_core_pkg is
       scalar_beta_input => scalar_beta_write_input
       );
 
-    -- READ_WRITE_WEIGHTING
-
-    -- w(t;i,j) = pi(t;i)[1]·b(t;i;j) + pi(t;i)[2]·c(t;i,j) + pi(t;i)[3]·f(t;i;j)
-    matrix_w_int := function_dnc_read_weighting (
-      SIZE_R_IN => SIZE_R_IN,
-      SIZE_N_IN => SIZE_N_IN,
-
-      matrix_pi_input => matrix_pi_read_input,
-
-      matrix_b_input => matrix_b_int,
-      matrix_c_input => matrix_c_int,
-      matrix_f_input => matrix_f_int
-      );
+    -- WRITE_WEIGHTING
 
     -- w(t;j) = gw(t)·(ga(t)·a(t;j) + (1 - ga(t))·c(t;j))
     vector_w_int := function_dnc_write_weighting (
@@ -2544,6 +2478,78 @@ package body dnc_core_pkg is
       vector_w_input => vector_w_int,
       vector_v_input => vector_v_write_input,
       vector_e_input => vector_e_write_input
+      );
+
+    -- PRECEDENCE_WEIGHTING
+
+    -- p(t;j) = (1 - summation(w(t;j))[i in 1 to N])·p(t-1;j) + w(t;j)
+    -- p(t=0) = 0
+    vector_p_out_int := function_dnc_precedence_weighting (
+      SIZE_N_IN => SIZE_N_IN,
+
+      vector_w_input => vector_w_int,
+      vector_p_input => vector_p_in_int
+      );
+
+    -- TEMPORAL_LINK_MATRIX
+
+    -- L(t)[g;j] = (1 - w(t;j)[i] - w(t;j)[j])·L(t-1)[g;j] + w(t;j)[i]·p(t-1;j)[j]
+    -- L(t=0)[g,j] = 0
+    matrix_l_out_int := function_dnc_temporal_link_matrix (
+      SIZE_N_IN => SIZE_N_IN,
+
+      matrix_l_input => matrix_l_in_int,
+      vector_w_input => vector_w_int,
+      vector_p_input => vector_p_out_int
+      );
+
+    -- FORWARD_WEIGHTING
+
+    -- f(t;i;j) = L(t;g;j)·w(t-1;i;j)
+    matrix_f_int := function_dnc_forward_weighting (
+      SIZE_R_IN => SIZE_R_IN,
+      SIZE_N_IN => SIZE_N_IN,
+
+      matrix_l_input => matrix_l_out_int,
+      matrix_w_input => matrix_w_int
+      );
+
+    -- BACKWARD_WEIGHTING
+
+    -- b(t;i;j) = transpose(L(t;g;j))·w(t-1;i;j)
+    matrix_b_int := function_dnc_backward_weighting (
+      SIZE_R_IN => SIZE_R_IN,
+      SIZE_N_IN => SIZE_N_IN,
+
+      matrix_l_input => matrix_l_out_int,
+      matrix_w_input => matrix_w_int
+      );
+
+    -- READ_CONTENT_WEIGHTING
+
+    -- c(t;i;j) = C(M(t-1;j;k),k(t;i;k),beta(t;i))
+    matrix_c_int := function_dnc_read_content_weighting (
+      SIZE_R_IN => SIZE_R_IN,
+      SIZE_N_IN => SIZE_N_IN,
+      SIZE_W_IN => SIZE_W_IN,
+
+      matrix_k_input    => matrix_k_read_input,
+      matrix_m_input    => matrix_m_in_int,
+      vector_beta_input => vector_beta_read_input
+      );
+
+    -- READ_WEIGHTING
+
+    -- w(t;i,j) = pi(t;i)[1]·b(t;i;j) + pi(t;i)[2]·c(t;i,j) + pi(t;i)[3]·f(t;i;j)
+    matrix_w_int := function_dnc_read_weighting (
+      SIZE_R_IN => SIZE_R_IN,
+      SIZE_N_IN => SIZE_N_IN,
+
+      matrix_pi_input => matrix_pi_read_input,
+
+      matrix_b_input => matrix_b_int,
+      matrix_c_input => matrix_c_int,
+      matrix_f_input => matrix_f_int
       );
 
     -- READ_VECTORS
@@ -3020,11 +3026,6 @@ package body dnc_core_pkg is
     variable scalar_gw_write_int   : std_logic_vector(DATA_SIZE-1 downto 0);
 
     -- Trainer Variable
-    variable tensor_k_int : tensor_buffer;
-    variable matrix_u_int : matrix_buffer;
-    variable matrix_v_int : matrix_buffer;
-    variable tensor_d_int : tensor_buffer;
-
     variable tensor_kt_int : array4_buffer;
     variable matrix_ut_int : tensor_buffer;
     variable matrix_vt_int : tensor_buffer;
@@ -3037,6 +3038,23 @@ package body dnc_core_pkg is
     variable vector_ht_int   : matrix_buffer;
 
     -- Internal Variable
+    variable matrix_l_int : matrix_buffer;
+    variable matrix_m_int : matrix_buffer;
+
+    variable matrix_b_int : matrix_buffer;
+    variable matrix_c_int : matrix_buffer;
+    variable matrix_f_int : matrix_buffer;
+    variable matrix_w_int : matrix_buffer;
+
+    variable vector_p_int : vector_buffer;
+    variable vector_u_int : vector_buffer;
+
+    variable vector_a_int : vector_buffer;
+    variable vector_c_int : vector_buffer;
+    variable vector_w_int : vector_buffer;
+
+    variable vector_psi_int : vector_buffer;
+
     variable matrix_r_int : matrix_buffer;
 
     variable vector_h_int : vector_buffer;
@@ -3053,6 +3071,7 @@ package body dnc_core_pkg is
 
     for t in 0 to to_integer(unsigned(SIZE_T_IN))-1 loop
       if (t = 0) then
+        vector_h_int := (others => ZERO_DATA);
       else
         -- ARITHMETIC S: [XI] = 3·W + 3
         SIZE_S_IN := THREE_CONTROL;
@@ -3077,33 +3096,6 @@ package body dnc_core_pkg is
           scalar_b_input => SIZE_W_IN
           );
 
-        -- CONTROLLER_BODY_STATE
-
-        -- FNN Convolutional mode: h(t;l) = sigmoid(W(l;x)*x(t;x) + K(i;l;k)*r(t;i;k) + D(i;l;m)*rho(t;i;m) + V(s;l)*xi(t;s) + U(l;l)*h(t-1;l) + b(l))
-        -- FNN Standard mode:      h(t;l) = sigmoid(W(l;x)·x(t;x) + K(i;l;k)·r(t;i;k) + D(i;l;m)·rho(t;i;m) + V(s;l)·xi(t;s) + U(l;l)·h(t-1;l) + b(l))
-
-        vector_h_int := function_ntm_fnn_standard_controller (
-          SIZE_X_IN => SIZE_X_IN,
-          SIZE_W_IN => SIZE_W_IN,
-          SIZE_L_IN => SIZE_L_IN,
-          SIZE_R_IN => SIZE_R_IN,
-          SIZE_S_IN => SIZE_S_IN,
-          SIZE_M_IN => SIZE_M_IN,
-
-          matrix_w_input => matrix_w_input,
-          tensor_k_input => tensor_k_input,
-          matrix_u_input => matrix_u_input,
-          matrix_v_input => matrix_v_input,
-          tensor_d_input => tensor_d_input,
-          vector_b_input => vector_b_input,
-
-          vector_x_input   => vector_x_input,
-          matrix_r_input   => matrix_r_int,
-          vector_xi_input  => vector_xi_int,
-          matrix_rho_input => matrix_rho_int,
-          vector_h_input   => vector_h_int
-          );
-
 
 
         -- INTERFACE_VECTOR_STATE
@@ -3113,7 +3105,7 @@ package body dnc_core_pkg is
           SIZE_S_IN => SIZE_S_IN,
           SIZE_L_IN => SIZE_L_IN,
 
-          matrix_u_input => matrix_v_int,
+          matrix_u_input => matrix_v_input,
 
           vector_h_input => vector_h_int
           );
@@ -3126,7 +3118,7 @@ package body dnc_core_pkg is
           SIZE_R_IN => SIZE_R_IN,
           SIZE_L_IN => SIZE_L_IN,
 
-          tensor_u_input => tensor_d_int,
+          tensor_u_input => tensor_d_input,
 
           vector_h_input => vector_h_int
           );
@@ -3248,22 +3240,185 @@ package body dnc_core_pkg is
 
 
         -- MEMORY_STATE
-        matrix_r_int := function_dnc_addressing (
+        -- MEMORY_RETENTION_VECTOR
+
+        -- psi(t;j) = multiplication(1 - f(t;i)·w(t-1;i;j))[i in 1 to R]
+        vector_psi_int := function_dnc_memory_retention_vector (
+          SIZE_R_IN => SIZE_R_IN,
+          SIZE_N_IN => SIZE_N_IN,
+
+          vector_f_input => vector_f_read_int,
+          matrix_w_input => matrix_w_int
+          );
+
+        -- USAGE_VECTOR
+
+        -- u(t;j) = (u(t-1;j) + w(t-1;j) - u(t-1;j) o w(t-1;j)) o psi(t;j)
+        vector_u_int := function_dnc_usage_vector (
+          SIZE_N_IN => SIZE_N_IN,
+
+          vector_u_input   => vector_u_int,
+          vector_w_input   => vector_w_int,
+          vector_psi_input => vector_psi_int
+          );
+
+        -- ALLOCATION_WEIGHTING
+
+        -- a(t)[phi(t)[j]] = (1 - u(t)[phi(t)[j]])·multiplication(u(t)[phi(t)[j]])[i in 1 to j-1]
+        vector_a_int := function_dnc_allocation_weighting (
+          SIZE_N_IN => SIZE_N_IN,
+
+          vector_u_input => vector_u_int
+          );
+
+        -- WRITE_CONTENT_WEIGHTING
+
+        -- c(t;j) = C(M(t-1;j;k),k(t;k),beta(t))
+        vector_c_int := function_dnc_write_content_weighting (
+          SIZE_N_IN => SIZE_N_IN,
+          SIZE_W_IN => SIZE_W_IN,
+
+          vector_k_input    => vector_k_write_int,
+          matrix_m_input    => matrix_m_int,
+          scalar_beta_input => scalar_beta_write_int
+          );
+
+        -- WRITE_WEIGHTING
+
+        -- w(t;j) = gw(t)·(ga(t)·a(t;j) + (1 - ga(t))·c(t;j))
+        vector_w_int := function_dnc_write_weighting (
+          SIZE_N_IN => SIZE_N_IN,
+
+          vector_a_input => vector_a_int,
+          vector_c_input => vector_c_int,
+
+          scalar_ga_input => scalar_ga_write_int,
+          scalar_gw_input => scalar_gw_write_int
+          );
+
+        -- MEMORY_MATRIX
+
+        -- M(t;j;k) = M(t-1;j;k) o (E - w(t;j)·transpose(e(t;k))) + w(t;j)·transpose(v(t;k))
+        matrix_m_int := function_dnc_memory_matrix (
+          SIZE_N_IN => SIZE_N_IN,
+          SIZE_W_IN => SIZE_W_IN,
+
+          matrix_m_input => matrix_m_int,
+
+          vector_w_input => vector_w_int,
+          vector_v_input => vector_v_write_int,
+          vector_e_input => vector_e_write_int
+          );
+
+        -- PRECEDENCE_WEIGHTING
+
+        -- p(t;j) = (1 - summation(w(t;j))[i in 1 to N])·p(t-1;j) + w(t;j)
+        -- p(t=0) = 0
+        vector_p_int := function_dnc_precedence_weighting (
+          SIZE_N_IN => SIZE_N_IN,
+
+          vector_w_input => vector_w_int,
+          vector_p_input => vector_p_int
+          );
+
+        -- TEMPORAL_LINK_MATRIX
+
+        -- L(t)[g;j] = (1 - w(t;j)[i] - w(t;j)[j])·L(t-1)[g;j] + w(t;j)[i]·p(t-1;j)[j]
+        -- L(t=0)[g,j] = 0
+        matrix_l_int := function_dnc_temporal_link_matrix (
+          SIZE_N_IN => SIZE_N_IN,
+
+          matrix_l_input => matrix_l_int,
+          vector_w_input => vector_w_int,
+          vector_p_input => vector_p_int
+          );
+
+        -- FORWARD_WEIGHTING
+
+        -- f(t;i;j) = L(t;g;j)·w(t-1;i;j)
+        matrix_f_int := function_dnc_forward_weighting (
+          SIZE_R_IN => SIZE_R_IN,
+          SIZE_N_IN => SIZE_N_IN,
+
+          matrix_l_input => matrix_l_int,
+          matrix_w_input => matrix_w_int
+          );
+
+        -- BACKWARD_WEIGHTING
+
+        -- b(t;i;j) = transpose(L(t;g;j))·w(t-1;i;j)
+        matrix_b_int := function_dnc_backward_weighting (
+          SIZE_R_IN => SIZE_R_IN,
+          SIZE_N_IN => SIZE_N_IN,
+
+          matrix_l_input => matrix_l_int,
+          matrix_w_input => matrix_w_int
+          );
+
+        -- READ_CONTENT_WEIGHTING
+
+        -- c(t;i;j) = C(M(t-1;j;k),k(t;i;k),beta(t;i))
+        matrix_c_int := function_dnc_read_content_weighting (
           SIZE_R_IN => SIZE_R_IN,
           SIZE_N_IN => SIZE_N_IN,
           SIZE_W_IN => SIZE_W_IN,
 
-          matrix_k_read_input    => matrix_k_read_int,
-          vector_beta_read_input => vector_beta_read_int,
-          vector_f_read_input    => vector_f_read_int,
-          matrix_pi_read_input   => matrix_pi_read_int,
+          matrix_k_input    => matrix_k_read_int,
+          matrix_m_input    => matrix_m_int,
+          vector_beta_input => vector_beta_read_int
+          );
 
-          vector_k_write_input    => vector_k_write_int,
-          scalar_beta_write_input => scalar_beta_write_int,
-          vector_e_write_input    => vector_e_write_int,
-          vector_v_write_input    => vector_v_write_int,
-          scalar_ga_write_input   => scalar_ga_write_int,
-          scalar_gw_write_input   => scalar_gw_write_int
+        -- READ_WEIGHTING
+
+        -- w(t;i,j) = pi(t;i)[1]·b(t;i;j) + pi(t;i)[2]·c(t;i,j) + pi(t;i)[3]·f(t;i;j)
+        matrix_w_int := function_dnc_read_weighting (
+          SIZE_R_IN => SIZE_R_IN,
+          SIZE_N_IN => SIZE_N_IN,
+
+          matrix_pi_input => matrix_pi_read_int,
+
+          matrix_b_input => matrix_b_int,
+          matrix_c_input => matrix_c_int,
+          matrix_f_input => matrix_f_int
+          );
+
+        -- READ_VECTORS
+
+        -- r(t;i;k) = transpose(M(t;j;k))·w(t;i;j)
+        matrix_r_int := function_dnc_read_vectors (
+          SIZE_R_IN => SIZE_R_IN,
+          SIZE_N_IN => SIZE_N_IN,
+          SIZE_W_IN => SIZE_W_IN,
+
+          matrix_m_input => matrix_m_int,
+          matrix_w_input => matrix_w_int
+          );
+
+        -- CONTROLLER_BODY_STATE
+
+        -- FNN Convolutional mode: h(t;l) = sigmoid(W(l;x)*x(t;x) + K(i;l;k)*r(t;i;k) + D(i;l;m)*rho(t;i;m) + V(s;l)*xi(t;s) + U(l;l)*h(t-1;l) + b(l))
+        -- FNN Standard mode:      h(t;l) = sigmoid(W(l;x)·x(t;x) + K(i;l;k)·r(t;i;k) + D(i;l;m)·rho(t;i;m) + V(s;l)·xi(t;s) + U(l;l)·h(t-1;l) + b(l))
+
+        vector_h_int := function_ntm_fnn_standard_controller (
+          SIZE_X_IN => SIZE_X_IN,
+          SIZE_W_IN => SIZE_W_IN,
+          SIZE_L_IN => SIZE_L_IN,
+          SIZE_R_IN => SIZE_R_IN,
+          SIZE_S_IN => SIZE_S_IN,
+          SIZE_M_IN => SIZE_M_IN,
+
+          matrix_w_input => matrix_w_input,
+          tensor_k_input => tensor_k_input,
+          matrix_u_input => matrix_u_input,
+          matrix_v_input => matrix_v_input,
+          tensor_d_input => tensor_d_input,
+          vector_b_input => vector_b_input,
+
+          vector_x_input   => vector_x_input,
+          matrix_r_input   => matrix_r_int,
+          vector_xi_input  => vector_xi_int,
+          matrix_rho_input => matrix_rho_int,
+          vector_h_input   => vector_h_int
           );
 
 
