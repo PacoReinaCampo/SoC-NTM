@@ -103,6 +103,20 @@ entity ntm_top is
 
     X_OUT_ENABLE : out std_logic;       -- for x in 0 to X-1
 
+    P_IN_I_ENABLE : in std_logic;       -- for i in 0 to R-1
+    P_IN_Y_ENABLE : in std_logic;       -- for y in 0 to Y-1
+    P_IN_K_ENABLE : in std_logic;       -- for k in 0 to W-1
+
+    P_OUT_I_ENABLE : out std_logic;     -- for i in 0 to R-1
+    P_OUT_Y_ENABLE : out std_logic;     -- for y in 0 to Y-1
+    P_OUT_K_ENABLE : out std_logic;     -- for k in 0 to W-1
+
+    Q_IN_Y_ENABLE : in std_logic;       -- for y in 0 to Y-1
+    Q_IN_L_ENABLE : in std_logic;       -- for l in 0 to L-1
+
+    Q_OUT_Y_ENABLE : out std_logic;     -- for y in 0 to Y-1
+    Q_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
+
     Y_OUT_ENABLE : out std_logic;       -- for y in 0 to Y-1
 
     -- DATA
@@ -120,7 +134,11 @@ entity ntm_top is
     D_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
     B_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
 
-    X_IN  : in  std_logic_vector(DATA_SIZE-1 downto 0);
+    X_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
+
+    P_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
+    Q_IN : in std_logic_vector(DATA_SIZE-1 downto 0);
+
     Y_OUT : out std_logic_vector(DATA_SIZE-1 downto 0)
     );
 end entity;
@@ -275,13 +293,13 @@ architecture ntm_top_architecture of ntm_top is
   signal start_output_vector : std_logic;
   signal ready_output_vector : std_logic;
 
-  signal k_in_i_enable_output_vector : std_logic;
-  signal k_in_y_enable_output_vector : std_logic;
-  signal k_in_k_enable_output_vector : std_logic;
+  signal p_in_i_enable_output_vector : std_logic;
+  signal p_in_y_enable_output_vector : std_logic;
+  signal p_in_k_enable_output_vector : std_logic;
 
-  signal k_out_i_enable_output_vector : std_logic;
-  signal k_out_y_enable_output_vector : std_logic;
-  signal k_out_k_enable_output_vector : std_logic;
+  signal p_out_i_enable_output_vector : std_logic;
+  signal p_out_y_enable_output_vector : std_logic;
+  signal p_out_k_enable_output_vector : std_logic;
 
   signal r_in_i_enable_output_vector : std_logic;
   signal r_in_k_enable_output_vector : std_logic;
@@ -289,11 +307,11 @@ architecture ntm_top_architecture of ntm_top is
   signal r_out_i_enable_output_vector : std_logic;
   signal r_out_k_enable_output_vector : std_logic;
 
-  signal u_in_y_enable_output_vector : std_logic;
-  signal u_in_l_enable_output_vector : std_logic;
+  signal q_in_y_enable_output_vector : std_logic;
+  signal q_in_l_enable_output_vector : std_logic;
 
-  signal u_out_y_enable_output_vector : std_logic;
-  signal u_out_l_enable_output_vector : std_logic;
+  signal q_out_y_enable_output_vector : std_logic;
+  signal q_out_l_enable_output_vector : std_logic;
 
   signal h_in_enable_output_vector : std_logic;
 
@@ -307,10 +325,10 @@ architecture ntm_top_architecture of ntm_top is
   signal size_w_in_output_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_r_in_output_vector : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
-  signal k_in_output_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal p_in_output_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal r_in_output_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
-  signal u_in_output_vector : std_logic_vector(DATA_SIZE-1 downto 0);
+  signal q_in_output_vector : std_logic_vector(DATA_SIZE-1 downto 0);
   signal h_in_output_vector : std_logic_vector(DATA_SIZE-1 downto 0);
 
   signal y_out_output_vector : std_logic_vector(DATA_SIZE-1 downto 0);
@@ -661,15 +679,15 @@ begin
   h_out_enable_controller <= '0';
 
   -- OUTPUT VECTOR
-  k_in_i_enable_output_vector <= '0';
-  k_in_y_enable_output_vector <= '0';
-  k_in_k_enable_output_vector <= '0';
+  p_in_i_enable_output_vector <= '0';
+  p_in_y_enable_output_vector <= '0';
+  p_in_k_enable_output_vector <= '0';
 
   r_in_i_enable_output_vector <= '0';
   r_in_k_enable_output_vector <= '0';
 
-  u_in_y_enable_output_vector <= '0';
-  u_in_l_enable_output_vector <= '0';
+  q_in_y_enable_output_vector <= '0';
+  q_in_l_enable_output_vector <= '0';
 
   h_in_enable_output_vector <= '0';
 
@@ -745,10 +763,10 @@ begin
   size_w_in_output_vector <= FULL;
   size_r_in_output_vector <= FULL;
 
-  k_in_output_vector <= FULL;
+  p_in_output_vector <= FULL;
   r_in_output_vector <= FULL;
 
-  u_in_output_vector <= FULL;
+  q_in_output_vector <= FULL;
   h_in_output_vector <= FULL;
 
   y_out_output_vector <= FULL;
@@ -930,13 +948,13 @@ begin
       START => start_output_vector,
       READY => ready_output_vector,
 
-      K_IN_I_ENABLE => k_in_i_enable_output_vector,
-      K_IN_Y_ENABLE => k_in_y_enable_output_vector,
-      K_IN_K_ENABLE => k_in_k_enable_output_vector,
+      P_IN_I_ENABLE => p_in_i_enable_output_vector,
+      P_IN_Y_ENABLE => p_in_y_enable_output_vector,
+      P_IN_K_ENABLE => p_in_k_enable_output_vector,
 
-      K_OUT_I_ENABLE => k_out_i_enable_output_vector,
-      K_OUT_Y_ENABLE => k_out_y_enable_output_vector,
-      K_OUT_K_ENABLE => k_out_k_enable_output_vector,
+      P_OUT_I_ENABLE => p_out_i_enable_output_vector,
+      P_OUT_Y_ENABLE => p_out_y_enable_output_vector,
+      P_OUT_K_ENABLE => p_out_k_enable_output_vector,
 
       R_IN_I_ENABLE => r_in_i_enable_output_vector,
       R_IN_K_ENABLE => r_in_k_enable_output_vector,
@@ -944,11 +962,11 @@ begin
       R_OUT_I_ENABLE => r_out_i_enable_output_vector,
       R_OUT_K_ENABLE => r_out_k_enable_output_vector,
 
-      U_IN_Y_ENABLE => u_in_y_enable_output_vector,
-      U_IN_L_ENABLE => u_in_l_enable_output_vector,
+      Q_IN_Y_ENABLE => q_in_y_enable_output_vector,
+      Q_IN_L_ENABLE => q_in_l_enable_output_vector,
 
-      U_OUT_Y_ENABLE => u_out_y_enable_output_vector,
-      U_OUT_L_ENABLE => u_out_l_enable_output_vector,
+      Q_OUT_Y_ENABLE => q_out_y_enable_output_vector,
+      Q_OUT_L_ENABLE => q_out_l_enable_output_vector,
 
       H_IN_ENABLE => h_in_enable_output_vector,
 
@@ -962,10 +980,10 @@ begin
       SIZE_W_IN => size_w_in_output_vector,
       SIZE_R_IN => size_r_in_output_vector,
 
-      K_IN => k_in_output_vector,
+      P_IN => p_in_output_vector,
       R_IN => r_in_output_vector,
 
-      U_IN => u_in_output_vector,
+      Q_IN => q_in_output_vector,
       H_IN => h_in_output_vector,
 
       Y_OUT => y_out_output_vector
