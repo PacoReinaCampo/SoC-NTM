@@ -41,18 +41,15 @@
  */
 
 fn main() {
+
+  // Constants
+  const SIZE_I_IN: u32 = 3;
+  const SIZE_J_IN: u32 = 3;
+
   // Body
-  for i in 1..SIZE_I_IN {
-    data_int(i, :) = data_int(i, :)/data_int(i, i);
-
-    for m in i..SIZE_I_IN - 1 {
-      data_int(m + 1, :) = data_int(m + 1, :) - data_int(i, :)*data_int(m + 1, i);
-    }
-  }
-
-  for i in 2..SIZE_I_IN {
-    for m = (i - 1): - 1:1
-      data_int(m, :) = data_int(m, :) - data_int(i, :)*data_int(m, i);
+  for i in 1..SIZE_J_IN {
+    for j in 1..SIZE_I_IN {
+      DATA_OUT(i, j) = DATA_IN(j, i);
     }
   }
 }

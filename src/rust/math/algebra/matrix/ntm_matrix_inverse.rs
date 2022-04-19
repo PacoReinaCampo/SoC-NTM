@@ -41,14 +41,23 @@
  */
 
 fn main() {
-  // Body
-  for i in 1..SIZE_A_I_IN {
-    for j in 1..SIZE_A_J_IN {
-      DATA_OUT(i) = 0;
 
-      for m in 1..SIZE_A_J_IN {
-        DATA_OUT(i) = DATA_OUT(i) + DATA_A_IN(i, m)*DATA_B_IN(m);
-      }
+  // Constants
+  const SIZE_I_IN: u32 = 3;
+  const SIZE_J_IN: u32 = 3;
+
+  // Body
+  for i in 1..SIZE_I_IN {
+    data_int(i, :) = data_int(i, :)/data_int(i, i);
+
+    for m in i..SIZE_I_IN - 1 {
+      data_int(m + 1, :) = data_int(m + 1, :) - data_int(i, :)*data_int(m + 1, i);
+    }
+  }
+
+  for i in 2..SIZE_I_IN {
+    for m = (i - 1): - 1:1
+      data_int(m, :) = data_int(m, :) - data_int(i, :)*data_int(m, i);
     }
   }
 }
