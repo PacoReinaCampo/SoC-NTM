@@ -197,11 +197,14 @@ architecture dnc_addressing_architecture of dnc_addressing is
   signal l_in_g_enable_backward_weighting : std_logic;
   signal l_in_j_enable_backward_weighting : std_logic;
 
+  signal l_out_g_enable_backward_weighting : std_logic;
+  signal l_out_j_enable_backward_weighting : std_logic;
+
   signal w_in_i_enable_backward_weighting : std_logic;
   signal w_in_j_enable_backward_weighting : std_logic;
 
-  signal b_i_enable_backward_weighting : std_logic;
-  signal b_j_enable_backward_weighting : std_logic;
+  signal w_out_i_enable_backward_weighting : std_logic;
+  signal w_out_j_enable_backward_weighting : std_logic;
 
   signal b_out_i_enable_backward_weighting : std_logic;
   signal b_out_j_enable_backward_weighting : std_logic;
@@ -223,11 +226,14 @@ architecture dnc_addressing_architecture of dnc_addressing is
   signal l_in_g_enable_forward_weighting : std_logic;
   signal l_in_j_enable_forward_weighting : std_logic;
 
+  signal l_out_g_enable_forward_weighting : std_logic;
+  signal l_out_j_enable_forward_weighting : std_logic;
+
   signal w_in_i_enable_forward_weighting : std_logic;
   signal w_in_j_enable_forward_weighting : std_logic;
 
-  signal f_i_enable_forward_weighting : std_logic;
-  signal f_j_enable_forward_weighting : std_logic;
+  signal w_out_i_enable_forward_weighting : std_logic;
+  signal w_out_j_enable_forward_weighting : std_logic;
 
   signal f_out_i_enable_forward_weighting : std_logic;
   signal f_out_j_enable_forward_weighting : std_logic;
@@ -311,7 +317,6 @@ architecture dnc_addressing_architecture of dnc_addressing is
   signal p_out_enable_precedence_weighting : std_logic;
 
   -- DATA
-  signal size_r_in_precedence_weighting : std_logic_vector(CONTROL_SIZE-1 downto 0);
   signal size_n_in_precedence_weighting : std_logic_vector(CONTROL_SIZE-1 downto 0);
 
   signal w_in_precedence_weighting : std_logic_vector(DATA_SIZE-1 downto 0);
@@ -742,7 +747,6 @@ begin
   psi_out_memory_retention_vector <= FULL;
 
   -- PRECEDENCE WEIGHTING
-  size_r_in_precedence_weighting <= ONE_CONTROL;
   size_n_in_precedence_weighting <= ONE_CONTROL;
 
   w_in_precedence_weighting <= FULL;
@@ -868,11 +872,14 @@ begin
       L_IN_G_ENABLE => l_in_g_enable_backward_weighting,
       L_IN_J_ENABLE => l_in_j_enable_backward_weighting,
 
+      L_OUT_G_ENABLE => l_out_g_enable_backward_weighting,
+      L_OUT_J_ENABLE => l_out_j_enable_backward_weighting,
+
       W_IN_I_ENABLE => w_in_i_enable_backward_weighting,
       W_IN_J_ENABLE => w_in_j_enable_backward_weighting,
 
-      W_OUT_I_ENABLE => b_i_enable_backward_weighting,
-      W_OUT_J_ENABLE => b_j_enable_backward_weighting,
+      W_OUT_I_ENABLE => w_out_i_enable_backward_weighting,
+      W_OUT_J_ENABLE => w_out_j_enable_backward_weighting,
 
       B_OUT_I_ENABLE => b_out_i_enable_backward_weighting,
       B_OUT_J_ENABLE => b_out_j_enable_backward_weighting,
@@ -906,11 +913,14 @@ begin
       L_IN_G_ENABLE => l_in_g_enable_forward_weighting,
       L_IN_J_ENABLE => l_in_j_enable_forward_weighting,
 
+      L_OUT_G_ENABLE => l_out_g_enable_forward_weighting,
+      L_OUT_J_ENABLE => l_out_j_enable_forward_weighting,
+
       W_IN_I_ENABLE => w_in_i_enable_forward_weighting,
       W_IN_J_ENABLE => w_in_j_enable_forward_weighting,
 
-      F_I_ENABLE => f_i_enable_forward_weighting,
-      F_J_ENABLE => f_j_enable_forward_weighting,
+      W_OUT_I_ENABLE => w_out_i_enable_forward_weighting,
+      W_OUT_J_ENABLE => w_out_j_enable_forward_weighting,
 
       F_OUT_I_ENABLE => f_out_i_enable_forward_weighting,
       F_OUT_J_ENABLE => f_out_j_enable_forward_weighting,
@@ -1027,7 +1037,6 @@ begin
       P_OUT_ENABLE => p_out_enable_precedence_weighting,
 
       -- DATA
-      SIZE_R_IN => size_n_in_precedence_weighting,
       SIZE_N_IN => size_n_in_precedence_weighting,
 
       W_IN => w_in_precedence_weighting,
