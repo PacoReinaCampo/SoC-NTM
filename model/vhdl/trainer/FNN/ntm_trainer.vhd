@@ -60,38 +60,38 @@ entity ntm_trainer is
     START : in  std_logic;
     READY : out std_logic;
 
-    X_IN_T_ENABLE : in std_logic;       -- for x in 0 to X-1
+    X_IN_T_ENABLE : in std_logic;       -- for t in 0 to T-1
     X_IN_X_ENABLE : in std_logic;       -- for x in 0 to X-1
 
-    X_OUT_T_ENABLE : out std_logic;     -- for x in 0 to X-1
+    X_OUT_T_ENABLE : out std_logic;     -- for t in 0 to T-1
     X_OUT_X_ENABLE : out std_logic;     -- for x in 0 to X-1
 
-    R_IN_T_ENABLE : in std_logic;       -- for i in 0 to T-1
+    R_IN_T_ENABLE : in std_logic;       -- for t in 0 to T-1
     R_IN_I_ENABLE : in std_logic;       -- for i in 0 to R-1 (read heads flow)
     R_IN_K_ENABLE : in std_logic;       -- for k in 0 to W-1
 
-    R_OUT_T_ENABLE : out std_logic;     -- for i in 0 to T-1
+    R_OUT_T_ENABLE : out std_logic;     -- for t in 0 to T-1
     R_OUT_I_ENABLE : out std_logic;     -- for i in 0 to R-1 (read heads flow)
     R_OUT_K_ENABLE : out std_logic;     -- for k in 0 to W-1
 
-    RHO_IN_T_ENABLE : in std_logic;     -- for i in 0 to T-1
+    RHO_IN_T_ENABLE : in std_logic;     -- for t in 0 to T-1
     RHO_IN_I_ENABLE : in std_logic;     -- for i in 0 to R-1 (read heads flow)
     RHO_IN_M_ENABLE : in std_logic;     -- for m in 0 to M-1
 
-    RHO_OUT_T_ENABLE : out std_logic;   -- for i in 0 to T-1
+    RHO_OUT_T_ENABLE : out std_logic;   -- for t in 0 to T-1
     RHO_OUT_I_ENABLE : out std_logic;   -- for i in 0 to R-1 (read heads flow)
     RHO_OUT_M_ENABLE : out std_logic;   -- for m in 0 to M-1
 
-    XI_IN_T_ENABLE : in std_logic;      -- for s in 0 to S-1
+    XI_IN_T_ENABLE : in std_logic;      -- for t in 0 to T-1
     XI_IN_S_ENABLE : in std_logic;      -- for s in 0 to S-1
 
-    XI_OUT_T_ENABLE : out std_logic;    -- for s in 0 to S-1
+    XI_OUT_T_ENABLE : out std_logic;    -- for t in 0 to T-1
     XI_OUT_S_ENABLE : out std_logic;    -- for s in 0 to S-1
 
-    H_IN_T_ENABLE : in std_logic;       -- for l in 0 to L-1
+    H_IN_T_ENABLE : in std_logic;       -- for t in 0 to T-1
     H_IN_L_ENABLE : in std_logic;       -- for l in 0 to L-1
 
-    H_OUT_T_ENABLE : out std_logic;     -- for l in 0 to L-1
+    H_OUT_T_ENABLE : out std_logic;     -- for t in 0 to T-1
     H_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
 
     W_OUT_L_ENABLE : out std_logic;     -- for l in 0 to L-1
