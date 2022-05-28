@@ -37,7 +37,7 @@
 // Author(s):
 //   Paco Reina Campo <pacoreinacampo@queenfield.tech>
 
-module ntm_read_heads_testbench;
+module ntm_testbench;
 
   ///////////////////////////////////////////////////////////////////////
   // Types
@@ -47,121 +47,12 @@ module ntm_read_heads_testbench;
   // Constants
   ///////////////////////////////////////////////////////////////////////
 
-  // SYSTEM-SIZE
-  parameter DATA_SIZE=64;
-  parameter CONTROL_SIZE=64;
-
-  parameter X=64;
-  parameter Y=64;
-  parameter N=64;
-  parameter W=64;
-  parameter L=64;
-  parameter R=64;
-
   ///////////////////////////////////////////////////////////////////////
   // Signals
   ///////////////////////////////////////////////////////////////////////
 
-  // GLOBAL
-  wire CLK;
-  wire RST;
-
-  // READING
-  // CONTROL
-  wire start_reading;
-  wire ready_reading;
-
-  wire m_in_j_enable_reading;
-  wire m_in_k_enable_reading;
-
-  wire m_out_j_enable_reading;
-  wire m_out_k_enable_reading;
-
-  wire r_out_enable_reading;
-
-  // DATA
-  wire [DATA_SIZE-1:0] size_n_in_reading;
-  wire [DATA_SIZE-1:0] size_w_in_reading;
-
-  wire [DATA_SIZE-1:0] w_in_reading;
-  wire [DATA_SIZE-1:0] m_in_reading;
-
-  wire [DATA_SIZE-1:0] r_out_reading;
-
   ///////////////////////////////////////////////////////////////////////
   // Body
   ///////////////////////////////////////////////////////////////////////
-
-  // STIMULUS
-  ntm_read_heads_stimulus #(
-    // SYSTEM-SIZE
-    .DATA_SIZE(DATA_SIZE),
-    .CONTROL_SIZE(CONTROL_SIZE),
-
-    .X(X),
-    .Y(Y),
-    .N(N),
-    .W(W),
-    .L(L),
-    .R(R)
-  )
-  read_heads_stimulus(
-    // GLOBAL
-    .CLK(CLK),
-    .RST(RST),
-
-    // CONTROL
-    .NTM_READ_HEADS_START(start_reading),
-    .NTM_READ_HEADS_READY(ready_reading),
-
-    .NTM_READ_HEADS_M_IN_J_ENABLE(m_in_j_enable_reading),
-    .NTM_READ_HEADS_M_IN_K_ENABLE(m_in_k_enable_reading),
-
-    .NTM_READ_HEADS_M_OUT_J_ENABLE(m_out_j_enable_reading),
-    .NTM_READ_HEADS_M_OUT_K_ENABLE(m_out_k_enable_reading),
-
-    .NTM_READ_HEADS_R_OUT_ENABLE(r_out_enable_reading),
-
-    // DATA
-    .NTM_READ_HEADS_SIZE_N_IN(size_n_in_reading),
-    .NTM_READ_HEADS_SIZE_W_IN(size_w_in_reading),
-
-    .NTM_READ_HEADS_W_IN(w_in_reading),
-    .NTM_READ_HEADS_M_IN(m_in_reading),
-
-    .NTM_READ_HEADS_R_OUT(r_out_reading)
-  );
-
-  // READING
-  ntm_reading #(
-    .DATA_SIZE(DATA_SIZE),
-    .CONTROL_SIZE(CONTROL_SIZE)
-  )
-  reading(
-    // GLOBAL
-    .CLK(CLK),
-    .RST(RST),
-
-    // CONTROL
-    .START(start_reading),
-    .READY(ready_reading),
-
-    .M_IN_J_ENABLE(m_in_j_enable_reading),
-    .M_IN_K_ENABLE(m_in_k_enable_reading),
-
-    .M_OUT_J_ENABLE(m_out_j_enable_reading),
-    .M_OUT_K_ENABLE(m_out_k_enable_reading),
-
-    .R_OUT_ENABLE(r_out_enable_reading),
-
-    // DATA
-    .SIZE_N_IN(size_n_in_reading),
-    .SIZE_W_IN(size_w_in_reading),
-
-    .W_IN(w_in_reading),
-    .M_IN(m_in_reading),
-
-    .R_OUT(r_out_reading)
-  );
 
 endmodule

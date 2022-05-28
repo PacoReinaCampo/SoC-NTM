@@ -37,7 +37,7 @@
 // Author(s):
 //   Paco Reina Campo <pacoreinacampo@queenfield.tech>
 
-module ntm_state_top_testbench;
+module ntm_testbench;
 
   ///////////////////////////////////////////////////////////////////////
   // Types
@@ -47,34 +47,12 @@ module ntm_state_top_testbench;
   // Constants
   ///////////////////////////////////////////////////////////////////////
 
-  // SYSTEM-SIZE
-  parameter DATA_SIZE=64;
-  parameter CONTROL_SIZE=64;
-
-  parameter X=64;
-  parameter Y=64;
-  parameter N=64;
-  parameter W=64;
-  parameter L=64;
-  parameter R=64;
-
-  // FUNCTIONALITY
-  parameter STIMULUS_DNC_TOP_TEST   = 0;
-  parameter STIMULUS_DNC_TOP_CASE_0 = 0;
-  parameter STIMULUS_DNC_TOP_CASE_1 = 0;
-
   ///////////////////////////////////////////////////////////////////////
   // Signals
   ///////////////////////////////////////////////////////////////////////
 
-  // GLOBAL
-  wire CLK;
-  wire RST;
-
   ///////////////////////////////////////////////////////////////////////
   // Body
   ///////////////////////////////////////////////////////////////////////
-
-  // STIMULUS
 
 endmodule
