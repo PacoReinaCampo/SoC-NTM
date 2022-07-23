@@ -1,7 +1,7 @@
 # SoC-Life (T-DNC/NTM-SoC)
 ## QueenField
 
-![QueenField](../main/icon.jpg)
+![QueenField](../master/icon.jpg)
 
 # 0. INTRODUCTION
 
