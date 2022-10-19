@@ -1,6 +1,6 @@
 ---
 title: 'SoC-NTM (T-DNC/NTM-SoC)'
-subtitle: 'QueenField ![](../../icon.jpg)'
+subtitle: 'QueenField ![](../../soc-ntm.svg){width=17cm}'
 
 author: Paco Reina Campo
 
