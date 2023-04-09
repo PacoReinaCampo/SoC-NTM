@@ -42,5 +42,15 @@
 ##                                                                               ##
 ###################################################################################
 
+# Remove Submodule
+git rm -rf soc-dv
+git rm -rf soc-rtos
+git rm -rf opennn
+
 # Update Submodule
 git submodule update --init --recursive --remote
+
+# Add Submodule
+git submodule add --force https://github.com/PacoReinaCampo/SoC-DV.git soc-dv
+git submodule add --force https://github.com/PacoReinaCampo/SoC-RTOS.git soc-rtos
+git submodule add --force https://github.com/PacoReinaCampo/OpenNN.git opennn
