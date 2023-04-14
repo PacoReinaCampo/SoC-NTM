@@ -42,6 +42,6 @@
 //                                                                               //
 ///////////////////////////////////////////////////////////////////////////////////
 
-sv work ../../../../../../../../verification/uvm/application/arithmetic/scalar/adder/ntm_design.sv
+sv work ../../../../../../../../../../template/traditional/verification/uvm/code/computing/information/bit/bit/application/fsm.sv
 
-sv work ../../../../../../../../verification/uvm/library/arithmetic/scalar/adder/ntm_uvm_testbench.sv
+sv work ../../../../../../../../../../template/traditional/verification/uvm/code/computing/information/bit/bit/library/peripheral_testbench.sv
