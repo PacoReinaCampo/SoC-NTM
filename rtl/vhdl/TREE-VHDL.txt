@@ -1,5 +1,7 @@
 code
 ├── architecture
+│   ├── mpsoc
+│   │   └── accelerator_mpsoc.vhd
 │   ├── pu
 │   │   └── accelerator_pu.vhd
 │   └── soc
@@ -124,9 +126,7 @@ code
 │   │   │   ├── accelerator_tensor_inverse.vhd
 │   │   │   ├── accelerator_tensor_matrix_convolution.vhd
 │   │   │   ├── accelerator_tensor_matrix_product.vhd
-│   │   │   ├── accelerator_tensor_multiplication.vhd
 │   │   │   ├── accelerator_tensor_product.vhd
-│   │   │   ├── accelerator_tensor_summation.vhd
 │   │   │   └── accelerator_tensor_transpose.vhd
 │   │   └── vector
 │   │       ├── accelerator_dot_product.vhd
@@ -227,4 +227,4 @@ code
         ├── accelerator_input_trainer.vhd
         └── accelerator_output_trainer.vhd
 
-64 directories, 163 files
+65 directories, 162 files
