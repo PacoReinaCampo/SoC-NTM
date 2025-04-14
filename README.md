@@ -1,4 +1,4 @@
-# SoC-NTM (T-DNC/NTM-SoC)
+# SoC-NTM
 ## QueenField
 
 ![QueenField](../main/icon.jpg)
