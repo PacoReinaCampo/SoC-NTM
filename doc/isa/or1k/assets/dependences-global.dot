@@ -32,9 +32,9 @@ digraph Project {
 
   // Accelerator Blocks
   subgraph "cluster AcceleratorBlocks" { label = "Accelerator Blocks";
-    MPSoC_NTM[label="MPSoC-NTM\nAccelerator\nor1k64-pvt-rnn"];
-    SoC_NTM[label="SoC-NTM\nAccelerator\nor1k64-pv-rnn"];
-    PU_NTM[label="PU-NTM\nAccelerator\nor1k64-p-rnn"];
+    MPSoC_NTM[label="MPSoC-NTM\nAccelerator\nor1k64-pvt-gcvwy"];
+    SoC_NTM[label="SoC-NTM\nAccelerator\nor1k64-pv-gcvwy"];
+    PU_NTM[label="PU-NTM\nAccelerator\nor1k64-p-gcvwy"];
   }
 
   // Target Blocks
