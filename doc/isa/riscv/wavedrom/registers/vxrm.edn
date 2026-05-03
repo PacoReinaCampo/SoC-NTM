@@ -1,0 +1,4 @@
+{reg: [
+  {bits: 2, name: 'vxrm', attr: '[1:0]'},
+  {bits: 30, name: 'reserved'}
+]}
