@@ -1,3 +1,0 @@
-{reg: [
-  {bits: 32, name: 'vector start index'}
-]}

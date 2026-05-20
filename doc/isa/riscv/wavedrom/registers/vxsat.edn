@@ -1,4 +1,0 @@
-{reg: [
-  {bits: 1, name: 'vxsat'},
-  {bits: 31, name: 'reserved'}
-]}
