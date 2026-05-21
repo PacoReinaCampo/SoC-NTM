@@ -124,6 +124,57 @@ code
 │           ├── model_vector_integer_divider.sv
 │           ├── model_vector_integer_multiplier.sv
 │           └── model_vector_integer_subtractor.sv
+├── intelligence
+│   ├── nn
+│   │   ├── fnn
+│   │   │   ├── convolutional
+│   │   │   │   └── model_controller.sv
+│   │   │   └── standard
+│   │   │       └── model_controller.sv
+│   │   ├── lstm
+│   │   │   ├── convolutional
+│   │   │   │   ├── model_activation_gate_vector.sv
+│   │   │   │   ├── model_controller.sv
+│   │   │   │   ├── model_forget_gate_vector.sv
+│   │   │   │   ├── model_hidden_gate_vector.sv
+│   │   │   │   ├── model_input_gate_vector.sv
+│   │   │   │   ├── model_output_gate_vector.sv
+│   │   │   │   └── model_state_gate_vector.sv
+│   │   │   └── standard
+│   │   │       ├── model_activation_gate_vector.sv
+│   │   │       ├── model_controller.sv
+│   │   │       ├── model_forget_gate_vector.sv
+│   │   │       ├── model_hidden_gate_vector.sv
+│   │   │       ├── model_input_gate_vector.sv
+│   │   │       ├── model_output_gate_vector.sv
+│   │   │       └── model_state_gate_vector.sv
+│   │   └── ntm
+│   │       ├── memory
+│   │       │   ├── model_addressing.sv
+│   │       │   └── model_content_based_addressing.sv
+│   │       ├── read_heads
+│   │       │   └── model_reading.sv
+│   │       ├── top
+│   │       │   ├── model_interface_matrix.sv
+│   │       │   ├── model_interface_vector.sv
+│   │       │   ├── model_output_vector.sv
+│   │       │   └── model_top.sv
+│   │       └── write_heads
+│   │           ├── model_erasing.sv
+│   │           └── model_writing.sv
+│   └── trainer
+│       ├── differentiation
+│       │   ├── model_trainer_matrix_differentiation.sv
+│       │   └── model_trainer_vector_differentiation.sv
+│       ├── fnn
+│       │   └── model_trainer.sv
+│       ├── lstm
+│       │   ├── model_activation_trainer.sv
+│       │   ├── model_forget_trainer.sv
+│       │   ├── model_input_trainer.sv
+│       │   └── model_output_trainer.sv
+│       └── pnn
+│           └── model_trainer.sv
 ├── math
 │   ├── matrix
 │   │   ├── model_matrix_cosh_function.sv
@@ -149,64 +200,14 @@ code
 │       ├── model_vector_oneplus_function.sv
 │       ├── model_vector_sinh_function.sv
 │       └── model_vector_tanh_function.sv
-├── nn
-│   ├── fnn
-│   │   ├── convolutional
-│   │   │   └── model_controller.sv
-│   │   └── standard
-│   │       └── model_controller.sv
-│   ├── lstm
-│   │   ├── convolutional
-│   │   │   ├── model_activation_gate_vector.sv
-│   │   │   ├── model_controller.sv
-│   │   │   ├── model_forget_gate_vector.sv
-│   │   │   ├── model_hidden_gate_vector.sv
-│   │   │   ├── model_input_gate_vector.sv
-│   │   │   ├── model_output_gate_vector.sv
-│   │   │   └── model_state_gate_vector.sv
-│   │   └── standard
-│   │       ├── model_activation_gate_vector.sv
-│   │       ├── model_controller.sv
-│   │       ├── model_forget_gate_vector.sv
-│   │       ├── model_hidden_gate_vector.sv
-│   │       ├── model_input_gate_vector.sv
-│   │       ├── model_output_gate_vector.sv
-│   │       └── model_state_gate_vector.sv
-│   └── ntm
-│       ├── memory
-│       │   ├── model_addressing.sv
-│       │   └── model_content_based_addressing.sv
-│       ├── read_heads
-│       │   └── model_reading.sv
-│       ├── top
-│       │   ├── model_interface_matrix.sv
-│       │   ├── model_interface_vector.sv
-│       │   ├── model_output_vector.sv
-│       │   └── model_top.sv
-│       └── write_heads
-│           ├── model_erasing.sv
-│           └── model_writing.sv
-├── pkg
-│   ├── model_ann_controller_verilog_pkg.sv
-│   ├── model_arithmetic_verilog_pkg.sv
-│   ├── model_fnn_controller_verilog_pkg.sv
-│   ├── model_lstm_controller_verilog_pkg.sv
-│   ├── model_math_verilog_pkg.sv
-│   ├── model_ntm_core_verilog_pkg.sv
-│   ├── model_pnn_controller_verilog_pkg.sv
-│   └── model_state_verilog_pkg.sv
-└── trainer
-    ├── differentiation
-    │   ├── model_trainer_matrix_differentiation.sv
-    │   └── model_trainer_vector_differentiation.sv
-    ├── fnn
-    │   └── model_trainer.sv
-    ├── lstm
-    │   ├── model_activation_trainer.sv
-    │   ├── model_forget_trainer.sv
-    │   ├── model_input_trainer.sv
-    │   └── model_output_trainer.sv
-    └── pnn
-        └── model_trainer.sv
+└── pkg
+    ├── model_ann_controller_verilog_pkg.sv
+    ├── model_arithmetic_verilog_pkg.sv
+    ├── model_fnn_controller_verilog_pkg.sv
+    ├── model_lstm_controller_verilog_pkg.sv
+    ├── model_math_verilog_pkg.sv
+    ├── model_ntm_core_verilog_pkg.sv
+    ├── model_pnn_controller_verilog_pkg.sv
+    └── model_state_verilog_pkg.sv
 
-57 directories, 152 files
+58 directories, 152 files
