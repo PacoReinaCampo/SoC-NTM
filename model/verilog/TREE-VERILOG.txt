@@ -125,7 +125,7 @@ code
 │           ├── model_vector_integer_multiplier.sv
 │           └── model_vector_integer_subtractor.sv
 ├── intelligence
-│   ├── nn
+│   ├── model
 │   │   ├── fnn
 │   │   │   ├── convolutional
 │   │   │   │   └── model_controller.sv

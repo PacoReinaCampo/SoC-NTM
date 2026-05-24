@@ -125,7 +125,7 @@ code
 │           ├── model_vector_integer_multiplier.vhd
 │           └── model_vector_integer_subtractor.vhd
 ├── intelligence
-│   ├── nn
+│   ├── model
 │   │   ├── fnn
 │   │   │   ├── convolutional
 │   │   │   │   └── model_controller.vhd
