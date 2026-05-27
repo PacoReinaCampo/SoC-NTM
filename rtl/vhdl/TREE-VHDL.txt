@@ -146,7 +146,7 @@ code
 │           ├── accelerator_vector_integer_multiplier.vhd
 │           └── accelerator_vector_integer_subtractor.vhd
 ├── intelligence
-│   ├── model
+│   ├── modeling
 │   │   ├── fnn
 │   │   │   ├── convolutional
 │   │   │   │   └── accelerator_controller.vhd
@@ -183,7 +183,7 @@ code
 │   │       └── write_heads
 │   │           ├── accelerator_erasing.vhd
 │   │           └── accelerator_writing.vhd
-│   └── trainer
+│   └── training
 │       ├── differentiation
 │       │   ├── accelerator_trainer_matrix_differentiation.vhd
 │       │   └── accelerator_trainer_vector_differentiation.vhd
